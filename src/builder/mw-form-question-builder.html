@@ -1,0 +1,183 @@
+<div class="mw-form-question-builder-wrapper">
+    <div class="mw-form-question-builder" ng-class="{'ng-submitted':ctrl.formSubmitted}">
+        <div ng-form="ctrl.form" ng-if="!ctrl.isPreview">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label ng-attr-for="question-text-{{ctrl.id}}" class="col-sm-2 control-label" translate="mwForm.question.text">Treść pytania</label>
+                    <div class="col-sm-10 col-md-8">
+                        <input type="text" class="form-control" name="text" ng-attr-id="question-text-{{ctrl.id}}" ng-model="ctrl.question.text" ng-readonly="ctrl.readOnly" required>
+                    </div>
+                </div>
+                <div class="form-group mw-question-type">
+                    <label ng-attr-for="question-type-{{ctrl.id}}" class="col-sm-2 control-label" translate="mwForm.question.type">Typ pytania</label>
+                    <div class="col-sm-10 form-inline">
+                        <select ng-attr-id="question-type-{{ctrl.id}}" ng-options="'mwForm.question.types.'+type+'.name'|translate for type in ctrl.questionTypes" ng-model="ctrl.question.type" ng-change="ctrl.questionTypeChanged()" class="form-control" ng-disabled="ctrl.readOnly" required></select>
+
+                        <div class="checkbox" ng-if="ctrl.question.type=='radio'">
+                            <label>
+                                <input type="checkbox" ng-model="ctrl.question.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly"> <span translate="mwForm.pageFlow.afterQuestionAnswer">Przejdź do strony w oparciu o odpowiedź</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-if="ctrl.question.type">
+                <div class="mw-form-question-answers-builder col-sm-10 col-sm-offset-2  col-md-8" >
+                    <div ng-if="ctrl.question.type=='text'">
+                        <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
+                    </div>
+                    <div ng-if="ctrl.question.type=='textarea'">
+                        <textarea class="form-control" disabled>{{'mwForm.question.preview.textarea'|translate}}</textarea>
+                    </div>
+                    <div ng-if="ctrl.question.type=='radio' || ctrl.question.type=='checkbox'">
+                        <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
+                    </div>
+                    <div ng-if="ctrl.question.type=='priority'">
+                        <mw-question-priority-list-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-priority-list-builder>
+                    </div>
+                </div>
+                <div class="col-sm-12" ng-if="ctrl.question.type=='grid'">
+                    <mw-question-grid-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-grid-builder>
+                </div>
+                <div class="col-sm-12" ng-if="ctrl.question.type=='division'">
+                    <mw-question-division-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-division-builder>
+                </div>
+            </div>
+
+            <br/> <br/>
+            <div class="row">
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">Gotowe</button>
+                </div>
+                <div class="col-xs-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="ctrl.question.required" ng-disabled="ctrl.readOnly"><span translate="mwForm.question.required">Required</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="mw-preview" ng-if="ctrl.isPreview">
+            <div class="mw-question-text">
+                {{ctrl.question.text}} <span ng-if="ctrl.question.required">*</span>
+            </div>
+            <div class="question-answers">
+                <div ng-if="ctrl.question.type=='text'">
+                    <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
+                </div>
+                <div ng-if="ctrl.question.type=='textarea'">
+                    <textarea class="form-control" type="text" disabled>{{'mwForm.question.preview.textarea'|translate}}</textarea>
+                </div>
+                <div ng-if="ctrl.question.type=='radio'">
+                    <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
+                        <label>
+                            <input type="radio">
+                            {{answer.value}}
+                        </label>
+                    </div>
+                    <div class="radio" ng-if="ctrl.question.otherAnswer">
+                        <label><input type="radio"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:</label>
+                        <span class="form-inline">
+                            <input type="text" class="form-control" disabled>
+                        </span>
+
+                    </div>
+                </div>
+                <div ng-if="ctrl.question.type=='checkbox'">
+                    <div class="checkbox" ng-repeat="answer in ctrl.question.offeredAnswers">
+                        <label>
+                            <input type="checkbox">
+                            {{answer.value}}
+                        </label>
+                    </div>
+                    <div class="checkbox" ng-if="ctrl.question.otherAnswer">
+                        <label><input type="checkbox"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:</label>
+                        <span class="form-inline">
+                            <input type="text" class="form-control" disabled>
+                        </span>
+
+                    </div>
+                </div>
+
+                <div ng-if="ctrl.question.type=='grid'">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-striped" border="0" cellpadding="5" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <td></td>
+                                <td ng-repeat="col in ctrl.question.grid.cols">
+                                    <label>{{col.label}}</label>
+                                </td>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="row in ctrl.question.grid.rows">
+                                <td>
+                                    {{row.label}}
+                                </td>
+                                <td ng-repeat="col in ctrl.question.grid.cols">
+                                    <input type="radio">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="mw-priority-list" ng-if="ctrl.question.type=='priority'">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th translate="mwForm.question.priority.sorted">Sorted</th>
+                            <th translate="mwForm.question.priority.available">Available</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+
+                            <td class="mw-ordered-items">
+                            </td>
+
+                            <td class="mw-available-items">
+                                <div class="mw-item" ng-repeat="item in ctrl.question.priorityList">
+                                    {{::item.value}}
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div ng-if="ctrl.question.type=='division'" class="">
+                <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
+                    <div class="form-group">
+                        <label>
+                            {{item.value}}
+                        </label>
+                        <input type="number" class="form-control" style="width: 80px" >
+                        <span>{{ctrl.question.unit}}</span>
+                    </div>
+
+                </div>
+                <div class="form-inline" style="margin-bottom: 5px">
+                    <div class="form-group">
+                        <label translate="mwForm.question.division.assignedSumLabel">
+                            Przydzielono
+                        </label>
+                        <input type="number" class="form-control strict-validation" style="width: 80px" readonly value="0">
+                        <span>{{ctrl.question.unit}} <span translate="mwForm.question.division.fromRequiredLabel">z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}}</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

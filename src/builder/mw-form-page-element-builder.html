@@ -1,0 +1,27 @@
+<div class="mw-form-page-element-builder-wrapper">
+    <div class="mw-form-page-element-builder" ng-class="{'active': ctrl.isActive, 'inactive draggable': !ctrl.isActive}">
+        <!--{{ctrl.pageElement.orderNo}}-->
+        <div class="mw-page-element-actions-tab" ng-switch="ctrl.isActive&&!ctrl.readOnly">
+            <div ng-switch-when="true">
+                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast"
+                        ng-attr-title="{{'mwForm.buttons.moveDown' | translate}}" popover="{{'mwForm.buttons.moveDown' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa  fa-chevron-down"></i>
+                </button>
+                <button type="button" class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst"
+                        ng-attr-title="{{'mwForm.buttons.moveUp' | translate}}" popover="{{'mwForm.buttons.moveUp' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removeElement()"
+                        ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-trash"></i></button>
+            </div>
+            <div ng-switch-when="false">
+                <button type="button" aria-label="Edytuj element" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="!ctrl.readOnly"><i class="fa fa-pencil"></i></button>
+                <button type="button" aria-label="Wyświetl element" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="ctrl.readOnly"><i class="fa fa-eye"></i></button>
+            </div>
+        </div>
+        <mw-form-question-builder ng-if="ctrl.pageElement.type=='question'" question="ctrl.pageElement.question"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-question-builder>
+        <mw-form-image-builder ng-if="ctrl.pageElement.type=='image'" image="ctrl.pageElement.image"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-image-builder>
+    </div>
+
+</div>

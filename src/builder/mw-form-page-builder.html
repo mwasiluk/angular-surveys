@@ -1,0 +1,81 @@
+<div class="mw-form-page-builder">
+    <div ng-mouseover="ctrl.hoverIn()" ng-mouseleave="ctrl.hoverOut()">
+        <div class="mw-page-tab-container">
+            <div class="mw-form-page-tab">
+                <span class="mw-page-tab-text" role="heading" translate="mwForm.page.tab.heading" translate-values="{page: ctrl.formPage.number, allPages:ctrl.formObject.pages.length}">Strona 1 z 3</span>
+                <span class="mw-page-tab-checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="ctrl.formPage.namedPage"><span class="mw-page-tab-checkbox-text" translate="mwForm.page.pageWithNameCheckbox">named</span>
+                    </label>
+                </span>
+            </div>
+            <div class="mw-page-tab-triangle"></div>
+            <div class="mw-page-tab-actions" ng-if="!ctrl.readOnly">
+                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast"
+                        ng-attr-title="{{'mwForm.buttons.moveDown' | translate}}" popover="{{'mwForm.buttons.moveDown' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa  fa-chevron-down"></i>
+                </button>
+                <button type="button"  class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst"
+                        ng-attr-title="{{'mwForm.buttons.moveUp' | translate}}" popover="{{'mwForm.buttons.moveUp' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removePage()"
+                        ng-attr-title="{{'mwForm.buttons.removePage' | translate}}" popover="{{'mwForm.buttons.removePage' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+        <div ng-form="ctrl.form" role="form" novalidate class="form-page-builder-body">
+
+            <div class="form-group" ng-if="ctrl.formPage.namedPage">
+                <label for="pageName" translate="mwForm.page.name">Nazwa strony</label>
+                <input type="text" class="form-control" name="pageName" id="pageName" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
+            </div>
+
+            <div class="page-element-list" ui-sortable="ctrl.sortableConfig" ng-model="ctrl.formPage.elements">
+                <div class="empty-page-element-list-label form-group" ng-if="!ctrl.formPage.elements || (ctrl.formPage.elements && ctrl.formPage.elements.length == 0)">
+                    <span translate="mwForm.page.elements.empty">Brak elementów</span>
+                </div>
+                <mw-form-page-element-builder  ng-repeat="element in ctrl.formPage.elements" page-element="element" form-object="ctrl.formObject" is-active="ctrl.isElementActive(element)" on-ready="ctrl.onElementReady()" ng-click="ctrl.selectElement(element)" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-element-builder>
+            </div>
+
+
+            <div class="add-element btn-group dropdown" ng-if="!ctrl.readOnly">
+                <button type="button" class="btn btn-default" ng-click="ctrl.addElement()">
+                    <span translate="mwForm.buttons.addElement">Add element</span>
+                </button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Split button!</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><button type="button" ng-click="ctrl.addQuestion()"><span translate="mwForm.elements.question">Pytanie</span></button></li>
+                    <li><button type="button" ng-click="ctrl.addImage()"><span translate="mwForm.elements.image">Obraz</span></button></li>
+
+                </ul>
+            </div>
+
+        </div>
+        <table cellspacing="0" class="mw-page-bottom-tab-container" ng-if="!ctrl.isLast">
+            <tr>
+                <td class="mw-page-bottom-tab-triangle">
+                </td>
+                <td class="mw-form-page-bottom-tab">
+                    <div class="page-flow-select form-inline">
+                        <label translate="mwForm.pageFlow.afterPage" translate-values="{page:ctrl.formPage.number}">Po stronie 1</label>
+                         <select ng-options="pageFlow.label for pageFlow in ctrl.possiblePageFlow" ng-model="ctrl.formPage.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly">
+                             <option value="" translate="mwForm.pageFlow.goToNextPage">Przejdz do następnej strony</option>
+                         </select>
+                    </div>
+
+                </td>
+                <td class="mw-page-bottom-tab-actions" >
+                    <button type="button" role="button" class="btn" ng-click="ctrl.addPage()" ng-if="!ctrl.readOnly"
+                            ng-attr-title="{{'mwForm.buttons.addPage' | translate}}" popover="{{'mwForm.buttons.addPage' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

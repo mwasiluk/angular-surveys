@@ -1,0 +1,36 @@
+{
+  "name": "angular-surveys",
+  "homepage": "https://github.com/mwasiluk/angular-surveys",
+  "authors": [
+    "Michał Wasiluk"
+  ],
+  "description": "Angular survey/form builder and viewer inspired by Google Forms",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "angular",
+    "form",
+    "forms",
+    "builder",
+    "google",
+    "forms"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">=1.2.x",
+    "angular-translate": "2.x",
+    "angular-ui-sortable": "0.13.x",
+    "bootstrap": "~3.3.6",
+    "angular-translate-loader-partial": "~2.8.1",
+    "angular-translate-loader-static-files": "~2.8.1",
+    "font-awesome": "~4.5.0",
+    "angular-elastic": "~2.5.1"
+  }
+}

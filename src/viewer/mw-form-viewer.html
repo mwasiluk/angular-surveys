@@ -1,0 +1,4 @@
+<div class="mw-form-viewer">
+    <form ng-if="!ctrl.options.nestedForm"  name="ctrl.form" role="form" novalidate ng-include="'mw-form-viewer-content.html'"></form>
+    <div ng-if="ctrl.options.nestedForm"  ng-form="ctrl.form" ng-include="'mw-form-viewer-content.html'"></div>
+</div>

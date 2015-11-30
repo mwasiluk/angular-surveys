@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>angular-surveys demo</title>
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../dist/form-builder.min.css">
+    <link rel="stylesheet" href="../dist/form-viewer.min.css">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body ng-controller="DemoController as ctrl">
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid" style="border-bottom: 1px solid #e7e7e7;" role="presentation">
+        <div class="navbar-header" role="presentation" aria-hidden="true">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span>angular-surveys demo</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse" role="presentation">
+            <ul class="nav navbar-nav nav-pills navbar-right" role="menubar">
+                <li class="dropdown pointer"  role="presentation">
+                    <a id="language-menu-item" class="dropdown-toggle" href="javascript:;" role="menuitem" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                    <span class="hidden-tablet">Language</span>
+                                    <b class="caret"></b>
+                                </span>
+                    </a>
+                    <ul class="dropdown-menu"  role="menu" aria-labelledby="language-menu-item">
+                        <li active-menu="{{language}}" ng-repeat="language in ctrl.languages" role="presentation">
+                            <a href="" ng-click="ctrl.changeLanguage(language)"  role="menuitem">{{language}}</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="demo-container">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#builder" aria-controls="home" role="tab" data-toggle="tab">Builder</a></li>
+        <li role="presentation"><a href="#viewer" aria-controls="profile" role="tab" data-toggle="tab" ng-click="ctrl.resetViewer()">Viewer</a></li>
+        <li role="presentation"><a href="#model" aria-controls="messages" role="tab" data-toggle="tab">Model</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="builder">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <mw-form-builder form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="viewer">
+            <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
+            <mw-form-viewer form-data="ctrl.formData" form-status="ctrl.formStatus" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.readOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+
+            <hr>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
+                </label>
+<pre ng-if="ctrl.showResponseData">
+{{ctrl.responseData|json}}
+</pre>
+            </div>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="model">
+<pre>
+{{ctrl.formData|json}}
+</pre>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+<script src="../bower_components/angular-ui-sortable/sortable.min.js"></script>
+<script src="../bower_components/angular-elastic/elastic.js"></script>
+
+<script src="../dist/form-builder.min.js"></script>
+<script src="../dist/form-viewer.min.js"></script>
+
+<script src="demo.js"></script>
+</body>
+</html>

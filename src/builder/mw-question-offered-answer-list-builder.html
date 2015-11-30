@@ -1,0 +1,56 @@
+<div class="question-offered-answer-list-builder">
+    <div class="question-offered-answer-list" ui-sortable="ctrl.offeredAnswersSortableConfig" ng-model="ctrl.question.offeredAnswers" role="list">
+        <div class="mw-question-offered-answer" ng-repeat="answer in ctrl.question.offeredAnswers" role="listitem">
+            <div class="drag-handle" ng-if="!ctrl.readOnly">
+                <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+
+            </div>
+            <div class="option-type-indicator">
+                <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
+                <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
+            </div>
+            <input wd-focus-me="ctrl.isNewAnswer[answer.id]" type="text" ng-model="answer.value" ng-keypress="ctrl.keyPressedOnInput($event,answer)" required class="form-control offered-answer-value " ng-readonly="ctrl.readOnly">
+            <button role="button" class="remove-item-button" ng-click="ctrl.removeOfferedAnswer(answer)" ng-if="!ctrl.readOnly"
+                    ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                <i class="fa fa-times"></i>
+            </button>
+            <span ng-if="ctrl.question.pageFlowModifier" class="form-inline">
+                 <select ng-options="pageFlow.label for pageFlow in ctrl.possiblePageFlow" ng-model="answer.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly">
+                     <option value="" translate="mwForm.pageFlow.goToNextPage">Przejdz do następnej strony</option>
+                 </select>
+            </span>
+
+        </div>
+
+    </div>
+    <div class="mw-question-offered-answer add-new-answer-widget" ng-if="!ctrl.readOnly">
+        <div class="drag-handle">
+        </div>
+        <div class="option-type-indicator">
+            <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
+            <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
+        </div>
+        <span ng-click="ctrl.addNewOfferedAnswer()" role="button">
+            <input type="text"  required class="form-control  offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
+        </span>
+        <span class="add-custom-answer"  ng-if="!ctrl.question.otherAnswer">
+            <span translate="mwForm.question.orLabel">lub </span>
+            <button role="button" ng-click="ctrl.addCustomAnswer()" translate="mwForm.question.buttons.addOther">Dodaj "Inne"</button>
+        </span>
+    </div>
+    <div class="mw-question-offered-answer custom-answer" ng-if="ctrl.question.otherAnswer">
+        <div class="drag-handle"  ng-if="!ctrl.readOnly">
+
+        </div>
+        <div class="option-type-indicator">
+            <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
+            <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
+        </div>
+        <label translate="mwForm.question.otherLabel">Inna: </label>
+        <input  type="text" value="Odpowiedź użytkownika"  class="form-control offered-answer-value " readonly>
+        <button type="button" role="button" class="remove-item-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly"
+                ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+</div>
