@@ -87,6 +87,10 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 ctrl.addElement('image');
             };
 
+            ctrl.addParagraph= function(){
+                ctrl.addElement('paragraph');
+            };
+
             ctrl.isElementActive= function(element){
                 return ctrl.activeElement==element;
             };
@@ -96,8 +100,6 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
             };
 
             ctrl.onElementReady = function(){
-
-
                 $timeout(function(){
                     ctrl.activeElement=null;
                 });

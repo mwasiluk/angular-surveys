@@ -9,7 +9,7 @@
             <input class="form-control" type="text" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.text'|translate}}" ng-required="ctrl.question.required">
         </div>
         <div ng-if="ctrl.question.type=='textarea'">
-            <textarea class="form-control" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ></textarea>
+            <textarea msd-elastic class="form-control" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ></textarea>
         </div>
         <div ng-if="ctrl.question.type=='radio'">
             <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">

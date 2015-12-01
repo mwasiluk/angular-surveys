@@ -20,8 +20,11 @@
                 <button type="button" aria-label="Wyświetl element" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="ctrl.readOnly"><i class="fa fa-eye"></i></button>
             </div>
         </div>
-        <mw-form-question-builder ng-if="ctrl.pageElement.type=='question'" question="ctrl.pageElement.question"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-question-builder>
-        <mw-form-image-builder ng-if="ctrl.pageElement.type=='image'" image="ctrl.pageElement.image"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-image-builder>
+        <div ng-switch="ctrl.pageElement.type">
+            <mw-form-question-builder ng-switch-when="question" question="ctrl.pageElement.question"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-question-builder>
+            <mw-form-image-builder ng-switch-when="image" image="ctrl.pageElement.image"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-image-builder>
+            <mw-form-paragraph-builder ng-switch-when="paragraph" paragraph="ctrl.pageElement.paragraph"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-paragraph-builder>
+        </div>
     </div>
 
 </div>

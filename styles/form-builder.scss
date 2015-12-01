@@ -128,8 +128,6 @@
 
             }
 
-
-
             .mw-page-bottom-tab-actions{
                 background-color: $bg-color;
                 padding: 4px;
@@ -167,6 +165,7 @@
                     width: 100%;
                     border: none;
                     background: none;
+                    line-height: 28px;
 
                     &:hover{
                         background: #CCCCCC;

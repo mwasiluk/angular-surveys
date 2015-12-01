@@ -1,2 +1,2 @@
-angular.module('mwFormViewer', [ 'ui.sortable']);
+angular.module('mwFormViewer', ['ngSanitize', 'ui.sortable']);
 

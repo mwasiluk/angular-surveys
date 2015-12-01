@@ -37,7 +37,8 @@
         },
         "elements":{
             "question":"Pytanie/Polecenie",
-            "image":"Obraz"
+            "image":"Obraz",
+            "paragraph": "Paragraf"
         },
         "question":{
             "types":{
@@ -102,6 +103,9 @@
         },
         "image":{
             "selectImageButton": "Wybierz obraz"
+        },
+        "paragraph":{
+            "placeholder": "Wpisz treść paragrafu"
         },
         "confirmationPage":{
             "title": "Strona potwierdzenia",

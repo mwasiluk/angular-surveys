@@ -12,14 +12,18 @@
         <div class="mw-form-page" ng-if="ctrl.currentPage">
             <h2 class="mw-page-title" ng-if="ctrl.currentPage.namedPage && ctrl.currentPage.name">{{ctrl.currentPage.name}}</h2>
             <div class="mw-form-page-element-list">
-                <div class="mw-page-element" ng-repeat="pageElement in ctrl.currentPage.elements">
-                    <mw-form-question ng-if="pageElement.type=='question'" question="pageElement.question" question-response="ctrl.responseData[pageElement.question.id]"  read-only="ctrl.readOnly" on-response-changed="ctrl.onResponseChanged(pageElement)"></mw-form-question>
-                    <div class="image-element" ng-if="pageElement.type=='image'">
+                <div class="mw-page-element" ng-repeat="pageElement in ctrl.currentPage.elements" ng-switch="pageElement.type">
+                    <mw-form-question ng-switch-when="question" question="pageElement.question" question-response="ctrl.responseData[pageElement.question.id]"  read-only="ctrl.readOnly" on-response-changed="ctrl.onResponseChanged(pageElement)"></mw-form-question>
+                    <div class="image-element" ng-switch-when="image">
                         <figure ng-class="'align-'+pageElement.image.align">
                             <img ng-src="{{pageElement.image.src}}" ng-attr-alt="pageElement.image.caption">
                             <figcaption ng-if="pageElement.image.caption">{{pageElement.image.caption}}</figcaption>
                         </figure>
                     </div>
+                    <div ng-switch-when="paragraph">
+                        <p ng-bind-html="pageElement.paragraph.html"></p>
+                    </div>
+
                 </div>
 
             </div>

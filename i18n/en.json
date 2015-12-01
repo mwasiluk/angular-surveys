@@ -37,7 +37,8 @@
         },
         "elements":{
             "question":"Question",
-            "image":"Image"
+            "image":"Image",
+            "paragraph": "Paragraph"
         },
         "question":{
             "types":{
@@ -102,6 +103,9 @@
         },
         "image":{
             "selectImageButton": "Select image"
+        },
+        "paragraph":{
+            "placeholder": "Enter paragraph text"
         },
         "confirmationPage":{
             "title": "Confirmation page",

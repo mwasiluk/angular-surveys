@@ -38,6 +38,14 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                     };
                 }
 
+            }else if(ctrl.pageElement.type=='paragraph'){
+                if(!ctrl.pageElement.paragraph){
+                    ctrl.pageElement.paragraph={
+                        id: uuid.get(),
+                        html: ''
+                    };
+                }
+
             }
 
 
