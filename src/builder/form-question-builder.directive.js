@@ -98,26 +98,21 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 if(!ctrl.question.offeredAnswers){
                     return;
                 }
+
                 ctrl.question.offeredAnswers.forEach(function (answer) {
-                    answer.pageFlow = null;
+                    if(ctrl.question.pageFlowModifier){
+                        answer.pageFlow = ctrl.possiblePageFlow[0];;
+                    }else{
+                        delete answer.pageFlow;
+                    }
+
                 });
             }
 
             ctrl.pageFlowModifierChanged = function(){
-
                 clearCustomPageFlow();
-
             };
 
-            ctrl.addNewOfferedAnswer=function(){
-
-                ctrl.question.offeredAnswers.push({
-                    id: uuid.get(),
-                    orderNo: ctrl.question.offeredAnswers.length+1,
-                    value: null,
-                    pageFlow: null
-                });
-            };
         },
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;

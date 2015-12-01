@@ -60,12 +60,13 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
 
             ctrl.addNewOfferedAnswer=function(){
 
-
+                var defaultPageFlow = ctrl.possiblePageFlow[0];
 
                 var answer = {
                     id: uuid.get(),
                     orderNo: ctrl.question.offeredAnswers.length + 1,
-                    value: null
+                    value: null,
+                    pageFlow:defaultPageFlow
                 };
                 ctrl.isNewAnswer[answer.id]=true;
                 ctrl.question.offeredAnswers.push(answer);

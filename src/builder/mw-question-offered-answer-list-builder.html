@@ -15,9 +15,7 @@
                 <i class="fa fa-times"></i>
             </button>
             <span ng-if="ctrl.question.pageFlowModifier" class="form-inline">
-                 <select ng-options="pageFlow.label for pageFlow in ctrl.possiblePageFlow" ng-model="answer.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly">
-                     <option value="" translate="mwForm.pageFlow.goToNextPage">Przejdz do następnej strony</option>
-                 </select>
+                 <select ng-options="pageFlow.label|translate:pageFlow for pageFlow in ctrl.possiblePageFlow" ng-model="answer.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly"></select>
             </span>
 
         </div>
@@ -31,7 +29,7 @@
             <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
         </div>
         <span ng-click="ctrl.addNewOfferedAnswer()" role="button">
-            <input type="text"  required class="form-control  offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
+            <input type="text" class="form-control  offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
         </span>
         <span class="add-custom-answer"  ng-if="!ctrl.question.otherAnswer">
             <span translate="mwForm.question.orLabel">lub </span>
@@ -47,7 +45,7 @@
             <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
         </div>
         <label translate="mwForm.question.otherLabel">Inna: </label>
-        <input  type="text" value="Odpowiedź użytkownika"  class="form-control offered-answer-value " readonly>
+        <input  type="text" value="{{'mwForm.question.userAnswer'|translate}}"  class="form-control offered-answer-value " readonly>
         <button type="button" role="button" class="remove-item-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly"
                 ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
             <i class="fa fa-times"></i>

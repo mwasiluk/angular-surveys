@@ -1,5 +1,5 @@
 
-angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
+angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
 
     return {
         replace: true,
@@ -17,11 +17,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
         bindToController: true,
         controller: function(uuid){
             var ctrl = this;
-
-            //angular.extend(ctrl.formData, {
-            //    name: null,
-            //    description: null
-            //});
+            ctrl.translations = {};
 
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                 ctrl.formData.pages = [];
@@ -36,11 +32,13 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
 
 
             function createEmptyPage(number){
+                var defaultPageFlow = ctrl.possiblePageFlow[0];
                 return {
                     id: uuid.get(),
                     number: number,
                     name: null,
                     description: null,
+                    pageFlow: defaultPageFlow,
                     elements: []
                 };
             }
@@ -49,6 +47,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
                 for(var i=0; i<ctrl.formData.pages.length; i++){
                     ctrl.formData.pages[i].number = i+1;
                 }
+                ctrl.updatePageFlow();
             }
 
             ctrl.addPageAfter=function(page){
@@ -98,34 +97,44 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
         },
         link: function (scope, ele, attrs){
             var ctrl = scope.ctrl;
-            var $translate = $filter('translate');
             ctrl.formStatus.form = ctrl.form;
 
             ctrl.possiblePageFlow = [];
-            scope.$watch('ctrl.formData.pages.length', function(newVal, oldVal){
+            var defaultPageFlow = {
+                nextPage: true,
+                label: 'mwForm.pageFlow.goToNextPage'
+            };
+            ctrl.possiblePageFlow.push(defaultPageFlow);
+            ctrl.isSamePageFlow = function (p1, p2){
+                return (p1.page && p2.page &&  p1.page.id==p2.page.id) || p1.formSubmit && p2.formSubmit || p1.nextPage && p2.nextPage;
+            };
 
-                ctrl.possiblePageFlow.length=0;
+            ctrl.updatePageFlow = function(){
+                ctrl.possiblePageFlow.length=1;
 
                 ctrl.formData.pages.forEach(function(page){
 
                     ctrl.possiblePageFlow.push({
                         page:{
-                            id: page.id
+                            id: page.id,
+                            number: page.number
                         },
-                        label: $translate('mwForm.pageFlow.goToPage', {page:page.number})
+                        label: 'mwForm.pageFlow.goToPage'
                     });
                 });
 
                 ctrl.possiblePageFlow.push({
                     formSubmit:true,
-                    label: $translate('mwForm.pageFlow.submitForm')
+                    label: 'mwForm.pageFlow.submitForm'
                 });
                 ctrl.formData.pages.forEach(function(page){
                     ctrl.possiblePageFlow.forEach(function(pageFlow){
                         if(page.pageFlow) {
-                            if((pageFlow.page && page.pageFlow.page &&  pageFlow.page.id==page.pageFlow.page.id) || pageFlow.formSubmit && page.pageFlow.formSubmit){
+                            if(ctrl.isSamePageFlow(pageFlow, page.pageFlow)){
                                 page.pageFlow = pageFlow;
                             }
+                        }else{
+                            page.pageFlow = defaultPageFlow;
                         }
 
                         page.elements.forEach(function(element){
@@ -133,10 +142,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
                             if(question && question.pageFlowModifier){
                                 question.offeredAnswers.forEach(function(answer){
                                     if(answer.pageFlow){
-
-                                            if((pageFlow.page && answer.pageFlow.page &&  pageFlow.page.id==answer.pageFlow.page.id) || pageFlow.formSubmit && answer.pageFlow.formSubmit){
-                                                answer.pageFlow = pageFlow;
-                                            }
+                                        if(ctrl.isSamePageFlow(pageFlow, answer.pageFlow)){
+                                            answer.pageFlow = pageFlow;
+                                        }
                                     }
                                 });
 
@@ -145,8 +153,10 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($filter) {
                         });
                     });
                 });
+            };
 
-
+            scope.$watch('ctrl.formData.pages.length', function(newVal, oldVal){
+                ctrl.updatePageFlow();
             });
         }
     };

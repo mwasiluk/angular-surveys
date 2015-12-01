@@ -31,7 +31,7 @@
         "pageFlow":{
             "afterPage":"Po stronie {{page}}",
             "afterQuestionAnswer": "Przejdź do strony w oparciu o odpowiedź",
-            "goToPage": "Przejdź do strony numer {{page}}",
+            "goToPage": "Przejdź do strony numer {{page.number}}",
             "goToNextPage": "Przejdz do następnej strony",
             "submitForm": "Prześlij formularz"
         },
@@ -93,6 +93,7 @@
             },
             "orLabel": "lub ",
             "otherLabel": "Inna: ",
+            "userAnswer": "Odpowiedź użytkownika",
             "buttons":{
                 "addOption":"Kliknij aby dodać opcję",
                 "addOther":"Dodaj \"Inne\""

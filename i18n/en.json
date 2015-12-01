@@ -31,7 +31,7 @@
         "pageFlow":{
             "afterPage":"After page {{page}}:",
             "afterQuestionAnswer": "Go to page based on answer",
-            "goToPage": "Go to page {{page}}",
+            "goToPage": "Go to page {{page.number}}",
             "goToNextPage": "Continue to next page",
             "submitForm": "Submit form"
         },
@@ -93,6 +93,7 @@
             },
             "orLabel": "or ",
             "otherLabel": "Other: ",
+            "userAnswer": "User answer",
             "buttons":{
                 "addOption":"Click to add option",
                 "addOther":"Add 'Other'"

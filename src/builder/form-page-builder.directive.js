@@ -89,11 +89,11 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.isElementActive= function(element){
                 return ctrl.activeElement==element;
-            }
+            };
 
             ctrl.selectElement = function(element){
                 ctrl.activeElement=element;
-            }
+            };
 
             ctrl.onElementReady = function(){
 
@@ -101,7 +101,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 $timeout(function(){
                     ctrl.activeElement=null;
                 });
-            }
+            };
 
 
 
