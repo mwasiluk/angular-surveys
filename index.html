@@ -60,7 +60,8 @@
         <div role="tabpanel" class="tab-pane active" id="builder">
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
-                    <mw-form-builder form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+                    <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
+                    <mw-form-builder form-data="ctrl.formData" api="ctrl.formBuilder" form-status="ctrl.formStatus" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
                 </div>
             </div>
         </div>
