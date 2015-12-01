@@ -10,21 +10,20 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             options: '=?',
             formStatus: '=?',
             confirm: '=',
-            onImageSelection: '&'
+            onImageSelection: '&',
+            api: '=?'
         },
         templateUrl: 'mw-form-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
         controller: function(uuid){
             var ctrl = this;
-            ctrl.translations = {};
 
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                 ctrl.formData.pages = [];
                 ctrl.formData.pages.push(createEmptyPage(1));
             }
 
-            console.log(ctrl.formData);
 
             ctrl.addPage = function(){
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
@@ -94,6 +93,20 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 var element = arr[fromIndex];
                 arr.splice(fromIndex, 1);
                 arr.splice(toIndex, 0, element);
+            }
+
+            if(ctrl.api){
+                ctrl.api.reset = function(){
+                    for (var prop in ctrl.formData) {
+                        if (ctrl.formData.hasOwnProperty(prop) && prop != 'pages') {
+                            delete ctrl.formData[prop];
+                        }
+                    }
+
+                    ctrl.formData.pages.length=0;
+                    ctrl.formData.pages.push(createEmptyPage(1));
+
+                }
             }
 
         },

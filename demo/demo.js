@@ -10,6 +10,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
         var ctrl = this;
         ctrl.languages = ['en', 'pl'];
         ctrl.formData = {};
+        ctrl.formBuilder={};
         ctrl.formViewer = {};
         ctrl.formStatus= {};
         ctrl.responseData={};
@@ -44,6 +45,12 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
                 ctrl.formViewer.reset();
             }
 
+        };
+
+        ctrl.resetBuilder= function(){
+            if(ctrl.formBuilder.reset){
+                ctrl.formBuilder.reset();
+            }
         };
 
         ctrl.changeLanguage = function (languageKey) {
