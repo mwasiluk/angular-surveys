@@ -102,14 +102,19 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 }
 
                 if(ctrl.currentPage.pageFlow){
-                    ctrl.buttons.submitForm.visible=ctrl.currentPage.pageFlow.formSubmit;
+                    var formSubmit = false;
                     if(ctrl.currentPage.pageFlow.formSubmit){
                         ctrl.nextPage=null;
-                        ctrl.buttons.nextPage.visible=false;
+                        formSubmit = true;
                     }else if(ctrl.currentPage.pageFlow.page){
                         ctrl.nextPage=ctrl.pageIdToPage[ctrl.currentPage.pageFlow.page.id];
                         ctrl.buttons.nextPage.visible=true;
+                    }else if(ctrl.currentPage.isLast){
+                        ctrl.nextPage=null;
+                        formSubmit = true;
                     }
+                    ctrl.buttons.submitForm.visible=formSubmit;
+                    ctrl.buttons.nextPage.visible=!formSubmit;
                 }
             };
 
@@ -125,7 +130,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
             ctrl.resetPages = function(){
                 ctrl.prevPages=[];
-
 
                 ctrl.currentPage=null;
                 ctrl.nextPage = null;
@@ -188,11 +192,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             };
 
             ctrl.onResponseChanged = function(pageElement){
-
                 ctrl.setDefaultNextPage();
                 ctrl.updateNextPageBasedOnAllAnswers();
-
-
             };
 
             if(ctrl.api){

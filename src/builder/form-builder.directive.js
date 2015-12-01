@@ -32,7 +32,11 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
 
 
             function createEmptyPage(number){
-                var defaultPageFlow = ctrl.possiblePageFlow[0];
+                var defaultPageFlow = null;
+                if(ctrl.possiblePageFlow){
+                    defaultPageFlow = ctrl.possiblePageFlow[0];
+                }
+
                 return {
                     id: uuid.get(),
                     number: number,
@@ -85,8 +89,6 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 ctrl.formData.pages.splice(index,1);
                 updatePageNumbers();
             };
-
-
 
             function arrayMove(arr, fromIndex, toIndex) {
                 var element = arr[fromIndex];
@@ -147,7 +149,6 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                                         }
                                     }
                                 });
-
                             }
 
                         });
