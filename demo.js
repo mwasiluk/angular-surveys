@@ -184,7 +184,8 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
               "isLast": true
             }
           ],
-          "name": "Lorem ipsum"
+          "name": "Lorem ipsum",
+          "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie tempus erat ut auctor. In sed iaculis ligula. In rhoncus quis orci a dapibus. Donec leo enim, vulputate ac magna ac, efficitur accumsan justo. Sed in finibus arcu, vitae volutpat lorem. Sed ornare sapien pretium massa fringilla lacinia. In in suscipit orci, elementum porttitor quam. Donec sit amet viverra lectus, quis dignissim augue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus lacinia enim dignissim porttitor finibus."
         };
         ctrl.formViewer = {};
         ctrl.formStatus= {};
