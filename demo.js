@@ -2,7 +2,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
             prefix: 'https://rawgit.com/mwasiluk/angular-surveys/master/dist/i18n/',
-            suffix: '.json'
+            suffix: '/angular-surveys.json'
         });
         $translateProvider.preferredLanguage('en');
     })
