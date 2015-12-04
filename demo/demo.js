@@ -2,7 +2,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
             prefix: '../dist/i18n/',
-            suffix: '.json'
+            suffix: '/angular-surveys.json'
         });
         $translateProvider.preferredLanguage('en');
     })
