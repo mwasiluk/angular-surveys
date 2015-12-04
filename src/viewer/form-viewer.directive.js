@@ -9,7 +9,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             responseData: '=',
             readOnly: '=?',
             options: '=?',
-            formStatus: '=?',
+            formStatus: '=?', //wrapper for internal angular form object
             onSubmit: '&',
             api: '=?'
 
@@ -21,7 +21,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             var ctrl = this;
 
             ctrl.defaultOptions = {
-                nestedForm: false
+                nestedForm: false,
+                autoStart: false
             };
             ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 
@@ -128,18 +129,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 });
             };
 
-            ctrl.resetPages = function(){
-                ctrl.prevPages=[];
-
-                ctrl.currentPage=null;
-                ctrl.nextPage = null;
-                ctrl.formSubmitted=false;
-
-
-            };
-            ctrl.resetPages();
-
-
             ctrl.beginResponse=function(){
 
                 if(ctrl.formData.pages.length>0){
@@ -148,6 +137,19 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 }
 
             };
+
+            ctrl.resetPages = function(){
+                ctrl.prevPages=[];
+
+                ctrl.currentPage=null;
+                ctrl.nextPage = null;
+                ctrl.formSubmitted=false;
+                if(ctrl.options.autoStart){
+                    ctrl.beginResponse();
+                }
+
+            };
+            ctrl.resetPages();
 
             ctrl.goToPrevPage= function(){
                 var prevPage = ctrl.prevPages.pop();

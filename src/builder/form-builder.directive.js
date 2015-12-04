@@ -112,7 +112,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         },
         link: function (scope, ele, attrs){
             var ctrl = scope.ctrl;
-            ctrl.formStatus.form = ctrl.form;
+            if(ctrl.formStatus){
+                ctrl.formStatus.form = ctrl.form;
+            }
 
             ctrl.possiblePageFlow = [];
             var defaultPageFlow = {

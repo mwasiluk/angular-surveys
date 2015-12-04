@@ -65,8 +65,16 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="viewer">
-            <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
-            <mw-form-viewer form-data="ctrl.formData" form-status="ctrl.formStatus" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.readOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+            <div class="form-inline">
+                <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
+                    </label>
+                </div>
+            </div>
+
+            <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.readOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
 
             <hr>
 
@@ -74,11 +82,10 @@
                 <label>
                     <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
                 </label>
+            </div>
 <pre ng-if="ctrl.showResponseData">
 {{ctrl.responseData|json}}
 </pre>
-            </div>
-
         </div>
         <div role="tabpanel" class="tab-pane" id="model">
 <pre>

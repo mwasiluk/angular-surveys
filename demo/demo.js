@@ -12,6 +12,9 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
         ctrl.formData = {};
         ctrl.formBuilder={};
         ctrl.formViewer = {};
+        ctrl.formOptions = {
+            autoStart: true
+        };
         ctrl.formStatus= {};
         ctrl.responseData={};
         ctrl.showResponseRata=false;
