@@ -14,13 +14,13 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         templateUrl: 'mw-question-grid-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
             ctrl.isNewInput = {};
             ctrl.addNewRow=function(noFocus){
 
                 var row = {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: ctrl.question.grid.rows.length + 1,
                     label: null
                 };
@@ -34,7 +34,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
             ctrl.addNewCol=function(noFocus){
 
                 var col = {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: ctrl.question.grid.cols.length + 1,
                     label: null
                 };

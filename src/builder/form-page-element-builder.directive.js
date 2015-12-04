@@ -18,13 +18,13 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         templateUrl: 'mw-form-page-element-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
 
             if(ctrl.pageElement.type=='question'){
                 if(!ctrl.pageElement.question){
                     ctrl.pageElement.question={
-                        id: uuid.get(),
+                        id: mwFormUuid.get(),
                         text: null,
                         type:null,
                         required:true
@@ -33,7 +33,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
             }else if(ctrl.pageElement.type=='image'){
                 if(!ctrl.pageElement.image){
                     ctrl.pageElement.image={
-                        id: uuid.get(),
+                        id: mwFormUuid.get(),
                         align: 'left'
                     };
                 }
@@ -41,7 +41,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
             }else if(ctrl.pageElement.type=='paragraph'){
                 if(!ctrl.pageElement.paragraph){
                     ctrl.pageElement.paragraph={
-                        id: uuid.get(),
+                        id: mwFormUuid.get(),
                         html: ''
                     };
                 }

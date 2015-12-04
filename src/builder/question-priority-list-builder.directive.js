@@ -13,14 +13,14 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
         templateUrl: 'mw-question-priority-list-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
             ctrl.isNewItem = {};
 
             ctrl.addNewItem=function(noFocus){
 
                 var item = {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: ctrl.question.priorityList.length + 1,
                     value: null
                 };

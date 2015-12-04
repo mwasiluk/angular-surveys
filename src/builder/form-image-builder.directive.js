@@ -26,7 +26,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
         templateUrl: 'mw-form-image-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormImageBuilderId, uuid){
+        controller: function($timeout,FormImageBuilderId, mwFormUuid){
             var ctrl = this;
             ctrl.id = FormImageBuilderId.next();
             ctrl.formSubmitted=false;

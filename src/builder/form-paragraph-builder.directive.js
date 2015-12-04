@@ -25,7 +25,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         templateUrl: 'mw-form-paragraph-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormParagraphBuilderId, uuid){
+        controller: function($timeout,FormParagraphBuilderId){
             var ctrl = this;
             ctrl.id = FormParagraphBuilderId.next();
             ctrl.formSubmitted=false;

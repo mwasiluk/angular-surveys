@@ -16,7 +16,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         templateUrl: 'mw-form-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
 
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
@@ -37,7 +37,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 }
 
                 return {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     number: number,
                     name: null,
                     description: null,

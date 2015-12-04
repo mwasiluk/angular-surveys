@@ -29,10 +29,13 @@
     "angular-translate": "2.x",
     "angular-ui-sortable": "0.13.x",
     "bootstrap": "3.x",
-    "angular-translate-loader-partial": "2.x",
-    "angular-translate-loader-static-files": "2.x",
     "font-awesome": "4.x",
     "angular-elastic": "2.x"
-
+  },
+  "devDependencies": {
+    "angular-translate-loader-partial": "2.x",
+    "angular-translate-loader-static-files": "2.x"
   }
+
+
 }

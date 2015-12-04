@@ -13,14 +13,14 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
         templateUrl: 'mw-question-division-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
             ctrl.isNewItem = {};
 
             ctrl.addNewItem=function(noFocus){
 
                 var item = {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: ctrl.question.divisionList.length + 1,
                     value: null
                 };

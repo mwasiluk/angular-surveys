@@ -24,7 +24,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
         templateUrl: 'mw-form-question.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormQuestionId, uuid){
+        controller: function($timeout,FormQuestionId){
             var ctrl = this;
             ctrl.id = FormQuestionId.next();
 

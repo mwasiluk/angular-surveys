@@ -17,7 +17,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         templateUrl: 'mw-form-viewer.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(){
             var ctrl = this;
 
             ctrl.defaultOptions = {
@@ -206,12 +206,11 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                         }
                     }
 
-                    ctrl.resetPages();
 
                     ctrl.buttons.submitForm.visible=false;
                     ctrl.buttons.prevPage.visible=false;
-
                     ctrl.buttons.nextPage.visible=false;
+                    ctrl.resetPages();
                 }
             }
 

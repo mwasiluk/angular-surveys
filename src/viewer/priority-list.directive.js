@@ -15,7 +15,7 @@ angular.module('mwFormViewer')
         templateUrl: 'mw-priority-list.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(uuid){
+        controller: function(){
             var ctrl = this;
 
             if(!ctrl.questionResponse.priorityList){

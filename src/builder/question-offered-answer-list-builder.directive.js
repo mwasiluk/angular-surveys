@@ -14,7 +14,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
         templateUrl: 'mw-question-offered-answer-list-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(FormQuestionBuilderId, uuid){
+        controller: function(FormQuestionBuilderId, mwFormUuid){
             var ctrl = this;
             ctrl.config={
                 radio:{
@@ -63,7 +63,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                 var defaultPageFlow = ctrl.possiblePageFlow[0];
 
                 var answer = {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: ctrl.question.offeredAnswers.length + 1,
                     value: null,
                     pageFlow:defaultPageFlow

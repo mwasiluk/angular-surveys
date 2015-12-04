@@ -16,7 +16,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
         templateUrl: 'mw-form-page-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout, uuid){
+        controller: function($timeout, mwFormUuid){
             var ctrl = this;
             ctrl.hoverEdit = false;
             ctrl.formPage.namedPage = !!ctrl.formPage.name;
@@ -109,7 +109,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             function createEmptyElement(type,orderNo){
                 return {
-                    id: uuid.get(),
+                    id: mwFormUuid.get(),
                     orderNo: orderNo,
                     type: type
                 };
