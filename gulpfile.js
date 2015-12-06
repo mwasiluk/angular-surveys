@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var del = require('del');
 var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
+var Server = require('karma').Server;
 
 gulp.task('clean', function (cb) {
     return del(['tmp', 'dist'], cb);
@@ -65,3 +66,12 @@ function buildModuleStream(dest, moduleName) {
 
 
 }
+
+gulp.task('test', function (done) {
+    new Server({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, function() {
+        done();
+    }).start();
+});

@@ -34,8 +34,7 @@
   },
   "devDependencies": {
     "angular-translate-loader-partial": "2.x",
-    "angular-translate-loader-static-files": "2.x"
+    "angular-translate-loader-static-files": "2.x",
+    "angular-mocks": "~1.4.8"
   }
-
-
 }

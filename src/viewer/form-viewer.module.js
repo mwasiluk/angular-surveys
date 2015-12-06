@@ -1,2 +1,3 @@
-angular.module('mwFormViewer', ['ngSanitize', 'ui.sortable']);
+angular.module('mwFormViewer', ['ngSanitize', 'ui.sortable', 'pascalprecht.translate']);
+
 
