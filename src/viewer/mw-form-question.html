@@ -45,7 +45,7 @@
                 </span>
 
             </div>
-            <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required=""/>
+            <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"/>
         </div>
 
         <div ng-if="ctrl.question.type=='grid'">

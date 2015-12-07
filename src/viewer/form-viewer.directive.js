@@ -17,7 +17,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         templateUrl: 'mw-form-viewer.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(){
+        controller: function($timeout){
             var ctrl = this;
 
             ctrl.defaultOptions = {
@@ -81,7 +81,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
                 ctrl.setDefaultNextPage();
 
-                ctrl.clearResponsesForCurrentPage();
+                ctrl.initResponsesForCurrentPage();
 
 
             };
@@ -119,23 +119,20 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 }
             };
 
-            ctrl.clearResponsesForCurrentPage = function(){
+            ctrl.initResponsesForCurrentPage = function(){
                 ctrl.currentPage.elements.forEach(function(element){
                     var question = element.question;
                     if(question && !ctrl.responseData[question.id]){
                         ctrl.responseData[question.id]={};
                     }
-
                 });
             };
 
             ctrl.beginResponse=function(){
 
                 if(ctrl.formData.pages.length>0){
-
                     ctrl.setCurrentPage(ctrl.formData.pages[0]);
                 }
-
             };
 
             ctrl.resetPages = function(){
@@ -186,8 +183,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                                     ctrl.nextPage = ctrl.pageIdToPage[answer.pageFlow.page.id];
                                 }
                             }
-
-
                         }
                     });
                 }
@@ -206,14 +201,14 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                         }
                     }
 
-
                     ctrl.buttons.submitForm.visible=false;
                     ctrl.buttons.prevPage.visible=false;
                     ctrl.buttons.nextPage.visible=false;
-                    ctrl.resetPages();
+                    ctrl.currentPage=null;
+                    $timeout(ctrl.resetPages, 0);
+
                 }
             }
-
 
             function sortPagesByNumber() {
                 ctrl.formData.pages.sort(function(a,b){
