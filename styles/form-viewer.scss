@@ -66,9 +66,10 @@
     .mw-form-description{
         margin-bottom: 25px;
     }
+
+    .no-drag{
+        cursor: default;
+    }
 }
 
 
-.no-drag{
-    cursor: default;
-}

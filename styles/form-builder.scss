@@ -560,8 +560,10 @@
     .align-right{
         text-align: right;
     }
+
+    .no-drag{
+        cursor: default;
+    }
+
 }
 
-.no-drag{
-    cursor: default;
-}
