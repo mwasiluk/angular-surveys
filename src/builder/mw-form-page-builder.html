@@ -28,8 +28,8 @@
         <div ng-form="ctrl.form" role="form" novalidate class="form-page-builder-body">
 
             <div class="form-group" ng-if="ctrl.formPage.namedPage">
-                <label for="pageName" translate="mwForm.page.name">Nazwa strony</label>
-                <input type="text" class="form-control" name="pageName" id="pageName" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
+                <label ng-attr-for="page-name-{{ctrl.formPage.number}}" translate="mwForm.page.name">Nazwa strony</label>
+                <input type="text" class="form-control" name="pageName" ng-attr-id="page-name-{{ctrl.formPage.number}}" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
             </div>
 
             <div class="page-element-list" ui-sortable="ctrl.sortableConfig" ng-model="ctrl.formPage.elements">
@@ -63,8 +63,8 @@
                 </td>
                 <td class="mw-form-page-bottom-tab">
                     <div class="page-flow-select form-inline">
-                        <label translate="mwForm.pageFlow.afterPage" translate-values="{page:ctrl.formPage.number}">Po stronie 1</label>
-                        <select ng-options="pageFlow.label|translate:pageFlow for pageFlow in ctrl.possiblePageFlow"  ng-model="ctrl.formPage.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly"></select>
+                        <label translate="mwForm.pageFlow.afterPage" translate-values="{page:ctrl.formPage.number}" ng-attr-for="page-flow-select-{{ctrl.formPage.number}}">Po stronie 1</label>
+                        <select ng-attr-id="page-flow-select-{{ctrl.formPage.number}}" ng-options="pageFlow.label|translate:pageFlow for pageFlow in ctrl.possiblePageFlow"  ng-model="ctrl.formPage.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly"></select>
                     </div>
 
                 </td>
