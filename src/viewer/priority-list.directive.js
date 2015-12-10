@@ -60,6 +60,7 @@ angular.module('mwFormViewer')
             }
 
             var baseConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 tolerance: 'pointer',
                 items: 'div',

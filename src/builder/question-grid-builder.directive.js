@@ -77,6 +77,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
             }
 
             ctrl.rowsSortableConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 handle: ".drag-handle",
                 stop: function(e, ui) {
@@ -84,6 +85,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                 }
             };
             ctrl.colsSortableConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 handle: ".drag-handle",
                 stop: function(e, ui) {

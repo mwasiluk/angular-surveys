@@ -58,6 +58,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
             };
 
             ctrl.offeredAnswersSortableConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 handle: ".drag-handle",
                 stop: function(e, ui) {

@@ -57,6 +57,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
             }
 
             ctrl.itemsSortableConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 handle: ".drag-handle",
                 stop: function(e, ui) {

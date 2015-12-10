@@ -44,6 +44,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
             }
 
             ctrl.sortableConfig = {
+                disabled: ctrl.readOnly,
                 placeholder: "beingDragged",
                 handle: ".inactive",
                 //cancel: ".not-draggable",
