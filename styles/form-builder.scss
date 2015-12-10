@@ -28,6 +28,28 @@
         position: relative;
 
 
+        &.page-folded{
+            .mw-page-tab-actions {
+                button{
+                    &.unfold-button{
+                        display: inline-block!important;
+                    }
+
+                    &.fold-button{
+                        display: none;
+                    }
+                }
+
+            }
+
+            .mw-form-question-builder{
+                .mw-preview{
+                    .question-answers{
+                        display: none;
+                    }
+                }
+            }
+        }
 
         .mw-page-tab-container{
             position: relative;
@@ -79,6 +101,10 @@
 
                     &.remove-button{
                         margin-left: 6px;
+                    }
+
+                    &.unfold-button{
+                        display: none;
                     }
 
                 }

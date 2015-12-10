@@ -16,7 +16,9 @@
             "next": "Next",
             "back": "Back",
             "submit": "Submit",
-            "begin": "Begin"
+            "begin": "Begin",
+            "fold": "Fold",
+            "unfold": "Unfold"
         },
         "page":{
             "tab":{

@@ -1,4 +1,4 @@
-<div class="mw-form-page-builder">
+<div class="mw-form-page-builder" ng-class="{'page-folded': ctrl.isFolded}">
     <div ng-mouseover="ctrl.hoverIn()" ng-mouseleave="ctrl.hoverOut()">
         <div class="mw-page-tab-container">
             <div class="mw-form-page-tab">
@@ -10,16 +10,24 @@
                 </span>
             </div>
             <div class="mw-page-tab-triangle"></div>
-            <div class="mw-page-tab-actions" ng-if="!ctrl.readOnly">
-                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast"
+            <div class="mw-page-tab-actions" ng-switch="ctrl.readOnly">
+                <button type="button" class="fold-button" ng-click="ctrl.fold()"
+                        ng-attr-title="{{'mwForm.buttons.fold' | translate}}" popover="{{'mwForm.buttons.fold' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="unfold-button" ng-click="ctrl.unfold()"
+                        ng-attr-title="{{'mwForm.buttons.unfold' | translate}}" popover="{{'mwForm.buttons.unfold' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-expand"></i>
+                </button>
+                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast" ng-switch-when="false"
                         ng-attr-title="{{'mwForm.buttons.moveDown' | translate}}" popover="{{'mwForm.buttons.moveDown' | translate}}" popover-trigger="mouseenter" popover-placement="left">
                     <i class="fa  fa-chevron-down"></i>
                 </button>
-                <button type="button"  class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst"
+                <button type="button"  class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst" ng-switch-when="false"
                         ng-attr-title="{{'mwForm.buttons.moveUp' | translate}}" popover="{{'mwForm.buttons.moveUp' | translate}}" popover-trigger="mouseenter" popover-placement="left">
                     <i class="fa fa-chevron-up"></i>
                 </button>
-                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removePage()"
+                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removePage()" ng-switch-when="false"
                         ng-attr-title="{{'mwForm.buttons.removePage' | translate}}" popover="{{'mwForm.buttons.removePage' | translate}}" popover-trigger="mouseenter" popover-placement="left">
                     <i class="fa fa-trash"></i>
                 </button>

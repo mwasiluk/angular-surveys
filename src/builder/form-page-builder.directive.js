@@ -20,6 +20,14 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
             var ctrl = this;
             ctrl.hoverEdit = false;
             ctrl.formPage.namedPage = !!ctrl.formPage.name;
+            ctrl.isFolded = false;
+
+            ctrl.unfold = function(){
+                ctrl.isFolded = false;
+            };
+            ctrl.fold = function(){
+                ctrl.isFolded = true;
+            };
 
             sortElementsByOrderNo();
             function updateElementsOrderNo() {

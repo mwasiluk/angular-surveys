@@ -16,7 +16,9 @@
             "next": "Dalej",
             "back": "Wstecz",
             "submit": "Prześlij",
-            "begin": "Rozpocznij"
+            "begin": "Rozpocznij",
+            "fold": "Zwiń",
+            "unfold": "Rozwiń"
         },
         "page":{
             "tab":{
