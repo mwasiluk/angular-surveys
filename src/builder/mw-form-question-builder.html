@@ -65,14 +65,14 @@
             <div class="mw-question-text">
                 {{ctrl.question.text}} <span ng-if="ctrl.question.required">*</span>
             </div>
-            <div class="question-answers">
-                <div ng-if="ctrl.question.type=='text'">
+            <div class="question-answers" ng-switch="ctrl.question.type">
+                <div ng-switch-when="text">
                     <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
                 </div>
-                <div ng-if="ctrl.question.type=='textarea'">
+                <div ng-switch-when="textarea">
                     <textarea class="form-control" type="text" disabled>{{'mwForm.question.preview.textarea'|translate}}</textarea>
                 </div>
-                <div ng-if="ctrl.question.type=='radio'">
+                <div ng-switch-when="radio">
                     <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
                         <label>
                             <input type="radio">
@@ -87,7 +87,7 @@
 
                     </div>
                 </div>
-                <div ng-if="ctrl.question.type=='checkbox'">
+                <div ng-switch-when="checkbox">
                     <div class="checkbox" ng-repeat="answer in ctrl.question.offeredAnswers">
                         <label>
                             <input type="checkbox">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div ng-if="ctrl.question.type=='grid'">
+                <div ng-switch-when="grid">
                     <div class="table-responsive">
                         <table class="table table-condensed table-striped" border="0" cellpadding="5" cellspacing="0">
                             <thead>
@@ -129,7 +129,7 @@
                     </div>
 
                 </div>
-                <div class="mw-priority-list" ng-if="ctrl.question.type=='priority'">
+                <div class="mw-priority-list" ng-switch-when="priority">
                     <table>
                         <thead>
                         <tr>
@@ -152,30 +152,31 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div ng-if="ctrl.question.type=='division'" class="">
-                <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
-                    <div class="form-group">
-                        <label>
-                            {{item.value}}
-                        </label>
-                        <input type="number" class="form-control" style="width: 80px" >
-                        <span>{{ctrl.question.unit}}</span>
+                <div ng-switch-when="division" class="">
+                    <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
+                        <div class="form-group">
+                            <label>
+                                {{item.value}}
+                            </label>
+                            <input type="number" class="form-control" style="width: 80px" >
+                            <span>{{ctrl.question.unit}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-inline" style="margin-bottom: 5px">
+                        <div class="form-group">
+                            <label translate="mwForm.question.division.assignedSumLabel">
+                                Przydzielono
+                            </label>
+                            <input type="number" class="form-control strict-validation" style="width: 80px" readonly value="0">
+                            <span>{{ctrl.question.unit}} <span translate="mwForm.question.division.fromRequiredLabel">z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}}</span>
+                        </div>
+
                     </div>
 
                 </div>
-                <div class="form-inline" style="margin-bottom: 5px">
-                    <div class="form-group">
-                        <label translate="mwForm.question.division.assignedSumLabel">
-                            Przydzielono
-                        </label>
-                        <input type="number" class="form-control strict-validation" style="width: 80px" readonly value="0">
-                        <span>{{ctrl.question.unit}} <span translate="mwForm.question.division.fromRequiredLabel">z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}}</span>
-                    </div>
-
-                </div>
-
             </div>
+
 
         </div>
     </div>
