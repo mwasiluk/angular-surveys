@@ -59,8 +59,15 @@
         <div role="tabpanel" class="tab-pane active" id="builder">
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
-                    <mw-form-builder api="ctrl.formBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+                    <div class="form-inline">
+                        <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="ctrl.builderReadOnly"> Read only
+                            </label>
+                        </div>
+                    </div>
+                    <mw-form-builder api="ctrl.formBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
                 </div>
             </div>
         </div>
@@ -72,9 +79,14 @@
                         <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
                     </label>
                 </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="ctrl.viewerReadOnly"> Read only
+                    </label>
+                </div>
             </div>
 
-            <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.readOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+            <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
 
             <hr>
 

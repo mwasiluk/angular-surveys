@@ -8,12 +8,14 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'pascalprecht.translate'
     })
     .controller('DemoController', function($q, $translate) {
         var ctrl = this;
+        ctrl.builderReadOnly = false;
+        ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl'];
         ctrl.formData = {};
         ctrl.formBuilder={};
         ctrl.formViewer = {};
         ctrl.formOptions = {
-            autoStart: true
+            autoStart: false
         };
         ctrl.formStatus= {};
         ctrl.responseData={};
