@@ -1,0 +1,42 @@
+{
+  "ed9a53e5ebc4fd4cdf84686743c0b939": {
+    "answer": "aaaaaaaaaaaaaaa"
+  },
+  "46d605c6b29161e49918733ea2c21b10": {
+    "answer": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "16a37f04b1f2c4ed9ccad0f90c202f3e": {
+    "selectedAnswer": "c1860469d05cb0be1ef6c254809c207e"
+  },
+  "3ba201eb2562dca36a5257ef3ff2be2d": {
+    "selectedAnswers": [
+      "567678e87b794541a9e6f7e1376b562c"
+    ],
+    "other": "aaaaaaaaaa"
+  },
+  "10b08afca4dff80e975f4910ee85ef3f": {
+    "48b09d72e6fb0d2a63985eef4018346e": "ace63d4001112c28e97b00ff67ceeeca",
+    "f35a6e5d1ce9407b5ece224198032cb6": "ace63d4001112c28e97b00ff67ceeeca"
+  },
+  "dc640ed493ba5a00d4a44f3a216cfa34": {
+    "priorityList": [
+      {
+        "priority": 1,
+        "id": "c389bfb386b59483c7592719d9968d35"
+      },
+      {
+        "priority": 2,
+        "id": "14629777a4bda0e1d40044429aaf63f9"
+      },
+      {
+        "priority": 3,
+        "id": "66a28c757482c280b30db318b5922201"
+      }
+    ]
+  },
+  "8666ad943291900f0e5b34bc14bb18dc": {
+    "dc3c109e947b736c49415faf0b595091": 10,
+    "476d950019a69252524ac00d2a39ef54": 10,
+    "d9b54b9da75bdfe78d4cbc41d0cdf9e0": 80
+  }
+}

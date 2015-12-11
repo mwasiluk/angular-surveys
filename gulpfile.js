@@ -21,7 +21,8 @@ gulp.task('build-css', ['clean'], function () {
 gulp.task('build-tmp', ['build-css'], function () {
     var builderStream = buildTemp('src/builder/', 'mwFormBuilder');
     var viewerStream = buildTemp('src/viewer/', 'mwFormViewer');
-    return merge(builderStream, viewerStream);
+    var utilsStream = buildTemp('src/utils/', 'mwFormUtils');
+    return merge(builderStream, viewerStream, utilsStream);
 });
 
 gulp.task('default', ['build-tmp'], function () {
@@ -29,7 +30,8 @@ gulp.task('default', ['build-tmp'], function () {
 
     var builderStream = buildModuleStream('form-builder.min.js', 'mwFormBuilder');
     var viewerStream = buildModuleStream('form-viewer.min.js', 'mwFormViewer');
-    return merge(builderStream, viewerStream, i18n);
+    var utilsStream = buildModuleStream('form-utils.min.js', 'mwFormUtils');
+    return merge(builderStream, viewerStream, utilsStream, i18n);
 });
 
 gulp.task('watch', function() {

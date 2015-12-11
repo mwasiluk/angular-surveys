@@ -1,0 +1,219 @@
+{
+  "name": "form name",
+  "description": "description",
+  "pages": [
+    {
+      "id": "b8107c034ded6bf430488ca30d524bed",
+      "number": 1,
+      "name": null,
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
+        {
+          "id": "7180d9e3d0c341bb99c91c73d5b97351",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "ed9a53e5ebc4fd4cdf84686743c0b939",
+            "text": "short text",
+            "type": "text",
+            "required": true,
+            "pageFlowModifier": false
+          }
+        },
+        {
+          "id": "3f215923f068d5355ce9dcc61aa340c7",
+          "orderNo": 2,
+          "type": "question",
+          "question": {
+            "id": "46d605c6b29161e49918733ea2c21b10",
+            "text": "long text",
+            "type": "textarea",
+            "required": true,
+            "pageFlowModifier": false
+          }
+        },
+        {
+          "id": "2da74f344ce74b0c9c501f05dd27b94a",
+          "orderNo": 3,
+          "type": "question",
+          "question": {
+            "id": "16a37f04b1f2c4ed9ccad0f90c202f3e",
+            "text": "radio question",
+            "type": "radio",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "c1860469d05cb0be1ef6c254809c207e",
+                "orderNo": 2,
+                "value": "bbbb",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              }
+            ],
+            "otherAnswer": true
+          }
+        },
+        {
+          "id": "a720b9734f64a7fd728df4cd5d995117",
+          "orderNo": 4,
+          "type": "question",
+          "question": {
+            "id": "3ba201eb2562dca36a5257ef3ff2be2d",
+            "text": "checkbox",
+            "type": "checkbox",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "16eddc288f7e58b5c3407de778f933a1",
+                "orderNo": 1,
+                "value": "aaaa",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "567678e87b794541a9e6f7e1376b562c",
+                "orderNo": 2,
+                "value": "bbb",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "1e27b677f96d2d08ce0fb0d5723607da",
+                "orderNo": 3,
+                "value": "cccc",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              }
+            ],
+            "pageFlowModifier": false,
+            "otherAnswer": true
+          }
+        }
+      ],
+      "namedPage": false
+    },
+    {
+      "id": "d7b158cc2aff4c00b3d452006d79368d",
+      "number": 2,
+      "name": null,
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
+        {
+          "id": "1b183679857291f8ad46c03c3173e64d",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "10b08afca4dff80e975f4910ee85ef3f",
+            "text": "grid question",
+            "type": "grid",
+            "required": true,
+            "grid": {
+              "rows": [
+                {
+                  "id": "48b09d72e6fb0d2a63985eef4018346e",
+                  "orderNo": 1,
+                  "label": "row 1"
+                },
+                {
+                  "id": "f35a6e5d1ce9407b5ece224198032cb6",
+                  "orderNo": 2,
+                  "label": "row 2"
+                }
+              ],
+              "cols": [
+                {
+                  "id": "ace63d4001112c28e97b00ff67ceeeca",
+                  "orderNo": 1,
+                  "label": "col 1"
+                },
+                {
+                  "id": "24062ae1fc97dead41d337ede7f2e55e",
+                  "orderNo": 2,
+                  "label": "col2"
+                }
+              ]
+            },
+            "pageFlowModifier": false
+          }
+        },
+        {
+          "id": "82332304478a82ee69f2d60157930e0a",
+          "orderNo": 2,
+          "type": "question",
+          "question": {
+            "id": "dc640ed493ba5a00d4a44f3a216cfa34",
+            "text": "priority list",
+            "type": "priority",
+            "required": true,
+            "priorityList": [
+              {
+                "id": "c389bfb386b59483c7592719d9968d35",
+                "orderNo": 1,
+                "value": "aaaaaaaaaaaa"
+              },
+              {
+                "id": "66a28c757482c280b30db318b5922201",
+                "orderNo": 2,
+                "value": "bbbbbbbbbb"
+              },
+              {
+                "id": "14629777a4bda0e1d40044429aaf63f9",
+                "orderNo": 3,
+                "value": "cccccccccccccc"
+              }
+            ],
+            "pageFlowModifier": false
+          }
+        },
+        {
+          "id": "358c65a9f3590235b3b9d019722f2372",
+          "orderNo": 3,
+          "type": "question",
+          "question": {
+            "id": "8666ad943291900f0e5b34bc14bb18dc",
+            "text": "division",
+            "type": "division",
+            "required": true,
+            "divisionList": [
+              {
+                "id": "dc3c109e947b736c49415faf0b595091",
+                "orderNo": 1,
+                "value": "aaaaaa"
+              },
+              {
+                "id": "476d950019a69252524ac00d2a39ef54",
+                "orderNo": 2,
+                "value": "bbbbb"
+              },
+              {
+                "id": "d9b54b9da75bdfe78d4cbc41d0cdf9e0",
+                "orderNo": 3,
+                "value": "cccccccc"
+              }
+            ],
+            "pageFlowModifier": false,
+            "quantity": 100,
+            "unit": "%"
+          }
+        }
+      ],
+      "namedPage": false
+    }
+  ]
+}
