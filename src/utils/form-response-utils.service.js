@@ -13,7 +13,7 @@ angular.module('mwFormUtils.responseUtils', [])
             });
             return objectById;
         };
-        service.getOfferedAnswerByIdMap = function (question) {
+        service.$getOfferedAnswerByIdMap = function (question) {
             return service.$getObjectByIdMap(question.offeredAnswers, function(offeredAnswer){
                 return {
                     id: offeredAnswer.id,
@@ -22,8 +22,8 @@ angular.module('mwFormUtils.responseUtils', [])
             });
         };
 
-        service.extractResponseForRadioOrCheckboxQuestion= function(question, questionResponse) {
-            var offeredAnswerById = service.getOfferedAnswerByIdMap(question);
+        service.$extractResponseForRadioOrCheckboxQuestion= function(question, questionResponse) {
+            var offeredAnswerById = service.$getOfferedAnswerByIdMap(question);
             var result ={};
             if (questionResponse.selectedAnswers) {
                 result.selectedAnswers = [];
@@ -39,7 +39,7 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.extractResponseForPriorityQuestion= function(question, questionResponse) {
+        service.$extractResponseForPriorityQuestion= function(question, questionResponse) {
             var result =[];
             var itemById = service.$getObjectByIdMap(question.priorityList);
             questionResponse.priorityList.forEach(function(i){
@@ -52,7 +52,7 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.extractResponseForDivisionQuestion= function(question, questionResponse) {
+        service.$extractResponseForDivisionQuestion= function(question, questionResponse) {
             var result =[];
             var itemById = service.$getObjectByIdMap(question.divisionList);
             Object.getOwnPropertyNames(questionResponse).forEach(function(itemId){
@@ -67,7 +67,7 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.extractResponseForGridQuestion= function(question, questionResponse) {
+        service.$extractResponseForGridQuestion= function(question, questionResponse) {
             var result =[];
             var colById = service.$getObjectByIdMap(question.grid.cols);
             question.grid.rows.forEach(function(row){
@@ -92,6 +92,25 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
+        service.extractResponse = function(question, questionResponse) {
+            if(question.type=='text' || question.type=='textarea'){
+                return  questionResponse.answer;
+            }
+            if(question.type=='radio' || question.type=='checkbox'){
+                return service.$extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
+            }
+            if(question.type=='grid'){
+                return service.$extractResponseForGridQuestion(question, questionResponse);
+            }
+            if(question.type=='priority'){
+                return service.$extractResponseForPriorityQuestion(question, questionResponse);
+            }
+            if(question.type=='division'){
+                return service.$extractResponseForDivisionQuestion(question, questionResponse);
+            }
+            return null;
+        };
+
         service.mergeFormWithResponse = function(formData, responseData){
             var result = {};
             angular.copy(formData, result);
@@ -107,21 +126,7 @@ angular.module('mwFormUtils.responseUtils', [])
                     if(!questionResponse){
                         return;
                     }
-
-                    if(question.type=='text' || question.type=='textarea'){
-                        question.response = questionResponse.answer;
-                    }else if(question.type=='radio' || question.type=='checkbox'){
-                        question.response = service.extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
-
-                    }else if(question.type=='grid'){
-                        question.response=service.extractResponseForGridQuestion(question, questionResponse);
-
-                    }else if(question.type=='priority'){
-                        question.response = service.extractResponseForPriorityQuestion(question, questionResponse);
-
-                    }else if(question.type=='division'){
-                        question.response = service.extractResponseForDivisionQuestion(question, questionResponse);
-                    }
+                    question.response = service.extractResponse(question, questionResponse);
                 });
 
             });
