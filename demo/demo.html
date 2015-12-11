@@ -53,7 +53,7 @@
         <li role="presentation" class="active"><a href="#builder" aria-controls="home" role="tab" data-toggle="tab">Builder</a></li>
         <li role="presentation"><a href="#viewer" aria-controls="profile" role="tab" data-toggle="tab" a-ng-click="ctrl.resetViewer()">Viewer</a></li>
         <li role="presentation"><a href="#model" aria-controls="messages" role="tab" data-toggle="tab">Model</a></li>
-        <li role="presentation"><a href="#merged" aria-controls="messages" role="tab" data-toggle="tab">Merged</a></li>
+        <li role="presentation"><a href="#utils" aria-controls="messages" role="tab" data-toggle="tab">Utils</a></li>
     </ul>
 
     <div class="tab-content">
@@ -105,9 +105,17 @@
 {{ctrl.formData|json}}
 </pre>
         </div>
-        <div role="tabpanel" class="tab-pane" id="merged">
+        <div role="tabpanel" class="tab-pane" id="utils">
+            <h3>mwFormResponseUtils service</h3>
+            <br />
+            <h4>mergeFormWithResponse(formData, responseData)</h4>
 <pre>
 {{ctrl.getMerged()|json}}
+</pre>
+            <br/>
+            <h4>getQuestionWithResponseList(formData, responseData)</h4>
+<pre>
+{{ctrl.getQuestionWithResponseList()|json}}
 </pre>
         </div>
     </div>

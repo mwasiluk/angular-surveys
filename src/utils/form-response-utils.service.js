@@ -134,5 +134,28 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
+        service.getQuestionWithResponseList = function(formData, responseData){
+            var result = [];
+            formData.pages.forEach(function (page){
+                page.elements.forEach(function (element){
+
+                    if(!element.question){
+                        return;
+                    }
+                    var question = {};
+                    angular.copy(element.question, question);
+                    result.push(question);
+                    var questionResponse = responseData[question.id];
+                    if(!questionResponse){
+                        return;
+                    }
+                    question.response = service.extractResponse(question, questionResponse);
+
+                });
+
+            });
+            return result;
+        };
+
         return service;
     });

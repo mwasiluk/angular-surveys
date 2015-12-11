@@ -73,5 +73,9 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
 
         ctrl.getMerged=function(){
             return mwFormResponseUtils.mergeFormWithResponse(ctrl.formData, ctrl.responseData);
-        }
+        };
+
+        ctrl.getQuestionWithResponseList=function(){
+            return mwFormResponseUtils.getQuestionWithResponseList(ctrl.formData, ctrl.responseData);
+        };
     });
