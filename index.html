@@ -56,6 +56,7 @@
         <li role="presentation" class="active"><a href="#builder" aria-controls="home" role="tab" data-toggle="tab">Builder</a></li>
         <li role="presentation"><a href="#viewer" aria-controls="profile" role="tab" data-toggle="tab" ng-click="ctrl.resetViewer()">Viewer</a></li>
         <li role="presentation"><a href="#model" aria-controls="messages" role="tab" data-toggle="tab">Model</a></li>
+        <li role="presentation"><a href="#utils" aria-controls="messages" role="tab" data-toggle="tab">Utils</a></li>
     </ul>
 
     <div class="tab-content">
@@ -107,6 +108,67 @@
 {{ctrl.formData|json}}
 </pre>
         </div>
+        <div role="tabpanel" class="tab-pane" id="utils">
+            <h3>mwFormResponseUtils service</h3>
+            <br />
+            <h4><a data-toggle="collapse" href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
+            <div class="collapse" id="mergeFormWithResponse">
+                <div class="well">
+<pre>
+{{ctrl.getMerged()|json}}
+</pre>
+                </div>
+            </div>
+
+
+            <h4><a data-toggle="collapse" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
+            <div class="collapse" id="getQuestionWithResponseList">
+                <div class="well">
+<pre>
+{{ctrl.getQuestionWithResponseList()|json}}
+</pre>
+                </div>
+            </div>
+
+            <h4><a data-toggle="collapse" href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
+            <div class="collapse" id="getResponseSheetHeaders">
+                <div class="well">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> withQuestionNumbers
+                        </label>
+                    </div>
+<pre>
+{{ctrl.getResponseSheetHeaders()|json}}
+</pre>
+                </div>
+            </div>
+
+            <h4><a data-toggle="collapse" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
+            <div class="collapse" id="getResponseSheetRow">
+                <div class="well">
+<pre>
+{{ctrl.getResponseSheetRow()|json}}
+</pre>
+                </div>
+            </div>
+
+            <h4><a data-toggle="collapse" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
+            <div class="collapse" id="getResponseSheet">
+                <div class="well">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> headersWithQuestionNumber
+                        </label>
+                    </div>
+
+<pre>
+{{ctrl.getResponseSheet()|json}}
+</pre>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -123,6 +185,7 @@
 <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
 <script src="bower_components/angular-elastic/elastic.js"></script>
 
+<script src="https://rawgit.com/mwasiluk/angular-surveys/master/dist/form-utils.min.js"></script>
 <script src="https://rawgit.com/mwasiluk/angular-surveys/master/dist/form-builder.min.js"></script>
 <script src="https://rawgit.com/mwasiluk/angular-surveys/master/dist/form-viewer.min.js"></script>
 
