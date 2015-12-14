@@ -7,7 +7,9 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         $translateProvider.preferredLanguage('en');
     })
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
+
         var ctrl = this;
+        ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl'];
@@ -37,7 +39,6 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
             }else{
                 d.reject();
             }
-
             return d.promise;
         };
 
@@ -78,4 +79,15 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         ctrl.getQuestionWithResponseList=function(){
             return mwFormResponseUtils.getQuestionWithResponseList(ctrl.formData, ctrl.responseData);
         };
+        ctrl.getResponseSheetRow=function(){
+            return mwFormResponseUtils.getResponseSheetRow(ctrl.formData, ctrl.responseData);
+        };
+        ctrl.getResponseSheetHeaders=function(){
+            return mwFormResponseUtils.getResponseSheetHeaders(ctrl.formData, ctrl.headersWithQuestionNumber);
+        };
+
+        ctrl.getResponseSheet=function(){
+            return mwFormResponseUtils.getResponseSheet(ctrl.formData, ctrl.responseData, ctrl.headersWithQuestionNumber);
+        };
+
     });

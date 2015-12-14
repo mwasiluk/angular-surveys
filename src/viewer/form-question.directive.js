@@ -37,7 +37,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
                 }
 
             }else if(ctrl.question.type=='checkbox'){
-                if(ctrl.questionResponse.selectedAnswers){
+                if(ctrl.questionResponse.selectedAnswers && ctrl.questionResponse.selectedAnswers.length){
                     ctrl.selectedAnswer=true;
                 }else{
                     ctrl.questionResponse.selectedAnswers=[];
@@ -94,7 +94,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
                 if(!ctrl.isOtherAnswer){
                     delete ctrl.questionResponse.other;
                 }
-                ctrl.selectedAnswer = ctrl.questionResponse.selectedAnswers.length>0||ctrl.isOtherAnswer ? true:null ;
+                ctrl.selectedAnswer = ctrl.questionResponse.selectedAnswers.length||ctrl.isOtherAnswer ? true:null ;
                 ctrl.answerChanged();
             };
 
@@ -105,7 +105,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
                 } else {
                     ctrl.questionResponse.selectedAnswers.splice(ctrl.questionResponse.selectedAnswers.indexOf(answer.id), 1);
                 }
-                ctrl.selectedAnswer = ctrl.questionResponse.selectedAnswers.length>0||ctrl.isOtherAnswer ? true:null ;
+                ctrl.selectedAnswer = ctrl.questionResponse.selectedAnswers.length||ctrl.isOtherAnswer ? true:null ;
 
                 ctrl.answerChanged();
             };

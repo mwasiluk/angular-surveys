@@ -1,9 +1,9 @@
 {
   "ed9a53e5ebc4fd4cdf84686743c0b939": {
-    "answer": "aaaaaaaaaaaaaaa"
+    "answer": "short text answer"
   },
   "46d605c6b29161e49918733ea2c21b10": {
-    "answer": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+    "answer": "long text answer"
   },
   "16a37f04b1f2c4ed9ccad0f90c202f3e": {
     "selectedAnswer": "c1860469d05cb0be1ef6c254809c207e"
@@ -12,7 +12,7 @@
     "selectedAnswers": [
       "567678e87b794541a9e6f7e1376b562c"
     ],
-    "other": "aaaaaaaaaa"
+    "other": "checkbox other answer"
   },
   "10b08afca4dff80e975f4910ee85ef3f": {
     "48b09d72e6fb0d2a63985eef4018346e": "ace63d4001112c28e97b00ff67ceeeca",
@@ -36,7 +36,10 @@
   },
   "8666ad943291900f0e5b34bc14bb18dc": {
     "dc3c109e947b736c49415faf0b595091": 10,
-    "476d950019a69252524ac00d2a39ef54": 10,
-    "d9b54b9da75bdfe78d4cbc41d0cdf9e0": 80
+    "476d950019a69252524ac00d2a39ef54": 30,
+    "d9b54b9da75bdfe78d4cbc41d0cdf9e0": 60
+  },
+  "7d8826e84a398532fbe78be646214eab": {
+    "answer": "Aenean non ante id turpis aliquam dignissim ut quis erat. Integer sed libero nunc."
   }
 }

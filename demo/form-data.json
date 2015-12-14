@@ -214,6 +214,51 @@
         }
       ],
       "namedPage": false
+    },
+    {
+      "id": "5d9fc08eaac5739f574db0e5b86a6a36",
+      "number": 3,
+      "name": "Page name",
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
+        {
+          "id": "99f0e2587c29cde3abb2ab2076fc375c",
+          "orderNo": 1,
+          "type": "paragraph",
+          "paragraph": {
+            "id": "12448073a8702376af0b427b63022926",
+            "html": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
+          }
+        },
+        {
+          "id": "2d9145a0b749ca85959268737c90029c",
+          "orderNo": 2,
+          "type": "image",
+          "image": {
+            "id": "e94d4dcdbc45d90d0561116518e13b77",
+            "align": "center",
+            "src": "lena.gif",
+            "caption": "Image caption"
+          }
+        },
+        {
+          "id": "1dfa4dc8242f7b98b5449d380fee1785",
+          "orderNo": 3,
+          "type": "question",
+          "question": {
+            "id": "7d8826e84a398532fbe78be646214eab",
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+            "type": "textarea",
+            "required": true,
+            "pageFlowModifier": false
+          }
+        }
+      ],
+      "namedPage": true
     }
   ]
 }
