@@ -44,6 +44,9 @@ angular.module('mwFormUtils.responseUtils', [])
 
         service.$extractResponseForPriorityQuestion= function(question, questionResponse) {
             var result =[];
+            if(!questionResponse.priorityList){
+                return result;
+            }
             var itemById = service.$getObjectByIdMap(question.priorityList);
             questionResponse.priorityList.forEach(function(i){
                 var item = itemById[i.id];
@@ -73,7 +76,7 @@ angular.module('mwFormUtils.responseUtils', [])
 
         service.$extractResponseForGridQuestion= function(question, questionResponse) {
             var result =[];
-            if(!question.grid){
+            if(!question.grid || !question.grid.rows){
                 return result;
             }
             var colById = service.$getObjectByIdMap(question.grid.cols);
