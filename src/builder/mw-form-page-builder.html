@@ -5,7 +5,7 @@
                 <span class="mw-page-tab-text" role="heading" translate="mwForm.page.tab.heading" translate-values="{page: ctrl.formPage.number, allPages:ctrl.formObject.pages.length}">Strona 1 z 3</span>
                 <span class="mw-page-tab-checkbox">
                     <label>
-                        <input type="checkbox" ng-model="ctrl.formPage.namedPage"><span class="mw-page-tab-checkbox-text" translate="mwForm.page.pageWithNameCheckbox">named</span>
+                        <input type="checkbox" ng-model="ctrl.formPage.namedPage" ng-disabled="ctrl.readOnly"><span class="mw-page-tab-checkbox-text" translate="mwForm.page.pageWithNameCheckbox">named</span>
                     </label>
                 </span>
             </div>
