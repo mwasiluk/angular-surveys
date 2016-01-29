@@ -65,6 +65,9 @@ angular.module('mwFormUtils.responseUtils', [])
             Object.getOwnPropertyNames(questionResponse).forEach(function(itemId){
                 var value = questionResponse[itemId];
                 var item = itemById[itemId];
+                if(!item) {
+                    return;
+                }
                 result.push({
                     id: item.id,
                     label: item.value,

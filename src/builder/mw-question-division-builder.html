@@ -1,13 +1,13 @@
 <div class="mw-question-division-builder">
     <div class="form-horizontal">
         <div class="form-group">
-            <label class="col-sm-2 control-label" translate="mwForm.question.division.quantity">Ilość</label>
+            <mw-label label-for="division-quantity-{{ctrl.question.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.division.quantity"></mw-label>
             <div class="col-sm-10 col-md-8 form-inline">
-                <input type="number" ng-model="ctrl.question.quantity" required class="form-control" min="1" ng-readonly="ctrl.readOnly">
+                <input ng-attr-id="division-quantity-{{ctrl.question.id}}" type="number" ng-model="ctrl.question.quantity"  required class="form-control" min="1" ng-readonly="ctrl.readOnly">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" ng-attr-for="division-unit-{{ctrl.question.id}}" translate="mwForm.question.division.unit">Etykieta jednostki</label>
+            <mw-label label-for="division-unit-{{ctrl.question.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.division.unit"></mw-label>
             <div class="col-sm-10 col-md-8 form-inline">
                 <input ng-attr-id="division-unit-{{ctrl.question.id}}" type="text" ng-model="ctrl.question.unit" required class="form-control" ng-readonly="ctrl.readOnly">
             </div>

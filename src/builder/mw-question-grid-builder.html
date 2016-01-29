@@ -2,12 +2,12 @@
     <div class="form-horizontal mw-grid-rows-builder">
         <div class="mw-grid-row-list" ui-sortable="ctrl.rowsSortableConfig" ng-model="ctrl.question.grid.rows" role="list">
             <div class="mw-grid-item form-group" ng-repeat="row in ctrl.question.grid.rows" role="listitem">
-                <label class="col-sm-2 control-label" translate="mwForm.question.grid.rowLabel" translate-values="{row: row.orderNo}">Etykieta wiersza {{row.orderNo}}</label>
+                <mw-label label-for="mw-grid-row-{{row.id}}-label" label-class="col-sm-2 control-label"  label-key="mwForm.question.grid.rowLabel" label-translate-values="{row: row.orderNo}"></mw-label>
                 <div class="col-sm-10 col-md-8">
                     <div class="drag-handle">
                         <i class="fa fa-arrows-v fa-lg handle-inner"></i>
                     </div>
-                    <input wd-focus-me="ctrl.isNewInput[row.id]" type="text" ng-model="row.label" ng-keypress="ctrl.keyPressedOnInput($event,row, 'row')" required class="form-control mw-item-label-value "  ng-readonly="ctrl.readOnly">
+                    <input ng-attr-id="mw-grid-row-{{row.id}}-label" wd-focus-me="ctrl.isNewInput[row.id]" type="text" ng-model="row.label" ng-keypress="ctrl.keyPressedOnInput($event,row, 'row')" required class="form-control mw-item-label-value "  ng-readonly="ctrl.readOnly">
                     <button role="button" class="remove-item-button" ng-click="ctrl.removeRow(row)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
                 </div>
             </div>
@@ -32,12 +32,12 @@
     <div class="form-horizontal mw-grid-cols-builder">
         <div class="mw-grid-col-list" ui-sortable="ctrl.colsSortableConfig" ng-model="ctrl.question.grid.cols" role="list">
             <div class="mw-grid-item form-group" ng-repeat="col in ctrl.question.grid.cols" role="listitem">
-                <label class="col-sm-2 control-label" translate="mwForm.question.grid.columnLabel" translate-values="{col: col.orderNo}">Etykieta kolumny {{col.orderNo}}</label>
+                <mw-label label-for="mw-grid-col-{{col.id}}-label" label-class="col-sm-2 control-label"  label-key="mwForm.question.grid.columnLabel" label-translate-values="{col: col.orderNo}"></mw-label>
                 <div class="col-sm-10 col-md-8">
                     <div class="drag-handle">
                         <i class="fa fa-arrows-v fa-lg handle-inner"></i>
                     </div>
-                    <input wd-focus-me="ctrl.isNewInput[col.id]" type="text" ng-model="col.label" ng-keypress="ctrl.keyPressedOnInput($event,col, 'col')" required class="form-control mw-item-label-value " ng-readonly="ctrl.readOnly">
+                    <input ng-attr-id="mw-grid-col-{{col.id}}-label" wd-focus-me="ctrl.isNewInput[col.id]" type="text" ng-model="col.label" ng-keypress="ctrl.keyPressedOnInput($event,col, 'col')" required class="form-control mw-item-label-value " ng-readonly="ctrl.readOnly">
                     <button role="button" class="remove-item-button" ng-click="ctrl.removeCol(col)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
                 </div>
             </div>
