@@ -68,6 +68,12 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                 pageBuilderCtrl.selectElement(ctrl.pageElement);
             };
 
+            ctrl.cloneElement=function($event){
+                $event.preventDefault();
+                $event.stopPropagation();
+                pageBuilderCtrl.cloneElement(ctrl.pageElement);
+            };
+
             ctrl.removeElement=function(){
                 pageBuilderCtrl.removeElement(ctrl.pageElement);
             };

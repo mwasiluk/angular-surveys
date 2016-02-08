@@ -18,7 +18,10 @@
             "submit": "Prześlij",
             "begin": "Rozpocznij",
             "fold": "Zwiń",
-            "unfold": "Rozwiń"
+            "unfold": "Rozwiń",
+            "edit": "Edytuj",
+            "clone": "Klonuj",
+            "view": "Wyświetl"
         },
         "page":{
             "tab":{

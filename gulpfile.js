@@ -63,6 +63,7 @@ function buildModuleStream(dest, moduleName) {
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify())
+        .pipe(plugins.stripDebug())
         .pipe(plugins.concat(dest))
         .pipe(gulp.dest('dist'));
 

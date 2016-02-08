@@ -18,7 +18,10 @@
             "submit": "Submit",
             "begin": "Begin",
             "fold": "Fold",
-            "unfold": "Unfold"
+            "unfold": "Unfold",
+            "edit": "Edit",
+            "clone": "Clone",
+            "view": "View"
         },
         "page":{
             "tab":{

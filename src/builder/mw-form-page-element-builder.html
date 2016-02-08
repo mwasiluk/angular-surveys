@@ -16,8 +16,18 @@
                     <i class="fa fa-trash"></i></button>
             </div>
             <div ng-switch-when="false">
-                <button type="button" aria-label="Edytuj element" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="!ctrl.readOnly"><i class="fa fa-pencil"></i></button>
-                <button type="button" aria-label="Wyświetl element" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="ctrl.readOnly"><i class="fa fa-eye"></i></button>
+                <button type="button" aria-label="{{'mwForm.buttons.clone' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.cloneElement($event)" ng-if="!ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.clone' | translate}}" popover="{{'mwForm.buttons.clone' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-clone"></i>
+                </button>
+                <button type="button" aria-label="{{'mwForm.buttons.edit' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="!ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.edit' | translate}}" popover="{{'mwForm.buttons.edit' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" aria-label="{{'mwForm.buttons.view' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.view' | translate}}" popover="{{'mwForm.buttons.view' | translate}}" popover-trigger="mouseenter" popover-placement="left">
+                    <i class="fa fa-eye"></i>
+                </button>
             </div>
         </div>
         <div ng-switch="ctrl.pageElement.type">
