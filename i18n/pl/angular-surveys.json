@@ -67,6 +67,27 @@
                 },
                 "division":{
                     "name": "Podział"
+                },
+                "number":{
+                    "name": "Liczba"
+                },
+                "date":{
+                    "name": "Data"
+                },
+                "datetime":{
+                    "name": "Data i godzina"
+                },
+                "time":{
+                    "name": "Godzina"
+                },
+                "email":{
+                    "name": "Email"
+                },
+                "range":{
+                    "name": "Zakres"
+                },
+                "url":{
+                    "name": "Adres URL"
                 }
 
 
@@ -96,6 +117,14 @@
                 "clickToAddRow": "Kliknij aby dodać wiersz",
                 "columnLabel": "Etykieta kolumny {{col}}",
                 "clickToAddColumn": "Kliknij aby dodać kolumnę"
+            },
+            "range":{
+                "from": "Zakres od",
+                "to": "do"
+            },
+            "number": {
+                "min": "Min",
+                "max": "Max"
             },
             "orLabel": "lub ",
             "otherLabel": "Inna: ",

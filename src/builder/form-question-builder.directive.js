@@ -19,16 +19,15 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
             formObject: '=',
             onReady: '&',
             isPreview: '=?',
-            readOnly: '=?',
-            options: '=?'
+            readOnly: '=?'
         },
         templateUrl: 'mw-form-question-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormQuestionBuilderId){
+        controller: function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
             var ctrl = this;
             ctrl.id = FormQuestionBuilderId.next();
-            ctrl.questionTypes = ['text', 'textarea', 'radio', 'checkbox', 'grid', 'priority', 'division'];
+            ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
             ctrl.formSubmitted=false;
 
             sortAnswersByOrderNo();
@@ -102,7 +101,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
 
                 ctrl.question.offeredAnswers.forEach(function (answer) {
                     if(ctrl.question.pageFlowModifier){
-                        answer.pageFlow = ctrl.possiblePageFlow[0];;
+                        answer.pageFlow = ctrl.possiblePageFlow[0];
                     }else{
                         delete answer.pageFlow;
                     }

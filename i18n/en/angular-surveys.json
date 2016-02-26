@@ -67,6 +67,27 @@
                 },
                 "division":{
                     "name": "Division"
+                },
+                "number":{
+                    "name": "Number"
+                },
+                "date":{
+                    "name": "Date"
+                },
+                "datetime":{
+                    "name": "Datetime"
+                },
+                "time":{
+                    "name": "Time"
+                },
+                "email":{
+                    "name": "Email"
+                },
+                "range":{
+                    "name": "Range"
+                },
+                "url":{
+                    "name": "URL"
                 }
 
 
@@ -96,6 +117,14 @@
                 "clickToAddRow": "Click to add row",
                 "columnLabel": "Column {{col}}",
                 "clickToAddColumn": "Click to add column"
+            },
+            "range":{
+                "from": "Range from",
+                "to": "to"
+            },
+            "number": {
+                "min": "Min",
+                "max": "Max"
             },
             "orLabel": "or ",
             "otherLabel": "Other: ",

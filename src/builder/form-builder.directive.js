@@ -9,20 +9,26 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             readOnly: '=?',
             options: '=?',
             formStatus: '=?',
-            confirm: '=',
             onImageSelection: '&',
             api: '=?'
         },
         templateUrl: 'mw-form-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid){
+        controller: function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
 
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                 ctrl.formData.pages = [];
                 ctrl.formData.pages.push(createEmptyPage(1));
             }
+            mwFormBuilderOptions.questionTypes = MW_QUESTION_TYPES;
+            if(ctrl.options){
+                if(ctrl.options.questionTypes){
+                    mwFormBuilderOptions.questionTypes = ctrl.options.questionTypes;
+                }
+            }
+
 
 
             ctrl.addPage = function(){

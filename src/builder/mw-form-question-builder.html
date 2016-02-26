@@ -24,18 +24,53 @@
             </div>
 
             <div class="row" ng-if="ctrl.question.type">
-                <div class="mw-form-question-answers-builder col-sm-10 col-sm-offset-2  col-md-8" >
+                <div class="mw-form-question-answers-builder col-sm-10 col-sm-offset-2  col-md-8" ng-switch="ctrl.question.type">
                     <div ng-if="ctrl.question.type=='text'">
                         <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
                     </div>
-                    <div ng-if="ctrl.question.type=='textarea'">
+                    <div ng-switch-when="textarea">
                         <textarea class="form-control" disabled>{{'mwForm.question.preview.textarea'|translate}}</textarea>
                     </div>
-                    <div ng-if="ctrl.question.type=='radio' || ctrl.question.type=='checkbox'">
+                    <div ng-switch-when="radio">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
                     </div>
-                    <div ng-if="ctrl.question.type=='priority'">
+                    <div ng-switch-when="checkbox">
+                        <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
+                    </div>
+                    <div ng-switch-when="priority">
                         <mw-question-priority-list-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-priority-list-builder>
+                    </div>
+                    <div ng-switch-when="number" class="form-inline">
+                        <div class="range-config form-inline">
+                            <span translate="mwForm.question.number.min">Min</span>: <input class="form-control" type="number" ng-model="ctrl.question.min" max="{{ctrl.question.max}}" ng-readonly="ctrl.readOnly"/> <span translate="mwForm.question.number.max">Max</span>: <input class="form-control" type="number" min="{{ctrl.question.min}}" ng-model="ctrl.question.max" ng-readonly="ctrl.readOnly"/>
+                        </div>
+                        <br/>
+                        <input class="form-control" type="number" disabled >
+                    </div>
+                    <div ng-switch-when="date" class="form-inline">
+                        <input class="form-control" type="date" disabled>
+                    </div>
+                    <div ng-switch-when="datetime" class="form-inline">
+                        <input class="form-control" type="datetime" disabled>
+                    </div>
+                    <div ng-switch-when="time" class="form-inline">
+                        <input class="form-control" type="datetime" disabled>
+                    </div>
+                    <div ng-switch-when="email" class="form-inline">
+                        <input class="form-control" type="email" disabled>
+                    </div>
+                    <div ng-switch-when="range" >
+                        <div class="range-config form-inline">
+                            <span translate="mwForm.question.range.from">Range from</span> <input class="form-control" type="number" ng-model="ctrl.question.min" required ng-readonly="ctrl.readOnly"/> <span translate="mwForm.question.range.to">to</span> <input class="form-control" type="number" ng-model="ctrl.question.max" required ng-readonly="ctrl.readOnly"/>
+                        </div>
+                        <br/>
+                        <div class="mw-range">
+                            <input min="ctrl.question.min" max="ctrl.question.max" class="" type="range" disabled>
+                        </div>
+
+                    </div>
+                    <div ng-switch-when="url" class="form-inline">
+                        <input class="form-control" type="url" disabled>
                     </div>
                 </div>
                 <div class="col-sm-12" ng-if="ctrl.question.type=='grid'">
@@ -70,6 +105,29 @@
                 <div ng-switch-when="text">
                     <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
                 </div>
+                <div ng-switch-when="number"  class="form-inline">
+                    <input class="form-control" type="number" disabled>
+                </div>
+                <div ng-switch-when="date"  class="form-inline">
+                    <input class="form-control" type="date" disabled>
+                </div>
+                <div ng-switch-when="datetime"  class="form-inline">
+                    <input class="form-control" type="datetime" disabled>
+                </div>
+                <div ng-switch-when="time" class="form-inline">
+                    <input class="form-control" type="time" disabled>
+                </div>
+                <div ng-switch-when="email" class="form-inline">
+                    <input class="form-control" type="email" disabled>
+                </div>
+                <div ng-switch-when="range" class="mw-range">
+
+                    <input ng-attr-min="{{ctrl.question.min}}" ng-attr-max="{{ctrl.question.max}}" class="" type="range" disabled>
+                </div>
+                <div ng-switch-when="url" class="form-inline">
+                    <input class="form-control" type="url" disabled>
+                </div>
+
                 <div ng-switch-when="textarea">
                     <textarea class="form-control" type="text" disabled>{{'mwForm.question.preview.textarea'|translate}}</textarea>
                 </div>

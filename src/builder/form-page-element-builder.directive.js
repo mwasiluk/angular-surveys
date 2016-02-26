@@ -12,8 +12,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
             isFirst: '=',
             isLast: '=',
             onReady: '&',
-            readOnly: '=?',
-            options: '=?'
+            readOnly: '=?'
         },
         templateUrl: 'mw-form-page-element-builder.html',
         controllerAs: 'ctrl',
