@@ -9,6 +9,12 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
 
         var ctrl = this;
+        ctrl.mergeFormWithResponse = true;
+        ctrl.getQuestionWithResponseList = true;
+        ctrl.getQuestionWithResponseList = true;
+        ctrl.getResponseSheetHeaders = true;
+        ctrl.getResponseSheetRow = true;
+        ctrl.getResponseSheet = true;
         ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;

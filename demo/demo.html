@@ -1,173 +1,167 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-<head>
-    <meta charset="UTF-8">
-    <title>angular-surveys demo</title>
-    <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
-    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../dist/form-builder.min.css">
-    <link rel="stylesheet" href="../dist/form-viewer.min.css">
-    <link rel="stylesheet" href="demo.css">
-</head>
-<body ng-controller="DemoController as ctrl">
+    <head>
+        <meta charset="UTF-8">
+        <title>angular-surveys demo</title>
+        <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../dist/form-builder.min.css">
+        <link rel="stylesheet" href="../dist/form-viewer.min.css">
+        <link rel="stylesheet" href="demo.css">
+    </head>
+    <body ng-controller="DemoController as ctrl">
 
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid" style="border-bottom: 1px solid #e7e7e7;" role="presentation">
-        <div class="navbar-header" role="presentation" aria-hidden="true">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><span>angular-surveys demo</span></a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse" role="presentation">
-            <ul class="nav navbar-nav nav-pills navbar-right" role="menubar">
-                <li class="dropdown pointer"  role="presentation">
-                    <a id="language-menu-item" class="dropdown-toggle" href="javascript:;" role="menuitem" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span>
-                             <span class="glyphicon glyphicon-flag"></span>
-                             <span class="hidden-tablet">Language</span>
-                             <b class="caret"></b>
-                         </span>
-                    </a>
-                    <ul class="dropdown-menu"  role="menu" aria-labelledby="language-menu-item">
-                        <li active-menu="{{language}}" ng-repeat="language in ctrl.languages" role="presentation">
-                            <a href="" ng-click="ctrl.changeLanguage(language)"  role="menuitem">{{language}}</a>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid" style="border-bottom: 1px solid #e7e7e7;" role="presentation">
+                <div class="navbar-header" role="presentation" aria-hidden="true">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><span>angular-surveys demo</span></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse" role="presentation">
+                    <ul class="nav navbar-nav nav-pills navbar-right" role="menubar">
+                        <li uib-dropdown class=" pointer"  role="presentation">
+                            <a id="language-menu-item"  href="javascript:;" role="menuitem" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                    <span class="hidden-tablet">Language</span>
+                                    <b class="caret"></b>
+                                </span>
+                            </a>
+                            <ul uib-dropdown-menu  role="menu" aria-labelledby="language-menu-item">
+                                <li active-menu="{{language}}" ng-repeat="language in ctrl.languages" role="presentation">
+                                    <a href="" ng-click="ctrl.changeLanguage(language)"  role="menuitem">{{language}}</a>
+                                </li>
+                            </ul>
                         </li>
+
                     </ul>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
+                </div>
+            </div>
+        </nav>
 
 
-<div class="demo-container">
+        <div class="demo-container">
 
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#builder" aria-controls="home" role="tab" data-toggle="tab">Builder</a></li>
-        <li role="presentation"><a href="#viewer" aria-controls="profile" role="tab" data-toggle="tab" a-ng-click="ctrl.resetViewer()">Viewer</a></li>
-        <li role="presentation"><a href="#model" aria-controls="messages" role="tab" data-toggle="tab">Model</a></li>
-        <li role="presentation"><a href="#utils" aria-controls="messages" role="tab" data-toggle="tab">Utils</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="builder">
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
+            <uib-tabset active="active">
+                <uib-tab index="0" heading="Builder">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="form-inline">
+                                <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-model="ctrl.builderReadOnly"> Read only
+                                    </label>
+                                </div>
+                            </div>
+                            <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab select="ctrl.resetViewer()"  heading="Viewer">
                     <div class="form-inline">
-                        <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
+                        <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="ctrl.builderReadOnly"> Read only
+                                <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="ctrl.viewerReadOnly"> Read only
                             </label>
                         </div>
                     </div>
-                    <mw-form-builder api="ctrl.formBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
-                </div>
-            </div>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="viewer">
-            <div class="form-inline">
-                <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="ctrl.viewerReadOnly"> Read only
-                    </label>
-                </div>
-            </div>
 
-            <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+                    <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
 
-            <hr>
+                    <hr>
 
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
-                </label>
-            </div>
-<pre ng-if="ctrl.showResponseData">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
+                        </label>
+                    </div>
+                    <pre ng-if="ctrl.showResponseData">
 {{ctrl.responseData|json}}
-</pre>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="model">
-<pre>
-{{ctrl.formData|json}}
-</pre>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="utils">
-            <h3>mwFormResponseUtils service</h3>
-            <br />
-            <h4><a data-toggle="collapse" href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
-            <div class="collapse" id="mergeFormWithResponse">
-                <div class="well">
-<pre>
-{{ctrl.getMerged()|json}}
-</pre>
-                </div>
-            </div>
-
-
-            <h4><a data-toggle="collapse" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
-            <div class="collapse" id="getQuestionWithResponseList">
-                <div class="well">
-<pre>
-{{ctrl.getQuestionWithResponseList()|json}}
-</pre>
-                </div>
-            </div>
-
-            <h4><a data-toggle="collapse" href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
-            <div class="collapse" id="getResponseSheetHeaders">
-                <div class="well">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> withQuestionNumbers
-                        </label>
-                    </div>
-<pre>
-{{ctrl.getResponseSheetHeaders()|json}}
-</pre>
-                </div>
-            </div>
-
-            <h4><a data-toggle="collapse" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
-            <div class="collapse" id="getResponseSheetRow">
-                <div class="well">
-<pre>
-{{ctrl.getResponseSheetRow()|json}}
-</pre>
-                </div>
-            </div>
-
-            <h4><a data-toggle="collapse" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
-            <div class="collapse" id="getResponseSheet">
-                <div class="well">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> headersWithQuestionNumber
-                        </label>
+                    </pre>
+                </uib-tab>
+                <uib-tab  heading="Model">
+                    <pre>
+                        {{ctrl.formData|json}}
+                    </pre>
+                </uib-tab>
+                
+                <uib-tab  heading="Utils">
+                    <h3>mwFormResponseUtils service</h3>
+                    <br />
+                    <h4><a ng-click="ctrl.mergeFormWithResponse = !ctrl.mergeFormWithResponse"  href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
+                    <div uib-collapse="ctrl.mergeFormWithResponse" id="mergeFormWithResponse">
+                        <div class="well">
+                            <pre>
+{{ctrl.getMerged() | json}}
+                            </pre>
+                        </div>
                     </div>
 
-<pre>
-{{ctrl.getResponseSheet()|json}}
-</pre>
-                </div>
-            </div>
+                    <h4><a ng-click="ctrl.getQuestionWithResponseList = !ctrl.getQuestionWithResponseList" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
+                    <div uib-collapse="ctrl.getQuestionWithResponseList" id="getQuestionWithResponseList">
+                        <div class="well">
+                            <pre>
+{{ctrl.getQuestionWithResponseList() | json}}
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h4><a ng-click="ctrl.getResponseSheetHeaders = !ctrl.getResponseSheetHeaders"  href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
+                    <div uib-collapse="ctrl.getResponseSheetHeaders" id="getResponseSheetHeaders">
+                        <div class="well">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> withQuestionNumbers
+                                </label>
+                            </div>
+                            <pre>
+{{ctrl.getResponseSheetHeaders() | json}}
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h4><a ng-click="ctrl.getResponseSheetRow = !ctrl.getResponseSheetRow" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
+                    <div  uib-collapse="ctrl.getResponseSheetRow" class="collapse" id="getResponseSheetRow">
+                        <div class="well">
+                            <pre>
+{{ctrl.getResponseSheetRow() | json}}
+                            </pre>
+                        </div>
+                    </div>
+
+                    <h4><a ng-click="ctrl.getResponseSheet = !ctrl.getResponseSheet" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
+                    <div uib-collapse="ctrl.getResponseSheet" id="getResponseSheet">
+                        <div class="well">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.headersWithQuestionNumber"> headersWithQuestionNumber
+                                </label>
+                            </div>
+
+                            <pre>
+{{ctrl.getResponseSheet() | json}}
+                            </pre>
+                        </div>
+                    </div>
+
+                </uib-tab>
+            </uib-tabset>
 
         </div>
-    </div>
-</div>
 
 
 
@@ -175,24 +169,21 @@
 
 
 
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="../bower_components/angular-translate/angular-translate.min.js"></script>
-<script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-<script src="../bower_components/angular-ui-sortable/sortable.min.js"></script>
-<script src="../bower_components/angular-elastic/elastic.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="../bower_components/angular-translate/angular-translate.min.js"></script>
+        <script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+        <script src="../bower_components/angular-elastic/elastic.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="../bower_components/Sortable/Sortable.min.js"></script>
+        <script src="../bower_components/Sortable/ng-sortable.js"></script>
+        <script src="../dist/form-utils.min.js"></script>
+        <script src="../dist/form-builder.min.js"></script>
+        <script src="../dist/form-viewer.min.js"></script>
+
+        <script src="demo.js"></script>
 
 
-
-<script src="../dist/form-utils.min.js"></script>
-<script src="../dist/form-builder.min.js"></script>
-<script src="../dist/form-viewer.min.js"></script>
-
-<script src="demo.js"></script>
-
-
-</body>
+    </body>
 </html>
