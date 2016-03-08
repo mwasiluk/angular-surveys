@@ -19,7 +19,13 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         bindToController: true,
         controller: function(mwFormUuid){
             var ctrl = this;
-
+            ctrl.callback = function($event,element){
+                $event.preventDefault();
+                $event.stopPropagation();
+                if (element.callback && typeof element.callback === "function") {
+                    element.callback(ctrl.pageElement);
+                }
+            };
             if(ctrl.pageElement.type=='question'){
                 if(!ctrl.pageElement.question){
                     ctrl.pageElement.question={
@@ -84,7 +90,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                 pageBuilderCtrl.moveUpElement(ctrl.pageElement);
             };
 
-
+            ctrl.options = pageBuilderCtrl.options;
             ctrl.onImageSelection = pageBuilderCtrl.onImageSelection;
         }
     };

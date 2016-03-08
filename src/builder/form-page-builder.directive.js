@@ -44,11 +44,12 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.sortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
+                group: "survey",
                 handle: ".inactive",
                 //cancel: ".not-draggable",
-                connectWith: ".page-element-list",
-                stop: function(e, ui) {
+                chosenClass: ".page-element-list",
+                onEnd: function(e, ui) {
                     updateElementsOrderNo();
                 }
             };
@@ -210,7 +211,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                     ctrl.updateElementsOrderNo();
                 }
             });
-
+            ctrl.options = formBuilderCtrl.options;
             ctrl.onImageSelection = formBuilderCtrl.onImageSelection;
         }
     };
