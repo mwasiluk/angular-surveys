@@ -13,7 +13,8 @@ angular.module('mwFormBuilder')
         }).factory('mwFormClone', ["mwFormUuid", function (mwFormUuid) {
     var service = {};
     var checkedObjects = [];
-    function resetIds(obj, root) {
+    
+    service.resetIds = function (obj, root) {
       if (root) {
         checkedObjects = [];
       }
@@ -26,13 +27,13 @@ angular.module('mwFormBuilder')
       }
 
       if (Array.isArray(obj)) {
-        obj.forEach(resetIds);
+        obj.forEach(service.resetIds);
         return;
       }
 
       for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
-          resetIds(obj[property]);
+          service.resetIds(obj[property]);
         }
       }
 
@@ -41,13 +42,12 @@ angular.module('mwFormBuilder')
         var oldId = obj.id;
         obj.id = newId;
       }
-
-    }
+    };
 
     service.cloneElement = function (pageElement) {
       var element = {};
       angular.copy(pageElement, element);
-      resetIds(element, true);
+      service.resetIds(element, true);
       return element;
     };
 
