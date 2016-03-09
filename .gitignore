@@ -38,3 +38,4 @@ tmp
 *.iml
 out
 gen
+/nbproject/private/
