@@ -43,7 +43,7 @@ angular.module('mwFormBuilder')
       }
 
     }
-    
+
     service.cloneElement = function (pageElement) {
       var element = {};
       angular.copy(pageElement, element);
@@ -74,6 +74,7 @@ angular.module('mwFormBuilder')
           _pages.push(service.clonePage(form.pages[i]));
         }
       }
+      _form.pages = _pages;
       return _form;
     };
 
