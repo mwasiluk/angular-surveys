@@ -78,17 +78,17 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
             ctrl.rowsSortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
                 handle: ".drag-handle",
-                stop: function(e, ui) {
+                onEnd: function(e, ui) {
                     updateOrderNo(ctrl.question.grid.rows);
                 }
             };
             ctrl.colsSortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
                 handle: ".drag-handle",
-                stop: function(e, ui) {
+                onEnd: function(e, ui) {
                     updateOrderNo(ctrl.question.grid.cols);
                 }
             };

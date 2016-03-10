@@ -58,9 +58,9 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
 
             ctrl.itemsSortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
                 handle: ".drag-handle",
-                stop: function(e, ui) {
+                onEnd: function(e, ui) {
                     updateOrderNo(ctrl.question.divisionList);
                 }
             };
