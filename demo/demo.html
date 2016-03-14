@@ -102,8 +102,8 @@
                 <uib-tab  heading="Utils">
                     <h3>mwFormResponseUtils service</h3>
                     <br />
-                    <h4><a ng-click="ctrl.mergeFormWithResponse = !ctrl.mergeFormWithResponse"  href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
-                    <div uib-collapse="ctrl.mergeFormWithResponse" id="mergeFormWithResponse">
+                    <h4><a ng-click="ctrl.cmergeFormWithResponse = !ctrl.cmergeFormWithResponse"  href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
+                    <div uib-collapse="ctrl.cmergeFormWithResponse" id="mergeFormWithResponse">
                         <div class="well">
                             <pre>
 {{ctrl.getMerged() | json}}
@@ -111,8 +111,8 @@
                         </div>
                     </div>
 
-                    <h4><a ng-click="ctrl.getQuestionWithResponseList = !ctrl.getQuestionWithResponseList" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
-                    <div uib-collapse="ctrl.getQuestionWithResponseList" id="getQuestionWithResponseList">
+                    <h4><a ng-click="ctrl.cgetQuestionWithResponseList = !ctrl.cgetQuestionWithResponseList" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
+                    <div uib-collapse="ctrl.cgetQuestionWithResponseList" id="getQuestionWithResponseList">
                         <div class="well">
                             <pre>
 {{ctrl.getQuestionWithResponseList() | json}}
@@ -120,8 +120,8 @@
                         </div>
                     </div>
 
-                    <h4><a ng-click="ctrl.getResponseSheetHeaders = !ctrl.getResponseSheetHeaders"  href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
-                    <div uib-collapse="ctrl.getResponseSheetHeaders" id="getResponseSheetHeaders">
+                    <h4><a ng-click="ctrl.cgetResponseSheetHeaders = !ctrl.cgetResponseSheetHeaders"  href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
+                    <div uib-collapse="ctrl.cgetResponseSheetHeaders" id="getResponseSheetHeaders">
                         <div class="well">
                             <div class="checkbox">
                                 <label>
@@ -134,8 +134,8 @@
                         </div>
                     </div>
 
-                    <h4><a ng-click="ctrl.getResponseSheetRow = !ctrl.getResponseSheetRow" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
-                    <div  uib-collapse="ctrl.getResponseSheetRow" class="collapse" id="getResponseSheetRow">
+                    <h4><a ng-click="ctrl.cgetResponseSheetRow = !ctrl.cgetResponseSheetRow" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
+                    <div  uib-collapse="ctrl.cgetResponseSheetRow" class="collapse" id="getResponseSheetRow">
                         <div class="well">
                             <pre>
 {{ctrl.getResponseSheetRow() | json}}
@@ -143,8 +143,8 @@
                         </div>
                     </div>
 
-                    <h4><a ng-click="ctrl.getResponseSheet = !ctrl.getResponseSheet" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
-                    <div uib-collapse="ctrl.getResponseSheet" id="getResponseSheet">
+                    <h4><a ng-click="ctrl.cgetResponseSheet = !ctrl.cgetResponseSheet" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
+                    <div uib-collapse="ctrl.cgetResponseSheet" id="getResponseSheet">
                         <div class="well">
                             <div class="checkbox">
                                 <label>

@@ -10,11 +10,10 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
 
         var ctrl = this;
         ctrl.mergeFormWithResponse = true;
-        ctrl.getQuestionWithResponseList = true;
-        ctrl.getQuestionWithResponseList = true;
-        ctrl.getResponseSheetHeaders = true;
-        ctrl.getResponseSheetRow = true;
-        ctrl.getResponseSheet = true;
+        ctrl.cgetQuestionWithResponseList = true;
+        ctrl.cgetResponseSheetHeaders = true;
+        ctrl.cgetResponseSheetRow = true;
+        ctrl.cgetResponseSheet = true;
         ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
