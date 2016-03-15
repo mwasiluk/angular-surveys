@@ -10,7 +10,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalp
         var ctrl = this;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
-        ctrl.languages = ['en', 'pl'];
+        ctrl.languages = ['en', 'pl', "es"];
         ctrl.formData = {};
         $http.get('form-data.json')
             .then(function(res){
