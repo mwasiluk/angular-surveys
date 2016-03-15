@@ -23,13 +23,14 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             }
             mwFormBuilderOptions.questionTypes = MW_QUESTION_TYPES;
             mwFormBuilderOptions.elementButtons = [];
+            mwFormBuilderOptions.additionalSelects = [];
             
             if(ctrl.options){
                 if(ctrl.options.questionTypes){
                     mwFormBuilderOptions.questionTypes = ctrl.options.questionTypes;
                 }
-                if(ctrl.options.elementButtons){
-                    mwFormBuilderOptions.elementButtons = ctrl.options.elementButtons;
+                if(ctrl.options.additionalSelects){
+                    mwFormBuilderOptions.additionalSelects = ctrl.options.additionalSelects;
                 }
             }
 

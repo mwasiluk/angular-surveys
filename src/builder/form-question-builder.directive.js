@@ -117,6 +117,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = formPageElementBuilder.possiblePageFlow;
+            ctrl.options = formPageElementBuilder.options;
         }
     };
 });

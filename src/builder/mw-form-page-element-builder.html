@@ -30,7 +30,7 @@
                 </button>
                 <button type="button" ng-click="ctrl.callback($event,button)" 
                         ng-attr-title="{{button.title | translate}}" class="edit-button" 
-                        aria-label="{{button.title | translate}}"  aria-hidden="false" ng-if="!ctrl.readOnly"
+                        aria-label="{{button.title | translate}}"  aria-hidden="false" ng-if="ctrl.filter(button) && !ctrl.readOnly"
                         ng-repeat="button in ctrl.options.elementButtons"
                         uib-popover="{{button.title | translate}}" popover-trigger="mouseenter" popover-append-to-body popover-placement="right"
                         >

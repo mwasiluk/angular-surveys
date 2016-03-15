@@ -26,6 +26,12 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                     element.callback(ctrl.pageElement);
                 }
             };
+            ctrl.filter = function(element){
+                if (element.filter && typeof element.filter === "function") {
+                    return element.filter(ctrl.pageElement);
+                }
+                return true;
+            };
             if(ctrl.pageElement.type=='question'){
                 if(!ctrl.pageElement.question){
                     ctrl.pageElement.question={
