@@ -32,6 +32,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 if(ctrl.options.additionalSelects){
                     mwFormBuilderOptions.additionalSelects = ctrl.options.additionalSelects;
                 }
+                if(ctrl.options.elementButtons){
+                    mwFormBuilderOptions.elementButtons = ctrl.options.elementButtons;
+                }
             }
 
 
