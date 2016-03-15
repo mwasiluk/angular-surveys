@@ -4,7 +4,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
             prefix: '../dist/i18n/',
             suffix: '/angular-surveys.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('es');
     })
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
 
@@ -17,7 +17,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
-        ctrl.languages = ['en', 'pl'];
+        ctrl.languages = ['en', 'pl', "es"];
         ctrl.formData = {};
         $http.get('form-data.json')
             .then(function(res){
