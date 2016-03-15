@@ -70,9 +70,9 @@ angular.module('mwFormViewer')
 
             ctrl.orderedConfig = angular.extend({}, baseConfig, {
                 group:{
-                    name: 'priorityList',
+                    name: 'A',
                     pull: false,
-                    put: true
+                    put: ['B']
                 },
                 onEnd: function(e, ui) {
                     updatePriority(ctrl.questionResponse.priorityList);
@@ -82,8 +82,8 @@ angular.module('mwFormViewer')
             ctrl.availableConfig = angular.extend({}, baseConfig, {
                 sort:false,
                  group:{
-                    name: 'priorityList',
-                    pull: true,
+                    name: 'B',
+                    pull: ['A'],
                     put: false
                 },
                 onEnd: function(e, ui) {
