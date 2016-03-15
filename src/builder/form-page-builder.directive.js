@@ -15,7 +15,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
         templateUrl: 'mw-form-page-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout, mwFormUuid){
+        controller: function($timeout, mwFormUuid, mwFormClone){
             var ctrl = this;
             ctrl.hoverEdit = false;
             ctrl.formPage.namedPage = !!ctrl.formPage.name;
@@ -44,11 +44,12 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.sortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
+                group: "survey",
                 handle: ".inactive",
                 //cancel: ".not-draggable",
-                connectWith: ".page-element-list",
-                stop: function(e, ui) {
+                chosenClass: ".page-element-list",
+                onEnd: function(e, ui) {
                     updateElementsOrderNo();
                 }
             };
@@ -66,49 +67,13 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.cloneElement = function(pageElement, setActive){
                 var index = ctrl.formPage.elements.indexOf(pageElement);
-                var element = {};
-                angular.copy(pageElement, element);
+                var element = mwFormClone.cloneElement(pageElement);
                 if(setActive){
                     ctrl.activeElement=element;
                 }
-                resetIds(element,true);
                 ctrl.formPage.elements.splice(index,0, element);
 
             };
-
-            var checkedObjects = [];
-            function resetIds(obj, root){
-                if(root){
-                    checkedObjects=[];
-                }
-                if(checkedObjects.indexOf(obj)>=0){
-                    return;
-                }
-                checkedObjects.push(obj);
-                if(!obj === Object(obj)){
-                    return;
-                }
-
-                if(Array.isArray(obj)){
-                    obj.forEach(resetIds);
-                    return;
-                }
-
-                for (var property in obj) {
-                    if (obj.hasOwnProperty(property)) {
-                        resetIds(obj[property]);
-                    }
-                }
-
-                if(obj.hasOwnProperty('id')){
-                    var newId = mwFormUuid.get();
-                    var oldId = obj.id;
-                    console.log('setting new id:',newId, oldId, obj);
-                    obj.id = newId;
-                }
-
-
-            }
 
             ctrl.removeElement = function(pageElement){
                 var index = ctrl.formPage.elements.indexOf(pageElement);
@@ -210,7 +175,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                     ctrl.updateElementsOrderNo();
                 }
             });
-
+            ctrl.options = formBuilderCtrl.options;
             ctrl.onImageSelection = formBuilderCtrl.onImageSelection;
         }
     };

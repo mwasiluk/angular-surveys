@@ -30,7 +30,9 @@
     "angular-ui-sortable": "0.13.x",
     "bootstrap": "3.x",
     "font-awesome": "4.x",
-    "angular-elastic": "2.x"
+    "angular-elastic": "2.x",
+    "angular-bootstrap": "^1.2.4",
+    "Sortable": "dev"
   },
   "devDependencies": {
     "angular-translate-loader-partial": "2.x",

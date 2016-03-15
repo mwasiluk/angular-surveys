@@ -9,17 +9,17 @@
         <tbody>
         <tr>
 
-            <td class="mw-ordered-items" ui-sortable="ctrl.orderedConfig" ng-model="ctrl.questionResponse.priorityList">
+            <td class="mw-ordered-items" ng-sortable="ctrl.orderedConfig" ng-model="ctrl.questionResponse.priorityList">
 
                 <div class="mw-item" ng-repeat="item in ctrl.questionResponse.priorityList">
 
                     <strong>{{$index+1}}.</strong> {{::ctrl.idToItem[item.id].value}}
                 </div>
-
-
+                
+                
             </td>
 
-            <td class="mw-available-items" ui-sortable="ctrl.availableConfig" ng-model="ctrl.availableItems">
+            <td class="mw-available-items" ng-sortable="ctrl.availableConfig" ng-model="ctrl.availableItems">
 
                 <div class="mw-item" ng-repeat="item in ctrl.availableItems">
 

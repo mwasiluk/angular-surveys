@@ -17,15 +17,23 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         bindToController: true,
         controller: function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
-
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                 ctrl.formData.pages = [];
                 ctrl.formData.pages.push(createEmptyPage(1));
             }
             mwFormBuilderOptions.questionTypes = MW_QUESTION_TYPES;
+            mwFormBuilderOptions.elementButtons = [];
+            mwFormBuilderOptions.additionalSelects = [];
+            
             if(ctrl.options){
                 if(ctrl.options.questionTypes){
                     mwFormBuilderOptions.questionTypes = ctrl.options.questionTypes;
+                }
+                if(ctrl.options.additionalSelects){
+                    mwFormBuilderOptions.additionalSelects = ctrl.options.additionalSelects;
+                }
+                if(ctrl.options.elementButtons){
+                    mwFormBuilderOptions.elementButtons = ctrl.options.elementButtons;
                 }
             }
 

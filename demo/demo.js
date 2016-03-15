@@ -4,15 +4,20 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
             prefix: '../dist/i18n/',
             suffix: '/angular-surveys.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('es');
     })
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
 
         var ctrl = this;
+        ctrl.mergeFormWithResponse = true;
+        ctrl.cgetQuestionWithResponseList = true;
+        ctrl.cgetResponseSheetHeaders = true;
+        ctrl.cgetResponseSheetRow = true;
+        ctrl.cgetResponseSheet = true;
         ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
-        ctrl.languages = ['en', 'pl'];
+        ctrl.languages = ['en', 'pl', "es"];
         ctrl.formData = {};
         $http.get('form-data.json')
             .then(function(res){

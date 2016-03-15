@@ -58,9 +58,9 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
 
             ctrl.offeredAnswersSortableConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
+                ghostClass: "beingDragged",
                 handle: ".drag-handle",
-                stop: function(e, ui) {
+                onEnd: function(e, ui) {
                     updateAnswersOrderNo();
                 }
             };
@@ -117,6 +117,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = formPageElementBuilder.possiblePageFlow;
+            ctrl.options = formPageElementBuilder.options;
         }
     };
 });
