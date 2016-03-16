@@ -100,6 +100,28 @@
 
         <mw-priority-list ng-switch-when="priority" question-response="ctrl.questionResponse" question="ctrl.question" read-only="ctrl.readOnly"></mw-priority-list>
 
+        <div ng-switch-when="number" class="form-inline">
+            <input class="form-control" min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+        <div ng-switch-when="date" class="form-inline">
+            <input class="form-control" type="date" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+        <div ng-switch-when="datetime" class="form-inline">
+            <input class="form-control" type="datetime" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+        <div ng-switch-when="time" class="form-inline">
+            <input class="form-control" type="time" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+        <div ng-switch-when="email" class="form-inline">
+            <input class="form-control" type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+        <div ng-switch-when="range" class="mw-range">
+            <input class="" ng-attr-min="{{ctrl.question.min}}" ng-attr-max="{{ctrl.question.max}}" type="range" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"><strong class="mw-range-value-label">{{ctrl.questionResponse.answer}}</strong>
+        </div>
+        <div ng-switch-when="url" class="form-inline">
+            <input class="form-control" type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+        </div>
+
     </div>
 
 </div>

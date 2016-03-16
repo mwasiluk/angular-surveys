@@ -61,22 +61,32 @@ angular.module('mwFormViewer')
 
             var baseConfig = {
                 disabled: ctrl.readOnly,
-                placeholder: "beingDragged",
-                tolerance: 'pointer',
-                items: 'div',
-                revert: 100
+                ghostClass: "beingDragged"
+//                tolerance: 'pointer',
+//                items: 'div',
+//                revert: 100
 
             };
 
             ctrl.orderedConfig = angular.extend({}, baseConfig, {
-                stop: function(e, ui) {
+                group:{
+                    name: 'A',
+                    pull: false,
+                    put: ['B']
+                },
+                onEnd: function(e, ui) {
                     updatePriority(ctrl.questionResponse.priorityList);
                 }
             });
 
             ctrl.availableConfig = angular.extend({}, baseConfig, {
-                connectWith: ".mw-ordered-items",
-                stop: function(e, ui) {
+                sort:false,
+                 group:{
+                    name: 'B',
+                    pull: ['A'],
+                    put: false
+                },
+                onEnd: function(e, ui) {
                     updatePriority(ctrl.questionResponse.priorityList);
                     ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
                 }

@@ -61,6 +61,19 @@
         .align-right{
             text-align: right;
         }
+
+        .mw-range{
+            input{
+                display: inline-block;
+                width: auto;
+            }
+
+            .mw-range-value-label{
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 22px;
+            }
+        }
     }
 
     .mw-form-description{
@@ -69,6 +82,11 @@
 
     .no-drag{
         cursor: default;
+    }
+
+    .ng-invalid.ng-dirty {
+        border-color: red;
+        outline-color: red;
     }
 }
 

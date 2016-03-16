@@ -1,5 +1,5 @@
 <div class="mw-question-priority-list-builder">
-    <div class="question-priority-list" ui-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.priorityList" role="list">
+    <div class="question-priority-list" ng-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.priorityList" role="list">
         <div class="mw-question-priority-list-item" ng-repeat="item in ctrl.question.priorityList" role="listitem">
             <div class="drag-handle" ng-if="!ctrl.readOnly">
                 <i class="fa fa-arrows-v fa-lg handle-inner"></i>

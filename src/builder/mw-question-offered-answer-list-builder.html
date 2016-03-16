@@ -1,5 +1,5 @@
 <div class="question-offered-answer-list-builder">
-    <div class="question-offered-answer-list" ui-sortable="ctrl.offeredAnswersSortableConfig" ng-model="ctrl.question.offeredAnswers" role="list">
+    <div class="question-offered-answer-list" ng-sortable="ctrl.offeredAnswersSortableConfig" ng-model="ctrl.question.offeredAnswers" role="list">
         <div class="mw-question-offered-answer" ng-repeat="answer in ctrl.question.offeredAnswers" role="listitem">
             <div class="drag-handle" ng-if="!ctrl.readOnly">
                 <i class="fa fa-arrows-v fa-lg handle-inner"></i>
@@ -11,7 +11,7 @@
             </div>
             <input wd-focus-me="ctrl.isNewAnswer[answer.id]" type="text" ng-model="answer.value" ng-keypress="ctrl.keyPressedOnInput($event,answer)" required class="form-control offered-answer-value " ng-readonly="ctrl.readOnly">
             <button role="button" class="remove-item-button" ng-click="ctrl.removeOfferedAnswer(answer)" ng-if="!ctrl.readOnly"
-                    ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    ng-attr-title="{{'mwForm.buttons.remove' | translate}}" uib-popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
                 <i class="fa fa-times"></i>
             </button>
             <span ng-if="ctrl.question.pageFlowModifier" class="form-inline">
@@ -47,7 +47,7 @@
         <label translate="mwForm.question.otherLabel">Inna: </label>
         <input  type="text" value="{{'mwForm.question.userAnswer'|translate}}"  class="form-control offered-answer-value " readonly>
         <button type="button" role="button" class="remove-item-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly"
-                ng-attr-title="{{'mwForm.buttons.remove' | translate}}" popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                ng-attr-title="{{'mwForm.buttons.remove' | translate}}" uib-popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
             <i class="fa fa-times"></i>
         </button>
     </div>

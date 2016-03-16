@@ -20,7 +20,6 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
             onReady: '&',
             isPreview: '=?',
             readOnly: '=?',
-            options: '=?',
             onImageSelection: '&'
         },
         templateUrl: 'mw-form-image-builder.html',
