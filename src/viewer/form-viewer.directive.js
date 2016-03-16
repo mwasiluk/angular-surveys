@@ -34,6 +34,23 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             ctrl.formData.pages.forEach(function(page){
                 ctrl.pageIdToPage[page.id]=page;
             });
+            
+            ctrl.showElement = function(element){
+              
+              if (!element.question){
+                return true;
+              }
+              
+              if (element.question.visibleIf === undefined){
+                return true;
+              }
+              
+              if (element.question.visibleIf === false){
+                return true;
+              }
+              
+              return ctrl.responseData[element.question.visibleIfQuestion.id].selectedAnswer === element.question.visibleIfAnswer;
+            }
 
 
             ctrl.buttons={

@@ -29,6 +29,23 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
             ctrl.id = FormQuestionBuilderId.next();
             ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
             ctrl.formSubmitted=false;
+            
+            function getRadioQuestions(){
+              var result = [];
+              ctrl.formObject.pages.forEach(function (page){
+                page.elements.filter(function (element){
+                  return element.type === 'question' && element.question.type === 'radio';
+                }).forEach(function (radioQuestion) {
+                  result.push(radioQuestion.question);
+                });
+              });
+              
+              return result;
+            }                                  
+            
+            ctrl.toggleVisibleIf = function(){
+               ctrl.radioQuestions = getRadioQuestions();
+            };
 
             sortAnswersByOrderNo();
             function updateAnswersOrderNo() {

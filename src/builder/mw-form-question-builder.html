@@ -89,6 +89,33 @@
             </div>
 
             <br/> <br/>
+            
+            <div class="row">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" data-ng-click="ctrl.toggleVisibleIf()" ng-model="ctrl.question.visibleIf" ng-disabled="ctrl.readOnly"><span translate="mwForm.question.visibleIf">Visible If</span>
+                        </label>
+                        <div ng-if="ctrl.question.visibleIf">
+                          <select name="visibleIfQuestion" ng-model="ctrl.question.visibleIfQuestion"
+                            ng-options="option.text for option in ctrl.radioQuestions track by option.id" >
+                            <option value="">---Please select---</option> 
+                          </select>
+                          <label>
+                              <span translate="mwForm.question.equals">equals</span>
+                          </label>
+                          <label>
+                            <select name="visibleIfAnswer" ng-model="ctrl.question.visibleIfAnswer" >
+                              <option ng-repeat="answer in ctrl.question.visibleIfQuestion.offeredAnswers" value="{{answer.id}}">{{answer.value}}</option>
+                            </select>
+                          </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="row">
                 <div class="col-xs-2">
                     <button type="button" class="btn btn-primary" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">Gotowe</button>

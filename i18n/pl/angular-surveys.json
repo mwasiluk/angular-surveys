@@ -132,8 +132,9 @@
             "buttons":{
                 "addOption":"Kliknij aby dodać opcję",
                 "addOther":"Dodaj \"Inne\""
-            }
-
+            },
+            "visibleIf": "visível se",
+            "equals": "é igual a"
         },
         "image":{
             "selectImageButton": "Wybierz obraz"
