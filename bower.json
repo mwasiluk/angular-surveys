@@ -1,11 +1,11 @@
 {
-  "name": "angular-surveys",
-  "homepage": "https://github.com/mwasiluk/angular-surveys",
+  "name": "angular-surveys-gofreddo",
+  "homepage": "https://github.com/gofreddo/angular-surveys",
   "authors": [
-    "Michał Wasiluk"
+    "Michał Wasiluk",
+    "Jeff Wilde"
   ],
   "description": "Angular survey/form builder and viewer inspired by Google Forms",
-  "main": "",
   "moduleType": [],
   "keywords": [
     "angular",
