@@ -1,0 +1,148 @@
+{
+  "mwForm": {
+    "form": {
+      "name": "Nombre del formulario",
+      "name.placeholder": "Título del formulario",
+      "description": "Descripción"
+    },
+    "buttons": {
+      "addPage": "Agregar página",
+      "moveDown": "Bajar",
+      "moveUp": "Subir",
+      "removePage": "Remover página",
+      "remove": "Eliminar",
+      "addElement": "Agregar elemento",
+      "questionReady": "Listo",
+      "next": "Siguiente",
+      "back": "Atras",
+      "submit": "Enviar",
+      "begin": "Comenzar",
+      "fold": "Colapsar",
+      "unfold": "Expander",
+      "edit": "Editar",
+      "clone": "Duplicar",
+      "view": "Ver"
+    },
+    "page": {
+      "tab": {
+        "heading": "Página {{page}} de {{allPages}}"
+      },
+      "elements": {
+        "empty": "Página vacia"
+      },
+      "pageWithNameCheckbox": "nombrar",
+      "name": "Nombre de página"
+    },
+    "pageFlow": {
+      "afterPage": "Despues de página {{page}}:",
+      "afterQuestionAnswer": "Ir a página basado en respuesta",
+      "goToPage": "Ir a página {{page.number}}",
+      "goToNextPage": "Continuar a la siguiente página",
+      "submitForm": "Enviar formulario"
+    },
+    "elements": {
+      "question": "Pregunta",
+      "image": "Imagen",
+      "paragraph": "Párrafo"
+    },
+    "question": {
+      "types": {
+        "text": {
+          "name": "Texto corto"
+        },
+        "textarea": {
+          "name": "Texto largo"
+        },
+        "radio": {
+          "name": "Radio"
+        },
+        "checkbox": {
+          "name": "Checkboxes"
+        },
+        "grid": {
+          "name": "Grid"
+        },
+        "priority": {
+          "name": "Prioridad"
+        },
+        "division": {
+          "name": "Division"
+        },
+        "number": {
+          "name": "Número"
+        },
+        "date": {
+          "name": "Fecha"
+        },
+        "datetime": {
+          "name": "Fecha y hora"
+        },
+        "time": {
+          "name": "Hora"
+        },
+        "email": {
+          "name": "Email"
+        },
+        "range": {
+          "name": "Rango"
+        },
+        "url": {
+          "name": "URL"
+        }
+      },
+      "text": "Texto de pregunta",
+      "type": "Tipo de pregunta",
+      "required": "Requerida",
+      "preview": {
+        "text": "Texto corto respuesta",
+        "textarea": "Texto largo respuesta",
+        "otherAnswer": "Otra"
+      },
+      "division": {
+        "quantity": "Cantidad",
+        "unit": "Etiqueta de unidad",
+        "assignedSumLabel": "Asignado",
+        "fromRequiredLabel": "de lo requerido:"
+      },
+      "priority": {
+        "sorted": "Ordenados",
+        "available": "Disponibles",
+        "clickToAddItem": "Click para agregar ítem"
+      },
+      "grid": {
+        "rowLabel": "Fila {{row}}",
+        "clickToAddRow": "Click para agregar fila",
+        "columnLabel": "Columna {{col}}",
+        "clickToAddColumn": "Click para agregar columna"
+      },
+      "range": {
+        "from": "Rango desde",
+        "to": "hasta"
+      },
+      "number": {
+        "min": "Min",
+        "max": "Max"
+      },
+      "orLabel": "o ",
+      "otherLabel": "Otra: ",
+      "userAnswer": "Respuesta del usuario",
+      "buttons": {
+        "addOption": "Click para agregar opción",
+        "addOther": "Agregar 'Otra'"
+      }
+    },
+    "image": {
+      "selectImageButton": "Seleccionar imagen"
+    },
+    "paragraph": {
+      "placeholder": "Digite texto de párrafo"
+    },
+    "confirmationPage": {
+      "title": "Página de confirmación",
+      "customMessage": "Mensaje de confirmación personalizada",
+      "defaultMessage": "Tus respuestas han sido guardadas",
+      "errorMessage": "Error! Tus respuestas no han sido guardadas",
+      "pendingMessage": "Tus respuestas estan siendo guardadas."
+    }
+  }
+}

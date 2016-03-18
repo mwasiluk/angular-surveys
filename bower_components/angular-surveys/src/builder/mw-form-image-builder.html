@@ -1,0 +1,51 @@
+<div class="mw-form-image-builder-wrapper">
+    <div class="mw-form-image-builder" ng-class="{'ng-submitted':ctrl.formSubmitted}">
+        <div class="image-editor" ng-form="ctrl.form" ng-if="!ctrl.isPreview">
+            <button ng-if="!ctrl.image.src" ng-click="ctrl.selectImageButtonClicked()" type="button" class="btn btn-default" translate="mwForm.image.selectImageButton">Select image</button>
+
+            <div class="image-edition row" ng-if="ctrl.image.src" >
+                <div class="col-md-12" ng-class="'align-'+ctrl.image.align">
+                    <img  ng-src="{{ctrl.image.src}}">
+                </div>
+                <div class="col-md-12 image-align-control">
+                    <div class="btn-group" role="group" aria-label="Image align">
+                        <button type="button" class="btn btn-default" ng-class="{'selected': ctrl.image.align=='left'}" ng-click="ctrl.setAlign('left')"><i class="fa fa-align-left"></i></button>
+                        <button type="button" class="btn btn-default" ng-class="{'selected': ctrl.image.align=='center'}" ng-click="ctrl.setAlign('center')"><i class="fa fa-align-center"></i></button>
+                        <button type="button" class="btn btn-default" ng-class="{'selected': ctrl.image.align=='right'}" ng-click="ctrl.setAlign('right')"><i class="fa fa-align-right"></i></button>
+                    </div>
+                </div>
+
+
+                <div class="form-horizontal">
+
+
+                    <div class="form-group">
+                        <label ng-attr-for="image-caption-{{ctrl.id}}" class="col-sm-2 control-label">Podpis</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="text" ng-attr-id="image-caption-{{ctrl.id}}" ng-model="ctrl.image.caption" ng-readonly="ctrl.readOnly">
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row"  ng-if="ctrl.image.src">
+                <br/> <br/>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">Gotowe</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="mw-preview" ng-if="ctrl.isPreview">
+
+            <figure ng-class="'align-'+ctrl.image.align">
+                <img ng-src="{{ctrl.image.src}}" ng-attr-alt="ctrl.image.caption">
+                <figcaption ng-if="ctrl.image.caption">{{ctrl.image.caption}}</figcaption>
+            </figure>
+        </div>
+    </div>
+
+</div>

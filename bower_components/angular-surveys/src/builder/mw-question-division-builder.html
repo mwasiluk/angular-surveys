@@ -1,0 +1,39 @@
+<div class="mw-question-division-builder">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <mw-label label-for="division-quantity-{{ctrl.question.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.division.quantity"></mw-label>
+            <div class="col-sm-10 col-md-8 form-inline">
+                <input ng-attr-id="division-quantity-{{ctrl.question.id}}" type="number" ng-model="ctrl.question.quantity"  required class="form-control" min="1" ng-readonly="ctrl.readOnly">
+            </div>
+        </div>
+        <div class="form-group">
+            <mw-label label-for="division-unit-{{ctrl.question.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.division.unit"></mw-label>
+            <div class="col-sm-10 col-md-8 form-inline">
+                <input ng-attr-id="division-unit-{{ctrl.question.id}}" type="text" ng-model="ctrl.question.unit" required class="form-control" ng-readonly="ctrl.readOnly">
+            </div>
+        </div>
+
+    </div>
+
+    <div class=" col-sm-10 col-sm-offset-2  col-md-8">
+        <div class="question-division-list" ng-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.divisionList" role="list">
+            <div class="mw-question-division-list-item" ng-repeat="item in ctrl.question.divisionList" role="listitem">
+                <div class="drag-handle" ng-if="!ctrl.readOnly">
+                    <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+                </div>
+                <input wd-focus-me="ctrl.isNewItem[item.id]" type="text" ng-model="item.value" ng-keypress="ctrl.keyPressedOnInput($event,item)" required class="form-control item-value " ng-readonly="ctrl.readOnly">
+                <button role="button" class="remove-item-button" ng-click="ctrl.removeItem(item)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
+            </div>
+
+        </div>
+        <div class="mw-question-division-list-item add-new-item-widget">
+            <div class="drag-handle">
+            </div>
+
+        <span ng-click="ctrl.addNewItem()" role="button" ng-if="!ctrl.readOnly">
+            <input type="text"  required class="form-control" value="Kliknij aby dodać pozycję">
+        </span>
+        </div>
+    </div>
+
+</div>

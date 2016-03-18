@@ -1,0 +1,88 @@
+<div class="mw-form-page-builder" ng-class="{'page-folded': ctrl.isFolded}">
+    <div ng-mouseover="ctrl.hoverIn()" ng-mouseleave="ctrl.hoverOut()">
+        <div class="mw-page-tab-container">
+            <div class="mw-form-page-tab">
+                <span class="mw-page-tab-text" role="heading" translate="mwForm.page.tab.heading" translate-values="{page: ctrl.formPage.number, allPages:ctrl.formObject.pages.length}">Strona 1 z 3</span>
+                <span class="mw-page-tab-checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="ctrl.formPage.namedPage" ng-disabled="ctrl.readOnly"><span class="mw-page-tab-checkbox-text" translate="mwForm.page.pageWithNameCheckbox">named</span>
+                    </label>
+                </span>
+            </div>
+            <div class="mw-page-tab-triangle"></div>
+            <div class="mw-page-tab-actions" ng-switch="ctrl.readOnly">
+                <button type="button" class="fold-button" ng-click="ctrl.fold()"
+                        ng-attr-title="{{'mwForm.buttons.fold' | translate}}" uib-popover="{{'mwForm.buttons.fold' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button type="button" class="unfold-button" ng-click="ctrl.unfold()"
+                        ng-attr-title="{{'mwForm.buttons.unfold' | translate}}" uib-popover="{{'mwForm.buttons.unfold' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    <i class="fa fa-expand"></i>
+                </button>
+                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast" ng-switch-when="false"
+                        ng-attr-title="{{'mwForm.buttons.moveDown' | translate}}" uib-popover="{{'mwForm.buttons.moveDown' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    <i class="fa  fa-chevron-down"></i>
+                </button>
+                <button type="button"  class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst" ng-switch-when="false"
+                        ng-attr-title="{{'mwForm.buttons.moveUp' | translate}}" uib-popover="{{'mwForm.buttons.moveUp' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removePage()" ng-switch-when="false"
+                        ng-attr-title="{{'mwForm.buttons.removePage' | translate}}" uib-popover="{{'mwForm.buttons.removePage' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+        <div ng-form="ctrl.form" role="form" novalidate class="form-page-builder-body">
+
+            <div class="form-group" ng-if="ctrl.formPage.namedPage">
+                <label ng-attr-for="page-name-{{ctrl.formPage.number}}" translate="mwForm.page.name">Nazwa strony</label>
+                <input type="text" class="form-control" name="pageName" ng-attr-id="page-name-{{ctrl.formPage.number}}" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
+            </div>
+
+            <div class="page-element-list" ng-sortable="ctrl.sortableConfig" ng-model="ctrl.formPage.elements">
+                <div class="empty-page-element-list-label form-group" ng-if="!ctrl.formPage.elements || (ctrl.formPage.elements && ctrl.formPage.elements.length === 0)">
+                    <span translate="mwForm.page.elements.empty">Brak elementów</span>
+                </div>
+                <mw-form-page-element-builder  ng-repeat="element in ctrl.formPage.elements" page-element="element" form-object="ctrl.formObject" is-active="ctrl.isElementActive(element)" on-ready="ctrl.onElementReady()" ng-click="ctrl.selectElement(element)" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-element-builder>
+            </div>
+
+
+            <div uib-dropdown class="add-element btn-group"  ng-if="!ctrl.readOnly">
+                <button type="button" class="btn btn-default" ng-click="ctrl.addElement()">
+                    <span translate="mwForm.buttons.addElement">Add element</span>
+                </button>
+                <button type="button" class="btn btn-default" uib-dropdown-toggle  aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Split button!</span>
+                </button>
+                <ul uib-dropdown-menu aria-labelledby="simple-dropdown" role="menu">
+                    <li ng-if="ctrl.isElementTypeEnabled('question')"><button type="button" ng-click="ctrl.addQuestion()"><span translate="mwForm.elements.question">Pytanie</span><i class="fa fa-question-circle  fa-lg fa-fw" style="margin-left: 10px;"></i></button></li>
+                    <li ng-if="ctrl.isElementTypeEnabled('image')"><button type="button" ng-click="ctrl.addImage()"><span translate="mwForm.elements.image">Obraz</span><i class="fa fa-picture-o  fa-lg fa-fw" style="margin-left: 10px;"></i></button></li>
+                    <li ng-if="ctrl.isElementTypeEnabled('paragraph')"><button type="button" ng-click="ctrl.addParagraph()"><span translate="mwForm.elements.paragraph">Obraz</span><i class="fa fa-paragraph  fa-lg fa-fw" style="margin-left: 10px;"></i></button></li>
+
+                </ul>
+            </div>
+
+        </div>
+        <table cellspacing="0" class="mw-page-bottom-tab-container" ng-if="!ctrl.isLast">
+            <tr>
+                <td class="mw-page-bottom-tab-triangle">
+                </td>
+                <td class="mw-form-page-bottom-tab">
+                    <div class="page-flow-select form-inline">
+                        <label translate="mwForm.pageFlow.afterPage" translate-values="{page:ctrl.formPage.number}" ng-attr-for="page-flow-select-{{ctrl.formPage.number}}">Po stronie 1</label>
+                        <select ng-attr-id="page-flow-select-{{ctrl.formPage.number}}" ng-options="pageFlow.label|translate:pageFlow for pageFlow in ctrl.possiblePageFlow"  ng-model="ctrl.formPage.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly"></select>
+                    </div>
+
+                </td>
+                <td class="mw-page-bottom-tab-actions" >
+                    <button type="button" role="button" class="btn" ng-click="ctrl.addPage()" ng-if="!ctrl.readOnly"
+                            ng-attr-title="{{'mwForm.buttons.addPage' | translate}}" uib-popover="{{'mwForm.buttons.addPage' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

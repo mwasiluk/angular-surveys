@@ -1,13 +1,20 @@
-angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
+angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
-            prefix: 'bower_components/angular-surveys/dist/i18n/',
+            prefix: '../dist/i18n/',
             suffix: '/angular-surveys.json'
         });
         $translateProvider.preferredLanguage('en');
     })
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
+
         var ctrl = this;
+        ctrl.mergeFormWithResponse = true;
+        ctrl.cgetQuestionWithResponseList = true;
+        ctrl.cgetResponseSheetHeaders = true;
+        ctrl.cgetResponseSheetRow = true;
+        ctrl.cgetResponseSheet = true;
+        ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl', "es"];
@@ -21,8 +28,21 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalp
         ctrl.formOptions = {
             autoStart: false
         };
+        ctrl.optionsBuilder={
+            /*elementButtons:   [{title: 'My title tooltip', icon: 'fa fa-database', text: '', callback: ctrl.callback, filter: ctrl.filter, showInOpen: true}],
+            customQuestionSelects:  [
+                {key:"category", label: 'Category', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}], required: false},
+                {key:"category2", label: 'Category2', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}]}
+            ],
+            elementTypes: ['question', 'image']*/
+        };
         ctrl.formStatus= {};
         ctrl.responseData={};
+        $http.get('response-data.json')
+            .then(function(res){
+                ctrl.responseData = res.data;
+            });
+
         ctrl.showResponseRata=false;
         ctrl.saveResponse = function(){
             var d = $q.defer();
@@ -32,7 +52,6 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalp
             }else{
                 d.reject();
             }
-
             return d.promise;
         };
 
