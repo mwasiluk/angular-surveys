@@ -21,27 +21,15 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 ctrl.formData.pages = [];
                 ctrl.formData.pages.push(createEmptyPage(1));
             }
-            mwFormBuilderOptions.questionTypes = MW_QUESTION_TYPES;
-            mwFormBuilderOptions.elementButtons = [];
-            mwFormBuilderOptions.additionalSelects = [];
-            
-            if(ctrl.options){
-                if(ctrl.options.questionTypes){
-                    mwFormBuilderOptions.questionTypes = ctrl.options.questionTypes;
-                }
-                if(ctrl.options.additionalSelects){
-                    mwFormBuilderOptions.additionalSelects = ctrl.options.additionalSelects;
-                }
-                if(ctrl.options.elementButtons){
-                    mwFormBuilderOptions.elementButtons = ctrl.options.elementButtons;
-                }
-            }
 
-
+            ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
+            console.log('options',mwFormBuilderOptions);
 
             ctrl.addPage = function(){
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
             };
+
+
 
 
             function createEmptyPage(number){

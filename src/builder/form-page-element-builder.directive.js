@@ -26,9 +26,16 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                     element.callback(ctrl.pageElement);
                 }
             };
-            ctrl.filter = function(element){
-                if (element.filter && typeof element.filter === "function") {
-                    return element.filter(ctrl.pageElement);
+            ctrl.filter = function(button){
+                if(!button.showInOpen && ctrl.isActive){
+                    return false;
+                }
+                if(!button.showInPreview && !ctrl.isActive){
+                    return false;
+                }
+
+                if (button.filter && typeof button.filter === "function") {
+                    return button.filter(ctrl.pageElement);
                 }
                 return true;
             };

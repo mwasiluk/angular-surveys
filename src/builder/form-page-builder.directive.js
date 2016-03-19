@@ -15,7 +15,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
         templateUrl: 'mw-form-page-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout, mwFormUuid, mwFormClone){
+        controller: function($timeout, mwFormUuid, mwFormClone, mwFormBuilderOptions){
             var ctrl = this;
             ctrl.hoverEdit = false;
             ctrl.formPage.namedPage = !!ctrl.formPage.name;
@@ -58,7 +58,8 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.addElement = function(type){
                 if(!type){
-                    type='question';
+
+                    type=mwFormBuilderOptions.elementTypes[0];
                 }
                 var element = createEmptyElement(type, ctrl.formPage.elements.length + 1);
                 ctrl.activeElement=element;
@@ -96,6 +97,10 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                     arrayMove(ctrl.formPage.elements, fromIndex, toIndex);
                 }
                 updateElementsOrderNo();
+            };
+
+            ctrl.isElementTypeEnabled = function(elementType){
+                return mwFormBuilderOptions.elementTypes.indexOf(elementType) !== -1;
             };
 
             ctrl.addQuestion = function(){
