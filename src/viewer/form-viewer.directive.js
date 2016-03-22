@@ -7,6 +7,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         scope: {
             formData: '=',
             responseData: '=',
+            templateData: '=?',
             readOnly: '=?',
             options: '=?',
             formStatus: '=?', //wrapper for internal angular form object
@@ -17,7 +18,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         templateUrl: 'mw-form-viewer.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout){
+        controller: function($timeout, $interpolate){
             var ctrl = this;
 
             ctrl.defaultOptions = {
@@ -135,6 +136,23 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                     ctrl.buttons.nextPage.visible=!formSubmit;
                 }
             };
+            
+            ctrl.applyTemplateDataToElement = function(element){
+              if (ctrl.templateData){                
+                if (element.paragraph){
+                  element.paragraph.displayHtml = $interpolate(element.paragraph.html)(ctrl.templateData);
+                }
+                if (element.question){
+                  element.question.displayText = $interpolate(element.question.text)(ctrl.templateData);
+                  
+                  if (element.question.offeredAnswers){
+                    element.question.offeredAnswers.forEach(function (offeredAnswer){
+                      offeredAnswer.displayValue = $interpolate(offeredAnswer.value)(ctrl.templateData);
+                    });
+                  }
+                }                
+              }
+            };
 
             ctrl.initResponsesForCurrentPage = function(){
                 ctrl.currentPage.elements.forEach(function(element){
@@ -142,6 +160,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                     if(question && !ctrl.responseData[question.id]){
                         ctrl.responseData[question.id]={};
                     }
+                    ctrl.applyTemplateDataToElement(element);
                 });
             };
 
