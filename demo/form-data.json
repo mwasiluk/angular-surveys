@@ -100,6 +100,68 @@
             "pageFlowModifier": false,
             "otherAnswer": true
           }
+        },
+        {
+          "id": "24490cf9c495cb33d4c8d2a0f813b817",
+          "orderNo": 5,
+          "type": "question",
+          "question": {
+            "id": "edb85ee7c9da14ffeb15bb9f8cfaffd3",
+            "text": "Is {{price}} a fair price?",
+            "type": "radio",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "68a49a4f13203098f0fc6a744c1fe704",
+                "orderNo": 1,
+                "value": "yes",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "53e006974790df5099ab26e9f2ce9c06",
+                "orderNo": 2,
+                "value": "{{noAnswer}}",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "ee297f58ceec1470c9db35559409755c",
+          "orderNo": 6,
+          "type": "question",
+          "question": {
+            "id": "a7106ec0fba810a84899b8579f5fd924",
+            "text": "Is {{person.name}} age {{person.age}}?",
+            "type": "radio",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "ae38733fc632753099f430b1c1ffcefc",
+                "orderNo": 1,
+                "value": "yes",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "61a226f242d86522a49b786c654c4165",
+                "orderNo": 2,
+                "value": "no",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              }
+            ]
+          }
         }
       ],
       "namedPage": false
@@ -231,7 +293,7 @@
           "type": "paragraph",
           "paragraph": {
             "id": "12448073a8702376af0b427b63022926",
-            "html": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
+            "html": "Lorem {{templateData}} ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
           }
         },
         {
