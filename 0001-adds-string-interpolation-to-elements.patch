@@ -1,0 +1,258 @@
+From 87d4b31a3edad04cbdde14570e76276d34381003 Mon Sep 17 00:00:00 2001
+From: jeff wilde <jeff.wilde@vivintsolar.com>
+Date: Tue, 22 Mar 2016 15:55:00 -0600
+Subject: [PATCH] adds string interpolation to elements
+
+---
+ demo/demo.html                         |  2 +-
+ demo/demo.js                           |  5 +++
+ demo/form-data.json                    | 64 +++++++++++++++++++++++++++++++++-
+ demo/template-data.json                |  9 +++++
+ dist/form-viewer.min.js                |  4 +--
+ src/viewer/form-viewer.directive.js    | 21 ++++++++++-
+ src/viewer/mw-form-question.html       |  6 ++--
+ src/viewer/mw-form-viewer-content.html |  2 +-
+ 8 files changed, 104 insertions(+), 9 deletions(-)
+ create mode 100644 demo/template-data.json
+
+diff --git a/demo/demo.html b/demo/demo.html
+index cb1c309..7cc1439 100644
+--- a/demo/demo.html
++++ b/demo/demo.html
+@@ -80,7 +80,7 @@
+                         </div>
+                     </div>
+ 
+-                    <mw-form-viewer form-data="ctrl.formData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
++                    <mw-form-viewer form-data="ctrl.formData" template-data="ctrl.templateData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+ 
+                     <hr>
+ 
+diff --git a/demo/demo.js b/demo/demo.js
+index 0deecdc..74affbb 100644
+--- a/demo/demo.js
++++ b/demo/demo.js
+@@ -34,6 +34,11 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
+             .then(function(res){
+                 ctrl.responseData = res.data;
+             });
++            
++        $http.get('template-data.json')
++            .then(function(res){
++                ctrl.templateData = res.data;
++            });
+ 
+         ctrl.showResponseRata=false;
+         ctrl.saveResponse = function(){
+diff --git a/demo/form-data.json b/demo/form-data.json
+index 1f35603..9cfa125 100644
+--- a/demo/form-data.json
++++ b/demo/form-data.json
+@@ -100,6 +100,68 @@
+             "pageFlowModifier": false,
+             "otherAnswer": true
+           }
++        },
++        {
++          "id": "24490cf9c495cb33d4c8d2a0f813b817",
++          "orderNo": 5,
++          "type": "question",
++          "question": {
++            "id": "edb85ee7c9da14ffeb15bb9f8cfaffd3",
++            "text": "Is {{price}} a fair price?",
++            "type": "radio",
++            "required": true,
++            "offeredAnswers": [
++              {
++                "id": "68a49a4f13203098f0fc6a744c1fe704",
++                "orderNo": 1,
++                "value": "yes",
++                "pageFlow": {
++                  "nextPage": true,
++                  "label": "mwForm.pageFlow.goToNextPage"
++                }
++              },
++              {
++                "id": "53e006974790df5099ab26e9f2ce9c06",
++                "orderNo": 2,
++                "value": "{{noAnswer}}",
++                "pageFlow": {
++                  "nextPage": true,
++                  "label": "mwForm.pageFlow.goToNextPage"
++                }
++              }
++            ]
++          }
++        },
++        {
++          "id": "ee297f58ceec1470c9db35559409755c",
++          "orderNo": 6,
++          "type": "question",
++          "question": {
++            "id": "a7106ec0fba810a84899b8579f5fd924",
++            "text": "Is {{person.name}} age {{person.age}}?",
++            "type": "radio",
++            "required": true,
++            "offeredAnswers": [
++              {
++                "id": "ae38733fc632753099f430b1c1ffcefc",
++                "orderNo": 1,
++                "value": "yes",
++                "pageFlow": {
++                  "nextPage": true,
++                  "label": "mwForm.pageFlow.goToNextPage"
++                }
++              },
++              {
++                "id": "61a226f242d86522a49b786c654c4165",
++                "orderNo": 2,
++                "value": "no",
++                "pageFlow": {
++                  "nextPage": true,
++                  "label": "mwForm.pageFlow.goToNextPage"
++                }
++              }
++            ]
++          }
+         }
+       ],
+       "namedPage": false
+@@ -231,7 +293,7 @@
+           "type": "paragraph",
+           "paragraph": {
+             "id": "12448073a8702376af0b427b63022926",
+-            "html": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
++            "html": "Lorem {{templateData}} ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
+           }
+         },
+         {
+diff --git a/demo/template-data.json b/demo/template-data.json
+new file mode 100644
+index 0000000..daa9275
+--- /dev/null
++++ b/demo/template-data.json
+@@ -0,0 +1,9 @@
++{
++    "price": 1.13,
++    "noAnswer" : "no",
++    "person": {
++        "name": "Bob",
++        "age": 33
++    },
++    "templateData": "from template"
++}
+\ No newline at end of file
+diff --git a/dist/form-viewer.min.js b/dist/form-viewer.min.js
+index 83f0667..ee5e3d9 100644
+--- a/dist/form-viewer.min.js
++++ b/dist/form-viewer.min.js
+@@ -1,6 +1,6 @@
+ angular.module("mwFormViewer",["ngSanitize","ui.bootstrap","ng-sortable","pascalprecht.translate"]);
+-angular.module("mwFormViewer").run(["$templateCache",function(e){e.put("mw-form-confirmation-page.html","<div class=mw-form-confirmation-page><div class=mw-confirmation-message ng-if=\"ctrl.submitStatus=='SUCCESS'\"><span ng-if=ctrl.confirmationMessage>{{ctrl.confirmationMessage}}</span> <span ng-if=!ctrl.confirmationMessage translate=mwForm.confirmationPage.defaultMessage>Twoja odpowiedź została zapisana</span></div><div class=mw-error-message ng-if=\"ctrl.submitStatus=='ERROR'\"><span translate=mwForm.confirmationPage.errorMessage>Bład. Twoja odpowiedź nie została zapisana.</span></div><div class=mw-pending-message ng-if=\"ctrl.submitStatus=='IN_PROGRESS'\"><span translate=mwForm.confirmationPage.pendingMessage>Zapisywanie odpowiedzi w trakcie.</span></div></div>"),e.put("mw-form-question.html",'<div class=mw-form-question><div class=mw-question-text>{{ctrl.question.text}} <span ng-if=ctrl.question.required>*</span></div><div class=mw-question-answers ng-switch=ctrl.question.type><div ng-switch-when=text><input class=form-control type=text ng-model=ctrl.questionResponse.answer placeholder="{{\'mwForm.question.preview.text\'|translate}}" ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=textarea><textarea msd-elastic class=form-control ng-model=ctrl.questionResponse.answer placeholder="{{\'mwForm.question.preview.textarea\'|translate}}" ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></textarea></div><div ng-switch-when=radio><div class=radio ng-repeat="answer in ctrl.question.offeredAnswers"><label><input type=radio ng-model=ctrl.questionResponse.selectedAnswer ng-value=answer.id name=answer-for-question-{{ctrl.question.id}} ng-change=ctrl.selectedAnswerChanged() ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled=ctrl.readOnly> {{answer.value}}</label></div><div class=radio ng-if=ctrl.question.otherAnswer><label><input type=radio ng-model=ctrl.isOtherAnswer ng-value=true name=other-answer-for-question-{{ctrl.question.id}} ng-change=ctrl.otherAnswerRadioChanged() ng-disabled=ctrl.readOnly><span translate=mwForm.question.preview.otherAnswer>Inna</span>:</label> <span class=form-inline><input type=text name=other-answer-for-question-{{ctrl.question.id}} ng-model=ctrl.questionResponse.other class=form-control ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required=ctrl.isOtherAnswer></span></div></div><div ng-switch-when=checkbox><div class=checkbox ng-repeat="answer in ::ctrl.question.offeredAnswers"><label><input type=checkbox name=answer-for-question-{{ctrl.question.id}} ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click=ctrl.toggleSelectedAnswer(answer) ng-disabled=ctrl.readOnly> {{::answer.value}}</label></div><div class=checkbox ng-if=ctrl.question.otherAnswer><label><input type=checkbox name=answer-for-question-{{ctrl.question.id}} ng-model=ctrl.isOtherAnswer ng-change=ctrl.otherAnswerCheckboxChanged() ng-disabled=ctrl.readOnly><span translate=mwForm.question.preview.otherAnswer>Inna</span>:</label> <span class=form-inline><input type=text ng-model=ctrl.questionResponse.other name=other-answer-for-question-{{ctrl.question.id}} class=form-control ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required=ctrl.isOtherAnswer></span></div><input type=hidden ng-model=ctrl.selectedAnswer ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"></div><div ng-switch-when=grid><div class=table-responsive><table class="table table-condensed table-striped" border=0 cellpadding=5 cellspacing=0><thead><tr><td></td><td ng-repeat="col in ::ctrl.question.grid.cols"><label>{{::col.label}}</label></td></tr></thead><tbody><tr ng-repeat="row in ::ctrl.question.grid.rows"><td>{{::row.label}}</td><td ng-repeat="col in ::ctrl.question.grid.cols"><input type=radio ng-model=ctrl.questionResponse[row.id] ng-value=col.id name=answer-for-question-{{row.id}} ng-required=ctrl.question.required ng-disabled=ctrl.readOnly></td></tr></tbody></table></div></div><div ng-switch-when=division class=division-list ng-form=ctrl.divisionForm><div class=form-inline style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList"><div class=form-group><label>{{item.value}}</label> <input type=number class=form-control ng-model=ctrl.questionResponse[item.id] min=0 max={{ctrl.question.quantity}} required style="width: 80px" ng-change=ctrl.computeDivisionSum() ng-readonly=ctrl.readOnly> <span>{{::ctrl.question.unit}}</span></div></div><div class=form-inline style="margin-bottom: 5px"><div class=form-group><label translate=mwForm.question.division.assignedSumLabel>Przydzielono</label> <input type=number class="form-control strict-validation" ng-model=ctrl.divisionSum min={{ctrl.question.quantity}} max={{ctrl.question.quantity}} style="width: 80px" readonly> <span>{{ctrl.question.unit}} <span translate=mwForm.question.division.fromRequiredLabel>z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}} <i ng-show=ctrl.divisionForm.$valid class="fa fa-check" style=color:#008000;></i></span></div></div></div><mw-priority-list ng-switch-when=priority question-response=ctrl.questionResponse question=ctrl.question read-only=ctrl.readOnly></mw-priority-list><div ng-switch-when=number class=form-inline><input class=form-control min={{ctrl.question.min}} max={{ctrl.question.max}} type=number ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=date class=form-inline><input class=form-control type=date ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=datetime class=form-inline><input class=form-control type=datetime ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=time class=form-inline><input class=form-control type=time ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=email class=form-inline><input class=form-control type=email ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=range class=mw-range><input ng-attr-min={{ctrl.question.min}} ng-attr-max={{ctrl.question.max}} type=range ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly><strong class=mw-range-value-label>{{ctrl.questionResponse.answer}}</strong></div><div ng-switch-when=url class=form-inline><input class=form-control type=url ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div></div></div>'),e.put("mw-form-viewer-content.html",'<div class=mw-form-viewer-content><h1 class=form-title>{{ctrl.formData.name}}</h1><div class=mw-title-page ng-if="!ctrl.currentPage && !ctrl.formSubmitted"><div class=mw-form-description>{{ctrl.formData.description}}</div><button type=button class="btn btn-default begin-response-button" ng-click=ctrl.beginResponse() translate=mwForm.buttons.begin>Rozpocznij</button></div><div class=mw-form-page ng-if=ctrl.currentPage><h2 class=mw-page-title ng-if="ctrl.currentPage.namedPage && ctrl.currentPage.name">{{ctrl.currentPage.name}}</h2><div class=mw-form-page-element-list><div class=mw-page-element ng-repeat="pageElement in ctrl.currentPage.elements" ng-switch=pageElement.type ng-if=ctrl.showElement(pageElement)><mw-form-question ng-switch-when=question question=pageElement.question question-response=ctrl.responseData[pageElement.question.id] read-only=ctrl.readOnly on-response-changed=ctrl.onResponseChanged(pageElement)></mw-form-question><div class=image-element ng-switch-when=image><figure ng-class="\'align-\'+pageElement.image.align"><img ng-src={{pageElement.image.src}} ng-attr-alt=pageElement.image.caption><figcaption ng-if=pageElement.image.caption>{{pageElement.image.caption}}</figcaption></figure></div><div ng-switch-when=paragraph><p ng-bind-html=pageElement.paragraph.html></p></div></div></div></div><mw-form-confirmation-page ng-if=ctrl.formSubmitted confirmation-message=ctrl.formData.confirmationMessage submit-status=ctrl.submitStatus></mw-form-confirmation-page><div class=mw-form-action-list><button type=button ng-if=ctrl.buttons.prevPage.visible class="btn btn-default prev-page-button" ng-click=ctrl.goToPrevPage()><i class="fa fa-chevron-left"></i> <span translate=mwForm.buttons.back>Wstecz</span></button> <button type=button ng-disabled=ctrl.form.$invalid ng-if=ctrl.buttons.nextPage.visible class="btn btn-default next-page-button" ng-click=ctrl.goToNextPage()><span translate=mwForm.buttons.next>Dalej</span> <i class="fa fa-chevron-right"></i></button> <button type=submit ng-disabled=ctrl.form.$invalid ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="btn btn-default next-page-button" ng-click=ctrl.submitForm()><span translate=mwForm.buttons.submit>Submit</span></button></div></div>'),e.put("mw-form-viewer.html","<div class=mw-form-viewer><form ng-if=!ctrl.options.nestedForm name=ctrl.form role=form novalidate ng-include=\"'mw-form-viewer-content.html'\"></form><div ng-if=ctrl.options.nestedForm ng-form=ctrl.form ng-include=\"'mw-form-viewer-content.html'\"></div></div>"),e.put("mw-priority-list.html",'<div class=mw-priority-list><table><thead><tr><th translate=mwForm.question.priority.sorted>Sorted</th><th translate=mwForm.question.priority.available>Available</th></tr></thead><tbody><tr><td class=mw-ordered-items ng-sortable=ctrl.orderedConfig ng-model=ctrl.questionResponse.priorityList><div class=mw-item ng-repeat="item in ctrl.questionResponse.priorityList"><strong>{{$index+1}}.</strong> {{::ctrl.idToItem[item.id].value}}</div></td><td class=mw-available-items ng-sortable=ctrl.availableConfig ng-model=ctrl.availableItems><div class=mw-item ng-repeat="item in ctrl.availableItems">{{::ctrl.idToItem[item.id].value}}</div></td></tr></tbody></table><input type=hidden ng-model=ctrl.allItemsOrdered ng-required=ctrl.question.required></div>')}]);
++angular.module("mwFormViewer").run(["$templateCache",function(e){e.put("mw-form-confirmation-page.html","<div class=mw-form-confirmation-page><div class=mw-confirmation-message ng-if=\"ctrl.submitStatus=='SUCCESS'\"><span ng-if=ctrl.confirmationMessage>{{ctrl.confirmationMessage}}</span> <span ng-if=!ctrl.confirmationMessage translate=mwForm.confirmationPage.defaultMessage>Twoja odpowiedź została zapisana</span></div><div class=mw-error-message ng-if=\"ctrl.submitStatus=='ERROR'\"><span translate=mwForm.confirmationPage.errorMessage>Bład. Twoja odpowiedź nie została zapisana.</span></div><div class=mw-pending-message ng-if=\"ctrl.submitStatus=='IN_PROGRESS'\"><span translate=mwForm.confirmationPage.pendingMessage>Zapisywanie odpowiedzi w trakcie.</span></div></div>"),e.put("mw-form-question.html",'<div class=mw-form-question><div class=mw-question-text>{{ctrl.question.displayText}} <span ng-if=ctrl.question.required>*</span></div><div class=mw-question-answers ng-switch=ctrl.question.type><div ng-switch-when=text><input class=form-control type=text ng-model=ctrl.questionResponse.answer placeholder="{{\'mwForm.question.preview.text\'|translate}}" ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=textarea><textarea msd-elastic class=form-control ng-model=ctrl.questionResponse.answer placeholder="{{\'mwForm.question.preview.textarea\'|translate}}" ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></textarea></div><div ng-switch-when=radio><div class=radio ng-repeat="answer in ctrl.question.offeredAnswers"><label><input type=radio ng-model=ctrl.questionResponse.selectedAnswer ng-value=answer.id name=answer-for-question-{{ctrl.question.id}} ng-change=ctrl.selectedAnswerChanged() ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled=ctrl.readOnly> {{answer.displayValue}}</label></div><div class=radio ng-if=ctrl.question.otherAnswer><label><input type=radio ng-model=ctrl.isOtherAnswer ng-value=true name=other-answer-for-question-{{ctrl.question.id}} ng-change=ctrl.otherAnswerRadioChanged() ng-disabled=ctrl.readOnly><span translate=mwForm.question.preview.otherAnswer>Inna</span>:</label> <span class=form-inline><input type=text name=other-answer-for-question-{{ctrl.question.id}} ng-model=ctrl.questionResponse.other class=form-control ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required=ctrl.isOtherAnswer></span></div></div><div ng-switch-when=checkbox><div class=checkbox ng-repeat="answer in ::ctrl.question.offeredAnswers"><label><input type=checkbox name=answer-for-question-{{ctrl.question.id}} ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click=ctrl.toggleSelectedAnswer(answer) ng-disabled=ctrl.readOnly> {{::answer.displayValue}}</label></div><div class=checkbox ng-if=ctrl.question.otherAnswer><label><input type=checkbox name=answer-for-question-{{ctrl.question.id}} ng-model=ctrl.isOtherAnswer ng-change=ctrl.otherAnswerCheckboxChanged() ng-disabled=ctrl.readOnly><span translate=mwForm.question.preview.otherAnswer>Inna</span>:</label> <span class=form-inline><input type=text ng-model=ctrl.questionResponse.other name=other-answer-for-question-{{ctrl.question.id}} class=form-control ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required=ctrl.isOtherAnswer></span></div><input type=hidden ng-model=ctrl.selectedAnswer ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"></div><div ng-switch-when=grid><div class=table-responsive><table class="table table-condensed table-striped" border=0 cellpadding=5 cellspacing=0><thead><tr><td></td><td ng-repeat="col in ::ctrl.question.grid.cols"><label>{{::col.label}}</label></td></tr></thead><tbody><tr ng-repeat="row in ::ctrl.question.grid.rows"><td>{{::row.label}}</td><td ng-repeat="col in ::ctrl.question.grid.cols"><input type=radio ng-model=ctrl.questionResponse[row.id] ng-value=col.id name=answer-for-question-{{row.id}} ng-required=ctrl.question.required ng-disabled=ctrl.readOnly></td></tr></tbody></table></div></div><div ng-switch-when=division class=division-list ng-form=ctrl.divisionForm><div class=form-inline style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList"><div class=form-group><label>{{item.value}}</label> <input type=number class=form-control ng-model=ctrl.questionResponse[item.id] min=0 max={{ctrl.question.quantity}} required style="width: 80px" ng-change=ctrl.computeDivisionSum() ng-readonly=ctrl.readOnly> <span>{{::ctrl.question.unit}}</span></div></div><div class=form-inline style="margin-bottom: 5px"><div class=form-group><label translate=mwForm.question.division.assignedSumLabel>Przydzielono</label> <input type=number class="form-control strict-validation" ng-model=ctrl.divisionSum min={{ctrl.question.quantity}} max={{ctrl.question.quantity}} style="width: 80px" readonly> <span>{{ctrl.question.unit}} <span translate=mwForm.question.division.fromRequiredLabel>z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}} <i ng-show=ctrl.divisionForm.$valid class="fa fa-check" style=color:#008000;></i></span></div></div></div><mw-priority-list ng-switch-when=priority question-response=ctrl.questionResponse question=ctrl.question read-only=ctrl.readOnly></mw-priority-list><div ng-switch-when=number class=form-inline><input class=form-control min={{ctrl.question.min}} max={{ctrl.question.max}} type=number ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=date class=form-inline><input class=form-control type=date ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=datetime class=form-inline><input class=form-control type=datetime ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=time class=form-inline><input class=form-control type=time ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=email class=form-inline><input class=form-control type=email ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div><div ng-switch-when=range class=mw-range><input ng-attr-min={{ctrl.question.min}} ng-attr-max={{ctrl.question.max}} type=range ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly><strong class=mw-range-value-label>{{ctrl.questionResponse.answer}}</strong></div><div ng-switch-when=url class=form-inline><input class=form-control type=url ng-model=ctrl.questionResponse.answer ng-required=ctrl.question.required ng-readonly=ctrl.readOnly></div></div></div>'),e.put("mw-form-viewer-content.html",'<div class=mw-form-viewer-content><h1 class=form-title>{{ctrl.formData.name}}</h1><div class=mw-title-page ng-if="!ctrl.currentPage && !ctrl.formSubmitted"><div class=mw-form-description>{{ctrl.formData.description}}</div><button type=button class="btn btn-default begin-response-button" ng-click=ctrl.beginResponse() translate=mwForm.buttons.begin>Rozpocznij</button></div><div class=mw-form-page ng-if=ctrl.currentPage><h2 class=mw-page-title ng-if="ctrl.currentPage.namedPage && ctrl.currentPage.name">{{ctrl.currentPage.name}}</h2><div class=mw-form-page-element-list><div class=mw-page-element ng-repeat="pageElement in ctrl.currentPage.elements" ng-switch=pageElement.type ng-if=ctrl.showElement(pageElement)><mw-form-question ng-switch-when=question question=pageElement.question question-response=ctrl.responseData[pageElement.question.id] read-only=ctrl.readOnly on-response-changed=ctrl.onResponseChanged(pageElement)></mw-form-question><div class=image-element ng-switch-when=image><figure ng-class="\'align-\'+pageElement.image.align"><img ng-src={{pageElement.image.src}} ng-attr-alt=pageElement.image.caption><figcaption ng-if=pageElement.image.caption>{{pageElement.image.caption}}</figcaption></figure></div><div ng-switch-when=paragraph><p ng-bind-html=pageElement.paragraph.displayHtml></p></div></div></div></div><mw-form-confirmation-page ng-if=ctrl.formSubmitted confirmation-message=ctrl.formData.confirmationMessage submit-status=ctrl.submitStatus></mw-form-confirmation-page><div class=mw-form-action-list><button type=button ng-if=ctrl.buttons.prevPage.visible class="btn btn-default prev-page-button" ng-click=ctrl.goToPrevPage()><i class="fa fa-chevron-left"></i> <span translate=mwForm.buttons.back>Wstecz</span></button> <button type=button ng-disabled=ctrl.form.$invalid ng-if=ctrl.buttons.nextPage.visible class="btn btn-default next-page-button" ng-click=ctrl.goToNextPage()><span translate=mwForm.buttons.next>Dalej</span> <i class="fa fa-chevron-right"></i></button> <button type=submit ng-disabled=ctrl.form.$invalid ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="btn btn-default next-page-button" ng-click=ctrl.submitForm()><span translate=mwForm.buttons.submit>Submit</span></button></div></div>'),e.put("mw-form-viewer.html","<div class=mw-form-viewer><form ng-if=!ctrl.options.nestedForm name=ctrl.form role=form novalidate ng-include=\"'mw-form-viewer-content.html'\"></form><div ng-if=ctrl.options.nestedForm ng-form=ctrl.form ng-include=\"'mw-form-viewer-content.html'\"></div></div>"),e.put("mw-priority-list.html",'<div class=mw-priority-list><table><thead><tr><th translate=mwForm.question.priority.sorted>Sorted</th><th translate=mwForm.question.priority.available>Available</th></tr></thead><tbody><tr><td class=mw-ordered-items ng-sortable=ctrl.orderedConfig ng-model=ctrl.questionResponse.priorityList><div class=mw-item ng-repeat="item in ctrl.questionResponse.priorityList"><strong>{{$index+1}}.</strong> {{::ctrl.idToItem[item.id].value}}</div></td><td class=mw-available-items ng-sortable=ctrl.availableConfig ng-model=ctrl.availableItems><div class=mw-item ng-repeat="item in ctrl.availableItems">{{::ctrl.idToItem[item.id].value}}</div></td></tr></tbody></table><input type=hidden ng-model=ctrl.allItemsOrdered ng-required=ctrl.question.required></div>')}]);
+ angular.module("mwFormViewer").directive("mwPriorityList",function(){return{replace:!0,restrict:"AE",require:"^mwFormQuestion",scope:{question:"=",questionResponse:"=",readOnly:"=?",options:"=?"},templateUrl:"mw-priority-list.html",controllerAs:"ctrl",bindToController:!0,controller:function(){function i(i){if(i)for(var e=0;e<i.length;e++){var t=i[e];t.priority=e+1}}function e(i){i.sort(function(i,e){return i.priority-e.priority})}var t=this;t.questionResponse.priorityList||(t.questionResponse.priorityList=[]),t.idToItem={},e(t.questionResponse.priorityList),t.availableItems=[],t.question.priorityList.forEach(function(i){t.idToItem[i.id]=i;var e=t.questionResponse.priorityList.some(function(e){return i.id==e.id});e||t.availableItems.push({priority:null,id:i.id})}),t.allItemsOrdered=0==t.availableItems.length?!0:null;var r={disabled:t.readOnly,ghostClass:"beingDragged"};t.orderedConfig=angular.extend({},r,{group:{name:"A",pull:!1,put:["B"]},onEnd:function(e,r){i(t.questionResponse.priorityList)}}),t.availableConfig=angular.extend({},r,{sort:!1,group:{name:"B",pull:["A"],put:!1},onEnd:function(e,r){i(t.questionResponse.priorityList),t.allItemsOrdered=0==t.availableItems.length?!0:null}})},link:function(i,e,t,r){i.ctrl}}});
+-angular.module("mwFormViewer").directive("mwFormViewer",function(){return{replace:!0,restrict:"AE",scope:{formData:"=",responseData:"=",readOnly:"=?",options:"=?",formStatus:"=?",onSubmit:"&",api:"=?"},templateUrl:"mw-form-viewer.html",controllerAs:"ctrl",bindToController:!0,controller:["$timeout",function(e){function t(){n.formData.pages.sort(function(e,t){return e.number-t.number})}var n=this;n.defaultOptions={nestedForm:!1,autoStart:!1},n.options=angular.extend({},n.defaultOptions,n.options),n.submitStatus="NOT_SUBMITTED",n.formSubmitted=!1,t(),n.pageIdToPage={},n.formData.pages.forEach(function(e){n.pageIdToPage[e.id]=e}),n.showElement=function(e){return e.question?void 0===e.question.visibleIf?!0:e.question.visibleIf===!1?!0:n.responseData[e.question.visibleIfQuestion.id].selectedAnswer===e.question.visibleIfAnswer:!0},n.buttons={prevPage:{visible:!1,disabled:!1},nextPage:{visible:!1,disabled:!1},submitForm:{visible:!1,disabled:!1}},n.submitForm=function(){n.formSubmitted=!0,n.submitStatus="IN_PROGRESS",n.setCurrentPage(null);var e=n.onSubmit();e.then(function(){n.submitStatus="SUCCESS"})["catch"](function(){n.submitStatus="ERROR"})},n.setCurrentPage=function(e){return n.currentPage=e,e?(n.setDefaultNextPage(),void n.initResponsesForCurrentPage()):(n.buttons.submitForm.visible=!1,n.buttons.prevPage.visible=!1,void(n.buttons.nextPage.visible=!1))},n.setDefaultNextPage=function(){var e=n.formData.pages.indexOf(n.currentPage);if(n.currentPage.isFirst=0==e,n.currentPage.isLast=e==n.formData.pages.length-1,n.buttons.submitForm.visible=n.currentPage.isLast,n.buttons.prevPage.visible=!n.currentPage.isFirst,n.buttons.nextPage.visible=!n.currentPage.isLast,n.currentPage.isLast?n.nextPage=null:n.nextPage=n.formData.pages[e+1],n.currentPage.pageFlow){var t=!1;n.currentPage.pageFlow.formSubmit?(n.nextPage=null,t=!0):n.currentPage.pageFlow.page?(n.nextPage=n.pageIdToPage[n.currentPage.pageFlow.page.id],n.buttons.nextPage.visible=!0):n.currentPage.isLast&&(n.nextPage=null,t=!0),n.buttons.submitForm.visible=t,n.buttons.nextPage.visible=!t}},n.initResponsesForCurrentPage=function(){n.currentPage.elements.forEach(function(e){var t=e.question;t&&!n.responseData[t.id]&&(n.responseData[t.id]={})})},n.beginResponse=function(){n.formData.pages.length>0&&n.setCurrentPage(n.formData.pages[0])},n.resetPages=function(){n.prevPages=[],n.currentPage=null,n.nextPage=null,n.formSubmitted=!1,n.options.autoStart&&n.beginResponse()},n.resetPages(),n.goToPrevPage=function(){var e=n.prevPages.pop();n.setCurrentPage(e),n.updateNextPageBasedOnAllAnswers()},n.goToNextPage=function(){n.prevPages.push(n.currentPage),n.updateNextPageBasedOnAllAnswers(),n.setCurrentPage(n.nextPage)},n.updateNextPageBasedOnAllAnswers=function(){n.currentPage.elements.forEach(function(e){n.updateNextPageBasedOnPageElementAnswers(e)}),n.buttons.submitForm.visible=!n.nextPage,n.buttons.nextPage.visible=!!n.nextPage},n.updateNextPageBasedOnPageElementAnswers=function(e){var t=e.question;t&&t.pageFlowModifier&&t.offeredAnswers.forEach(function(e){e.pageFlow&&n.responseData[t.id].selectedAnswer==e.id&&(e.pageFlow.formSubmit?n.nextPage=null:e.pageFlow.page&&(n.nextPage=n.pageIdToPage[e.pageFlow.page.id]))})},n.onResponseChanged=function(e){n.setDefaultNextPage(),n.updateNextPageBasedOnAllAnswers()},n.api&&(n.api.reset=function(){for(var t in n.responseData)n.responseData.hasOwnProperty(t)&&delete n.responseData[t];n.buttons.submitForm.visible=!1,n.buttons.prevPage.visible=!1,n.buttons.nextPage.visible=!1,n.currentPage=null,e(n.resetPages,0)})}],link:function(e,t,n){var a=e.ctrl;a.formStatus&&(a.formStatus.form=a.form)}}});
++angular.module("mwFormViewer").directive("mwFormViewer",function(){return{replace:!0,restrict:"AE",scope:{formData:"=",responseData:"=",templateData:"=?",readOnly:"=?",options:"=?",formStatus:"=?",onSubmit:"&",api:"=?"},templateUrl:"mw-form-viewer.html",controllerAs:"ctrl",bindToController:!0,controller:["$timeout","$interpolate",function(e,t){function a(){n.formData.pages.sort(function(e,t){return e.number-t.number})}var n=this;n.defaultOptions={nestedForm:!1,autoStart:!1},n.options=angular.extend({},n.defaultOptions,n.options),n.submitStatus="NOT_SUBMITTED",n.formSubmitted=!1,a(),n.pageIdToPage={},n.formData.pages.forEach(function(e){n.pageIdToPage[e.id]=e}),n.showElement=function(e){return e.question?void 0===e.question.visibleIf?!0:e.question.visibleIf===!1?!0:n.responseData[e.question.visibleIfQuestion.id].selectedAnswer===e.question.visibleIfAnswer:!0},n.buttons={prevPage:{visible:!1,disabled:!1},nextPage:{visible:!1,disabled:!1},submitForm:{visible:!1,disabled:!1}},n.submitForm=function(){n.formSubmitted=!0,n.submitStatus="IN_PROGRESS",n.setCurrentPage(null);var e=n.onSubmit();e.then(function(){n.submitStatus="SUCCESS"})["catch"](function(){n.submitStatus="ERROR"})},n.setCurrentPage=function(e){return n.currentPage=e,e?(n.setDefaultNextPage(),void n.initResponsesForCurrentPage()):(n.buttons.submitForm.visible=!1,n.buttons.prevPage.visible=!1,void(n.buttons.nextPage.visible=!1))},n.setDefaultNextPage=function(){var e=n.formData.pages.indexOf(n.currentPage);if(n.currentPage.isFirst=0==e,n.currentPage.isLast=e==n.formData.pages.length-1,n.buttons.submitForm.visible=n.currentPage.isLast,n.buttons.prevPage.visible=!n.currentPage.isFirst,n.buttons.nextPage.visible=!n.currentPage.isLast,n.currentPage.isLast?n.nextPage=null:n.nextPage=n.formData.pages[e+1],n.currentPage.pageFlow){var t=!1;n.currentPage.pageFlow.formSubmit?(n.nextPage=null,t=!0):n.currentPage.pageFlow.page?(n.nextPage=n.pageIdToPage[n.currentPage.pageFlow.page.id],n.buttons.nextPage.visible=!0):n.currentPage.isLast&&(n.nextPage=null,t=!0),n.buttons.submitForm.visible=t,n.buttons.nextPage.visible=!t}},n.applyTemplateDataToElement=function(e){n.templateData&&(e.paragraph&&(e.paragraph.displayHtml=t(e.paragraph.html)(n.templateData)),e.question&&(e.question.displayText=t(e.question.text)(n.templateData),e.question.offeredAnswers&&e.question.offeredAnswers.forEach(function(e){e.displayValue=t(e.value)(n.templateData)})))},n.initResponsesForCurrentPage=function(){n.currentPage.elements.forEach(function(e){var t=e.question;t&&!n.responseData[t.id]&&(n.responseData[t.id]={}),n.applyTemplateDataToElement(e)})},n.beginResponse=function(){n.formData.pages.length>0&&n.setCurrentPage(n.formData.pages[0])},n.resetPages=function(){n.prevPages=[],n.currentPage=null,n.nextPage=null,n.formSubmitted=!1,n.options.autoStart&&n.beginResponse()},n.resetPages(),n.goToPrevPage=function(){var e=n.prevPages.pop();n.setCurrentPage(e),n.updateNextPageBasedOnAllAnswers()},n.goToNextPage=function(){n.prevPages.push(n.currentPage),n.updateNextPageBasedOnAllAnswers(),n.setCurrentPage(n.nextPage)},n.updateNextPageBasedOnAllAnswers=function(){n.currentPage.elements.forEach(function(e){n.updateNextPageBasedOnPageElementAnswers(e)}),n.buttons.submitForm.visible=!n.nextPage,n.buttons.nextPage.visible=!!n.nextPage},n.updateNextPageBasedOnPageElementAnswers=function(e){var t=e.question;t&&t.pageFlowModifier&&t.offeredAnswers.forEach(function(e){e.pageFlow&&n.responseData[t.id].selectedAnswer==e.id&&(e.pageFlow.formSubmit?n.nextPage=null:e.pageFlow.page&&(n.nextPage=n.pageIdToPage[e.pageFlow.page.id]))})},n.onResponseChanged=function(e){n.setDefaultNextPage(),n.updateNextPageBasedOnAllAnswers()},n.api&&(n.api.reset=function(){for(var t in n.responseData)n.responseData.hasOwnProperty(t)&&delete n.responseData[t];n.buttons.submitForm.visible=!1,n.buttons.prevPage.visible=!1,n.buttons.nextPage.visible=!1,n.currentPage=null,e(n.resetPages,0)})}],link:function(e,t,a){var n=e.ctrl;n.formStatus&&(n.formStatus.form=n.form)}}});
+ angular.module("mwFormViewer").factory("FormQuestionId",function(){var e=0;return{next:function(){return++e}}}).directive("mwFormQuestion",function(){return{replace:!0,restrict:"AE",require:"^mwFormViewer",scope:{question:"=",questionResponse:"=",readOnly:"=?",options:"=?",onResponseChanged:"&?"},templateUrl:"mw-form-question.html",controllerAs:"ctrl",bindToController:!0,controller:["$timeout","FormQuestionId",function(e,s){var n=this;n.id=s.next(),"radio"==n.question.type?(n.questionResponse.selectedAnswer||(n.questionResponse.selectedAnswer=null),n.questionResponse.other&&(n.isOtherAnswer=!0)):"checkbox"==n.question.type?(n.questionResponse.selectedAnswers&&n.questionResponse.selectedAnswers.length?n.selectedAnswer=!0:n.questionResponse.selectedAnswers=[],n.questionResponse.other&&(n.isOtherAnswer=!0)):"grid"==n.question.type||"division"==n.question.type&&(n.computeDivisionSum=function(){n.divisionSum=0,n.question.divisionList.forEach(function(e){0==n.questionResponse[e.id]||n.questionResponse[e.id]?n.divisionSum+=n.questionResponse[e.id]:(n.questionResponse[e.id]=null,n.divisionSum+=0)})},n.computeDivisionSum()),n.isAnswerSelected=!1,n.selectedAnswerChanged=function(){delete n.questionResponse.other,n.isOtherAnswer=!1,n.answerChanged()},n.otherAnswerRadioChanged=function(){n.isOtherAnswer&&(n.questionResponse.selectedAnswer=null),n.answerChanged()},n.otherAnswerCheckboxChanged=function(){n.isOtherAnswer||delete n.questionResponse.other,n.selectedAnswer=n.questionResponse.selectedAnswers.length||n.isOtherAnswer?!0:null,n.answerChanged()},n.toggleSelectedAnswer=function(e){-1===n.questionResponse.selectedAnswers.indexOf(e.id)?n.questionResponse.selectedAnswers.push(e.id):n.questionResponse.selectedAnswers.splice(n.questionResponse.selectedAnswers.indexOf(e.id),1),n.selectedAnswer=n.questionResponse.selectedAnswers.length||n.isOtherAnswer?!0:null,n.answerChanged()},n.answerChanged=function(){n.onResponseChanged&&n.onResponseChanged()}}],link:function(e,s,n,o){e.ctrl}}});
+ angular.module("mwFormViewer").directive("mwFormConfirmationPage",function(){return{replace:!0,restrict:"AE",require:"^mwFormViewer",scope:{submitStatus:"=",confirmationMessage:"=",readOnly:"=?"},templateUrl:"mw-form-confirmation-page.html",controllerAs:"ctrl",bindToController:!0,controller:function(){},link:function(r,e,o,t){r.ctrl}}});
+\ No newline at end of file
+diff --git a/src/viewer/form-viewer.directive.js b/src/viewer/form-viewer.directive.js
+index c703e72..22fad5e 100644
+--- a/src/viewer/form-viewer.directive.js
++++ b/src/viewer/form-viewer.directive.js
+@@ -7,6 +7,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
+         scope: {
+             formData: '=',
+             responseData: '=',
++            templateData: '=?',
+             readOnly: '=?',
+             options: '=?',
+             formStatus: '=?', //wrapper for internal angular form object
+@@ -17,7 +18,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
+         templateUrl: 'mw-form-viewer.html',
+         controllerAs: 'ctrl',
+         bindToController: true,
+-        controller: function($timeout){
++        controller: function($timeout, $interpolate){
+             var ctrl = this;
+ 
+             ctrl.defaultOptions = {
+@@ -135,6 +136,23 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
+                     ctrl.buttons.nextPage.visible=!formSubmit;
+                 }
+             };
++            
++            ctrl.applyTemplateDataToElement = function(element){
++              if (ctrl.templateData){                
++                if (element.paragraph){
++                  element.paragraph.displayHtml = $interpolate(element.paragraph.html)(ctrl.templateData);
++                }
++                if (element.question){
++                  element.question.displayText = $interpolate(element.question.text)(ctrl.templateData);
++                  
++                  if (element.question.offeredAnswers){
++                    element.question.offeredAnswers.forEach(function (offeredAnswer){
++                      offeredAnswer.displayValue = $interpolate(offeredAnswer.value)(ctrl.templateData);
++                    });
++                  }
++                }                
++              }
++            };
+ 
+             ctrl.initResponsesForCurrentPage = function(){
+                 ctrl.currentPage.elements.forEach(function(element){
+@@ -142,6 +160,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
+                     if(question && !ctrl.responseData[question.id]){
+                         ctrl.responseData[question.id]={};
+                     }
++                    ctrl.applyTemplateDataToElement(element);
+                 });
+             };
+ 
+diff --git a/src/viewer/mw-form-question.html b/src/viewer/mw-form-question.html
+index cabc029..9be85fd 100644
+--- a/src/viewer/mw-form-question.html
++++ b/src/viewer/mw-form-question.html
+@@ -1,7 +1,7 @@
+ <div class="mw-form-question">
+ 
+     <div class="mw-question-text">
+-        {{ctrl.question.text}} <span ng-if="ctrl.question.required">*</span>
++        {{ctrl.question.displayText}} <span ng-if="ctrl.question.required">*</span>
+     </div>
+ 
+     <div class="mw-question-answers" ng-switch="ctrl.question.type">
+@@ -15,7 +15,7 @@
+             <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
+                 <label>
+                     <input type="radio" ng-model="ctrl.questionResponse.selectedAnswer" ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.selectedAnswerChanged()" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">
+-                    {{answer.value}}
++                    {{answer.displayValue}}
+                 </label>
+             </div>
+             <div class="radio" ng-if="ctrl.question.otherAnswer">
+@@ -33,7 +33,7 @@
+             <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers">
+                 <label>
+                     <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly">
+-                    {{::answer.value}}
++                    {{::answer.displayValue}}
+                 </label>
+             </div>
+             <div class="checkbox"  ng-if="ctrl.question.otherAnswer">
+diff --git a/src/viewer/mw-form-viewer-content.html b/src/viewer/mw-form-viewer-content.html
+index 4d9886a..c1c37ec 100644
+--- a/src/viewer/mw-form-viewer-content.html
++++ b/src/viewer/mw-form-viewer-content.html
+@@ -21,7 +21,7 @@
+                         </figure>
+                     </div>
+                     <div ng-switch-when="paragraph">
+-                        <p ng-bind-html="pageElement.paragraph.html"></p>
++                        <p ng-bind-html="pageElement.paragraph.displayHtml"></p>
+                     </div>
+ 
+                 </div>
+-- 
+2.6.4 (Apple Git-63)
+

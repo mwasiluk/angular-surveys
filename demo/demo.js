@@ -42,6 +42,11 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
             .then(function(res){
                 ctrl.responseData = res.data;
             });
+            
+        $http.get('template-data.json')
+            .then(function(res){
+                ctrl.templateData = res.data;
+            });
 
         ctrl.showResponseRata=false;
         ctrl.saveResponse = function(){
