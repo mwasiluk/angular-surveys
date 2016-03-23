@@ -252,6 +252,13 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 });
             }
 
+            ctrl.print=function(input){
+                if (ctrl.templateData){
+                    return $interpolate(input)(ctrl.templateData);
+                }
+                return input;
+            }
+
         },
         link: function (scope, ele, attrs){
             var ctrl = scope.ctrl;

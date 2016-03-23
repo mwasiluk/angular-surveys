@@ -4,7 +4,7 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
             prefix: '../dist/i18n/',
             suffix: '/angular-surveys.json'
         });
-        $translateProvider.preferredLanguage('es');
+        $translateProvider.preferredLanguage('en');
     })
     .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
 
@@ -27,6 +27,14 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         ctrl.formViewer = {};
         ctrl.formOptions = {
             autoStart: false
+        };
+        ctrl.optionsBuilder={
+            /*elementButtons:   [{title: 'My title tooltip', icon: 'fa fa-database', text: '', callback: ctrl.callback, filter: ctrl.filter, showInOpen: true}],
+            customQuestionSelects:  [
+                {key:"category", label: 'Category', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}], required: false},
+                {key:"category2", label: 'Category2', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}]}
+            ],
+            elementTypes: ['question', 'image']*/
         };
         ctrl.formStatus= {};
         ctrl.responseData={};
