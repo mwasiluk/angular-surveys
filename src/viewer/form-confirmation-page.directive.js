@@ -21,7 +21,7 @@ angular.module('mwFormViewer')
         },
         link: function (scope, ele, attrs, mwFormViewer){
             var ctrl = scope.ctrl;
-
+            ctrl.print =  mwFormViewer.print;
         }
     };
 });

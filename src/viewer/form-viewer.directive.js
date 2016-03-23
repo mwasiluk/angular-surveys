@@ -7,6 +7,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         scope: {
             formData: '=',
             responseData: '=',
+            templateData: '=?',
             readOnly: '=?',
             options: '=?',
             formStatus: '=?', //wrapper for internal angular form object
@@ -17,7 +18,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         templateUrl: 'mw-form-viewer.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout){
+        controller: function($timeout, $interpolate){
             var ctrl = this;
 
             ctrl.defaultOptions = {
@@ -214,6 +215,13 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 ctrl.formData.pages.sort(function(a,b){
                     return a.number - b.number;
                 });
+            }
+
+            ctrl.print=function(input){
+                if (ctrl.templateData){
+                    return $interpolate(input)(ctrl.templateData);
+                }
+                return input;
             }
 
         },
