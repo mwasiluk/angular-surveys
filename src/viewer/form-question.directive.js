@@ -119,7 +119,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
         },
         link: function (scope, ele, attrs, mwFormViewer){
             var ctrl = scope.ctrl;
-
+            ctrl.print =  mwFormViewer.print;
         }
     };
 });
