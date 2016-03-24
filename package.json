@@ -1,6 +1,6 @@
 {
   "name": "angular-surveys",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Angular survey/form builder and viewer inspired by Google Forms",
   "main": "gulpfile.js",
   "devDependencies": {
@@ -36,7 +36,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mwasiluk/angular-surveys.git"
+    "url": "git+https://github.com/gofreddo/angular-surveys.git"
   },
   "keywords": [
     "angular",
@@ -47,7 +47,7 @@
   "author": "Michal Wasiluk",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/mwasiluk/angular-surveys/issues"
+    "url": "https://github.com/gofreddo/angular-surveys/issues"
   },
-  "homepage": "https://github.com/mwasiluk/angular-surveys#readme"
+  "homepage": "https://github.com/gofreddo/angular-surveys#readme"
 }

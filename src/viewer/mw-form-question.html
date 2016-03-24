@@ -1,7 +1,11 @@
 <div class="mw-form-question">
 
     <div class="mw-question-text">
+<<<<<<< HEAD
+        {{ctrl.question.displayText}} <span ng-if="ctrl.question.required">*</span>
+=======
         {{::ctrl.print(ctrl.question.text)}} <span ng-if="ctrl.question.required">*</span>
+>>>>>>> mwasiluk/master
     </div>
 
     <div class="mw-question-answers" ng-switch="ctrl.question.type">
@@ -15,7 +19,11 @@
             <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
                 <label>
                     <input type="radio" ng-model="ctrl.questionResponse.selectedAnswer" ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.selectedAnswerChanged()" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">
+<<<<<<< HEAD
+                    {{answer.displayValue}}
+=======
                     {{::ctrl.print(answer.value)}}
+>>>>>>> mwasiluk/master
                 </label>
             </div>
             <div class="radio" ng-if="ctrl.question.otherAnswer">
@@ -33,7 +41,11 @@
             <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers">
                 <label>
                     <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly">
+<<<<<<< HEAD
+                    {{::answer.displayValue}}
+=======
                     {{::ctrl.print(answer.value)}}
+>>>>>>> mwasiluk/master
                 </label>
             </div>
             <div class="checkbox"  ng-if="ctrl.question.otherAnswer">

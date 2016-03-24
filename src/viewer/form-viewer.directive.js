@@ -35,6 +35,23 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             ctrl.formData.pages.forEach(function(page){
                 ctrl.pageIdToPage[page.id]=page;
             });
+            
+            ctrl.showElement = function(element){
+              
+              if (!element.question){
+                return true;
+              }
+              
+              if (element.question.visibleIf === undefined){
+                return true;
+              }
+              
+              if (element.question.visibleIf === false){
+                return true;
+              }
+              
+              return ctrl.responseData[element.question.visibleIfQuestion.id].selectedAnswer === element.question.visibleIfAnswer;
+            }
 
 
             ctrl.buttons={
@@ -119,6 +136,23 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                     ctrl.buttons.nextPage.visible=!formSubmit;
                 }
             };
+            
+            ctrl.applyTemplateDataToElement = function(element){
+              var templateData = Object.assign({}, ctrl.templateData);
+                              
+              if (element.paragraph){
+                element.paragraph.displayHtml = $interpolate(element.paragraph.html)(templateData);
+              }
+              if (element.question){
+                element.question.displayText = $interpolate(element.question.text)(templateData);
+                
+                if (element.question.offeredAnswers){
+                  element.question.offeredAnswers.forEach(function (offeredAnswer){
+                    offeredAnswer.displayValue = $interpolate(offeredAnswer.value)(templateData);
+                  });
+                }
+              }                              
+            };
 
             ctrl.initResponsesForCurrentPage = function(){
                 ctrl.currentPage.elements.forEach(function(element){
@@ -126,6 +160,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                     if(question && !ctrl.responseData[question.id]){
                         ctrl.responseData[question.id]={};
                     }
+                    ctrl.applyTemplateDataToElement(element);
                 });
             };
 

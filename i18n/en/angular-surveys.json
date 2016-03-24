@@ -132,7 +132,9 @@
             "buttons":{
                 "addOption":"Click to add option",
                 "addOther":"Add 'Other'"
-            }
+            },
+            "visibleIf": "Visible if ",
+            "equals": "equals"
 
         },
         "image":{

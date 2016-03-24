@@ -129,7 +129,9 @@
       "buttons": {
         "addOption": "Click para agregar opción",
         "addOther": "Agregar 'Otra'"
-      }
+      },
+      "visibleIf": "visible si",
+      "equals": "es igual"
     },
     "image": {
       "selectImageButton": "Seleccionar imagen"
