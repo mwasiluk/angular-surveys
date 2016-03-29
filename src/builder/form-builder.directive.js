@@ -17,20 +17,31 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         bindToController: true,
         controller: function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
+            ctrl.currentPage = 0;
+            ctrl.pageSize = 10;
+            ctrl.pagesSize = [10,25,50,100];
             if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                 ctrl.formData.pages = [];
                 ctrl.formData.pages.push(createEmptyPage(1));
             }
 
             ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
-            console.log('options',mwFormBuilderOptions);
-
+            ctrl.numberOfPages=function(){
+                return Math.ceil(ctrl.formData.pages.length/ctrl.pageSize);                
+            };
+            ctrl.lastPage = function(){
+               ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+            };
             ctrl.addPage = function(){
+                ctrl.lastPage();
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
             };
-
-
-
+            ctrl.onChangePageSize = function(){
+                if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1)){
+                   ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+                }
+            };
+            
 
             function createEmptyPage(number){
                 var defaultPageFlow = null;
@@ -177,5 +188,13 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 ctrl.updatePageFlow();
             });
         }
+    };
+});
+
+
+angular.module('mwFormBuilder').filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
     };
 });
