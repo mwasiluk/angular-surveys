@@ -192,7 +192,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
 });
 
 
-angular.module('mwFormBuilder').filter('startFrom', function() {
+angular.module('mwFormBuilder').filter('mwStartFrom', function() {
     return function(input, start) {
         start = +start; //parse to int
         return input.slice(start);
