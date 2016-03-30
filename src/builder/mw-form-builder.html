@@ -16,7 +16,7 @@
 
 
         <div class="form-page-list">
-            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| startFrom:ctrl.currentPage * ctrl.pageSize | limitTo:ctrl.pageSize" form-page="page" form-object="ctrl.formData" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
+            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.pageSize | limitTo:ctrl.pageSize" form-page="page" form-object="ctrl.formData" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
         </div>
         <div class="row">
             <div class="col-sm-9">
