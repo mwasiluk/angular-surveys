@@ -1,7 +1,7 @@
 <div class="mw-form-question">
 
     <div class="mw-question-text">
-        {{ctrl.question.text}} <span ng-if="ctrl.question.required">*</span>
+        {{::ctrl.print(ctrl.question.text)}} <span ng-if="ctrl.question.required">*</span>
     </div>
 
     <div class="mw-question-answers" ng-switch="ctrl.question.type">
@@ -15,7 +15,7 @@
             <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
                 <label>
                     <input type="radio" ng-model="ctrl.questionResponse.selectedAnswer" ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.selectedAnswerChanged()" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">
-                    {{answer.value}}
+                    {{::ctrl.print(answer.value)}}
                 </label>
             </div>
             <div class="radio" ng-if="ctrl.question.otherAnswer">
@@ -33,7 +33,7 @@
             <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers">
                 <label>
                     <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly">
-                    {{::answer.value}}
+                    {{::ctrl.print(answer.value)}}
                 </label>
             </div>
             <div class="checkbox"  ng-if="ctrl.question.otherAnswer">
@@ -55,7 +55,7 @@
                     <tr>
                         <td></td>
                         <td ng-repeat="col in ::ctrl.question.grid.cols">
-                            <label>{{::col.label}}</label>
+                            <label>{{::ctrl.print(col.label)}}</label>
                         </td>
                     </tr>
 
@@ -63,7 +63,7 @@
                     <tbody>
                     <tr ng-repeat="row in ::ctrl.question.grid.rows">
                         <td>
-                            {{::row.label}}
+                            {{::ctrl.print(row.label)}}
                         </td>
                         <td ng-repeat="col in ::ctrl.question.grid.cols">
                             <input type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
@@ -78,10 +78,10 @@
             <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
                 <div class="form-group">
                     <label>
-                        {{item.value}}
+                        {{::ctrl.print(item.value)}}
                     </label>
                     <input type="number" class="form-control" ng-model="ctrl.questionResponse[item.id]" min="0" max="{{ctrl.question.quantity}}" required style="width: 80px" ng-change="ctrl.computeDivisionSum()" ng-readonly="ctrl.readOnly">
-                    <span>{{::ctrl.question.unit}}</span>
+                    <span>{{::ctrl.print(ctrl.question.unit)}}</span>
                 </div>
 
             </div>

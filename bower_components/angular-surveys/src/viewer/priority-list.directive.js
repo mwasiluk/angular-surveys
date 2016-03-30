@@ -93,9 +93,9 @@ angular.module('mwFormViewer')
             });
 
         },
-        link: function (scope, ele, attrs, mwFormViewer){
+        link: function (scope, ele, attrs, mwFormQuestion){
             var ctrl = scope.ctrl;
-
+            ctrl.print =  mwFormQuestion.print;
         }
     };
 });

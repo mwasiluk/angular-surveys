@@ -39,15 +39,14 @@
     "angular-translate-loader-static-files": "2.x",
     "angular-mocks": "~1.4.8"
   },
-  "version": "0.6.0",
-  "_release": "0.6.0",
+  "version": "0.6.2",
+  "_release": "0.6.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.6.0",
-    "commit": "da00e161853ceaf5ffacff112f615f4a46e45b1f"
+    "tag": "0.6.2",
+    "commit": "396e7377f813473f683eedbca5eedd0a89b87109"
   },
   "_source": "git://github.com/mwasiluk/angular-surveys.git",
   "_target": "^0.6.0",
-  "_originalSource": "angular-surveys",
-  "_direct": true
+  "_originalSource": "angular-surveys"
 }
