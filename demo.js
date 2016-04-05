@@ -6,12 +6,12 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalp
         });
         $translateProvider.preferredLanguage('en');
     })
-    .controller('DemoController', function($q,$http, $translate, mwFormResponseUtils) {
+    .controller('DemoController', function($q,$http, $translate, $timeout, mwFormResponseUtils) {
         var ctrl = this;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl', "es"];
-        ctrl.formData = {};
+        ctrl.formData = null;
         $http.get('form-data.json')
             .then(function(res){
                 ctrl.formData = res.data;
@@ -83,5 +83,16 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer',  'mwFormUtils', 'pascalp
         ctrl.getResponseSheet=function(){
             return mwFormResponseUtils.getResponseSheet(ctrl.formData, ctrl.responseData, ctrl.headersWithQuestionNumber);
         };
+
+        ctrl.setModelFromJsonInput = function(){
+            ctrl.showModelJsonInput = false;
+            ctrl.formData = null;
+            $timeout(function(){
+                console.log(ctrl.modelJsonInput);
+                ctrl.formData= angular.fromJson(ctrl.modelJsonInput);
+            }, 10);
+
+        }
+
 
     });

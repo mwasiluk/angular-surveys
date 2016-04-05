@@ -48,7 +48,7 @@
 </nav>
 
 
-<div class="demo-container">
+<div class="demo-container" ng-if="ctrl.formData">
 
     <p>Angular.js survey / form builder and viewer inspired by Google Forms</p>
 
@@ -59,7 +59,7 @@
         <li role="presentation"><a href="#utils" aria-controls="messages" role="tab" data-toggle="tab">Utils</a></li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content" >
         <div role="tabpanel" class="tab-pane active" id="builder">
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
@@ -107,6 +107,16 @@
 <pre>
 {{ctrl.formData|json}}
 </pre>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="ctrl.showModelJsonInput"> Set model value
+                </label>
+            </div>
+            <div ng-if="ctrl.showModelJsonInput">
+                <textarea class="form-control"  ng-model="ctrl.modelJsonInput"></textarea>
+                <button class="btn btn-default" ng-click="ctrl.setModelFromJsonInput()">Set</button>
+            </div>
+
         </div>
         <div role="tabpanel" class="tab-pane" id="utils">
             <h3>mwFormResponseUtils service</h3>
