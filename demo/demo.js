@@ -18,8 +18,8 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl', "es"];
-        ctrl.formData = {};
-        $http.get('form-data.json')
+        ctrl.formData = null;
+        $http.get('form-data2.json')
             .then(function(res){
                 ctrl.formData = res.data;
             });
