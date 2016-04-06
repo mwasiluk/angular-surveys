@@ -28,9 +28,9 @@ gulp.task('build-tmp', ['build-css'], function () {
 gulp.task('default', ['build-tmp'], function () {
     var i18n = gulp.src('i18n/**/*.json').pipe(plugins.jsonminify()).pipe(gulp.dest('dist/i18n/'));
 
-    var builderStream = buildModuleStream('form-builder.min.js', 'mwFormBuilder');
-    var viewerStream = buildModuleStream('form-viewer.min.js', 'mwFormViewer');
-    var utilsStream = buildModuleStream('form-utils.min.js', 'mwFormUtils');
+    var builderStream = buildModuleStream('form-builder', 'mwFormBuilder');
+    var viewerStream = buildModuleStream('form-viewer', 'mwFormViewer');
+    var utilsStream = buildModuleStream('form-utils', 'mwFormUtils');
     return merge(builderStream, viewerStream, utilsStream, i18n);
 });
 
@@ -42,32 +42,40 @@ function buildTemp(src, moduleName) {
 
     var tmpDir = 'tmp/'+moduleName;
 
-    var copy = gulp.src(src + '**/*.js').pipe(gulp.dest(tmpDir));
+    var copy = gulp.src(src + '**/*').pipe(gulp.dest(tmpDir));
 
-    var templates =  gulp.src(src + '**/*.html')
+
+
+    return merge(copy);
+}
+
+function buildTemplates(src, moduleName, dest, filePrefix){
+    return gulp.src(src + '**/*.html')
         .pipe(plugins.minifyHtml())
         .pipe(plugins.angularTemplatecache({
             module: moduleName,
-            filename: 'templates.js'
+            filename: filePrefix+'-tpls.min.js'
         }))
-        .pipe(gulp.dest(tmpDir));
-
-    return merge(copy, templates);
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(dest));
 }
 
-function buildModuleStream(dest, moduleName) {
+function buildModuleStream(destPrefix, moduleName) {
 
     var tmpDir = 'tmp/'+moduleName;
 
-    return gulp.src(tmpDir + '/**/*.js')
+    var bootstrapTemplates = buildTemplates(tmpDir+'/templates/bootstrap/', moduleName, 'dist', destPrefix+'-bootstrap');
+    var materialTemplates = buildTemplates(tmpDir+'/templates/material/', moduleName, 'dist', destPrefix+'-material');
+
+    var module =  gulp.src(tmpDir + '/**/*.js')
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
-        .pipe(plugins.uglify())
-        .pipe(plugins.stripDebug())
-        .pipe(plugins.concat(dest))
+        //.pipe(plugins.uglify())
+        //.pipe(plugins.stripDebug())
+        .pipe(plugins.concat(destPrefix+'.min.js'))
         .pipe(gulp.dest('dist'));
 
-
+    return merge(module, bootstrapTemplates, materialTemplates);
 }
 
 gulp.task('test', function (done) {

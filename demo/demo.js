@@ -1,4 +1,4 @@
-angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
+angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
             prefix: '../dist/i18n/',

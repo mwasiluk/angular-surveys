@@ -1,0 +1,57 @@
+<div class="mw-question-grid-builder">
+    <div class="form-horizontal mw-grid-rows-builder">
+        <div class="mw-grid-row-list" ng-sortable="ctrl.rowsSortableConfig" ng-model="ctrl.question.grid.rows" role="list">
+            <div class="mw-grid-item form-group" ng-repeat="row in ctrl.question.grid.rows" role="listitem">
+                <mw-label label-for="mw-grid-row-{{row.id}}-label" label-class="col-sm-2 control-label"  label-key="mwForm.question.grid.rowLabel" label-translate-values="{row: row.orderNo}"></mw-label>
+                <div class="col-sm-10 col-md-8">
+                    <div class="drag-handle">
+                        <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+                    </div>
+                    <input ng-attr-id="mw-grid-row-{{row.id}}-label" wd-focus-me="ctrl.isNewInput[row.id]" type="text" ng-model="row.label" ng-keypress="ctrl.keyPressedOnInput($event,row, 'row')" required class="form-control mw-item-label-value "  ng-readonly="ctrl.readOnly">
+                    <button role="button" class="remove-item-button" ng-click="ctrl.removeRow(row)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+        </div>
+        <div class="mw-grid-item form-group add-new-item-widget" ng-if="!ctrl.readOnly">
+            <label class="col-sm-2 control-label" translate="mwForm.question.grid.rowLabel" translate-values="{row: ctrl.question.grid.rows.length+1}">Etykieta wiersza {{ctrl.question.grid.rows.length+1}}</label>
+            <div class="col-sm-10 col-md-8">
+                <div class="drag-handle">
+                </div>
+                <span ng-click="ctrl.addNewRow()" role="button">
+                    <input type="text"  required class="form-control" value="{{'mwForm.question.grid.clickToAddRow'|translate}}">
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="mw-grid-separator col-sm-9 col-sm-offset-1"></div>
+    </div>
+
+    <div class="form-horizontal mw-grid-cols-builder">
+        <div class="mw-grid-col-list" ng-sortable="ctrl.colsSortableConfig" ng-model="ctrl.question.grid.cols" role="list">
+            <div class="mw-grid-item form-group" ng-repeat="col in ctrl.question.grid.cols" role="listitem">
+                <mw-label label-for="mw-grid-col-{{col.id}}-label" label-class="col-sm-2 control-label"  label-key="mwForm.question.grid.columnLabel" label-translate-values="{col: col.orderNo}"></mw-label>
+                <div class="col-sm-10 col-md-8">
+                    <div class="drag-handle">
+                        <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+                    </div>
+                    <input ng-attr-id="mw-grid-col-{{col.id}}-label" wd-focus-me="ctrl.isNewInput[col.id]" type="text" ng-model="col.label" ng-keypress="ctrl.keyPressedOnInput($event,col, 'col')" required class="form-control mw-item-label-value " ng-readonly="ctrl.readOnly">
+                    <button role="button" class="remove-item-button" ng-click="ctrl.removeCol(col)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+        </div>
+        <div class="mw-grid-item form-group add-new-item-widget" ng-if="!ctrl.readOnly">
+            <label class="col-sm-2 control-label"  translate="mwForm.question.grid.columnLabel" translate-values="{col: ctrl.question.grid.cols.length+1}">Etykieta kolumny {{ctrl.question.grid.cols.length+1}}</label>
+            <div class="col-sm-10 col-md-8">
+                <div class="drag-handle">
+                </div>
+                <span ng-click="ctrl.addNewCol()" role="button" >
+                    <input type="text"  required class="form-control" value="{{'mwForm.question.grid.clickToAddColumn'|translate}}">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
