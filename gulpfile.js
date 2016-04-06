@@ -70,8 +70,8 @@ function buildModuleStream(destPrefix, moduleName) {
     var module =  gulp.src(tmpDir + '/**/*.js')
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
-        //.pipe(plugins.uglify())
-        //.pipe(plugins.stripDebug())
+        .pipe(plugins.uglify())
+        .pipe(plugins.stripDebug())
         .pipe(plugins.concat(destPrefix+'.min.js'))
         .pipe(gulp.dest('dist'));
 

@@ -1,0 +1,143 @@
+{
+  "pages": [
+    {
+      "id": "3e85e01175c78021d0b552a72ecddd76",
+      "number": 1,
+      "name": null,
+      "description": null,
+      "pageFlow": {
+        "page": {
+          "id": "4ea50b65fff0e30f197d78ef82d5a946",
+          "number": 4
+        },
+        "label": "mwForm.pageFlow.goToPage"
+      },
+      "elements": [
+        {
+          "id": "5615172be457d703997d93b4aeebf7fb",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "18b4f70e0523f4910eca3f7c3053ec4a",
+            "text": "YES OR NO?",
+            "type": "radio",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "3b8004d4db0fa88184fb509217d21203",
+                "orderNo": 1,
+                "value": "YES",
+                "pageFlow": {
+                  "page": {
+                    "id": "45422016bd62ac25c9f10b9a569c8b28",
+                    "number": 2
+                  },
+                  "label": "mwForm.pageFlow.goToPage"
+                }
+              },
+              {
+                "id": "6899c4ad88aeab991f5ccdf501f8d17f",
+                "orderNo": 2,
+                "value": "NO",
+                "pageFlow": {
+                  "page": {
+                    "id": "723960d518e45fed949aff73f6b2149b",
+                    "number": 3
+                  },
+                  "label": "mwForm.pageFlow.goToPage"
+                }
+              }
+            ],
+            "pageFlowModifier": true
+          }
+        }
+      ],
+      "namedPage": false,
+      "isFirst": true,
+      "isLast": false
+    },
+    {
+      "id": "45422016bd62ac25c9f10b9a569c8b28",
+      "number": 2,
+      "name": "YES",
+      "description": null,
+      "pageFlow": {
+        "page": {
+          "id": "4ea50b65fff0e30f197d78ef82d5a946",
+          "number": 4
+        },
+        "label": "mwForm.pageFlow.goToPage"
+      },
+      "elements": [
+        {
+          "id": "a83958320f9c743410210d299872cc3a",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "b9f51a3e27ffc67cf869e88753def16f",
+            "text": "Why did you answer yes?",
+            "type": "text",
+            "required": true,
+            "pageFlowModifier": false
+          }
+        }
+      ],
+      "namedPage": true
+    },
+    {
+      "id": "723960d518e45fed949aff73f6b2149b",
+      "number": 3,
+      "name": "NO",
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
+        {
+          "id": "8cd89a14b955b4189687ab7469d1c3b8",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "974181c30bb3989bbf16fb785377db33",
+            "text": "asdfasdfasdfasdfr",
+            "type": "time",
+            "required": true,
+            "pageFlowModifier": false
+          }
+        }
+      ],
+      "namedPage": true
+    },
+    {
+      "id": "4ea50b65fff0e30f197d78ef82d5a946",
+      "number": 4,
+      "name": "Final",
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
+        {
+          "id": "01ec89f92275c211ea6cd82b1b91bb82",
+          "orderNo": 1,
+          "type": "question",
+          "question": {
+            "id": "70d0d64e3ab4f20fcd11e9913516a75c",
+            "text": "How good was this survey from 0 (horrible) to 10 (perfect)",
+            "type": "range",
+            "required": true,
+            "pageFlowModifier": false,
+            "min": 0,
+            "max": 10
+          }
+        }
+      ],
+      "namedPage": true
+    }
+  ],
+  "name": "TEST",
+  "description": "Test decision tree",
+  "confirmationMessage": "DONE!"
+}

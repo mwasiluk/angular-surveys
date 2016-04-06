@@ -7,7 +7,10 @@
         </div>
         <div ng-form="ctrl.form" role="form" novalidate class="form-page-builder-body">
             <div class="form-group">
-                <textarea msd-elastic class="form-control" name="confirmationMessage" ng-model="ctrl.formObject.confirmationMessage" aria-label="{{'mwForm.confirmationPage.customMessage'|translate}}" placeholder="{{'mwForm.confirmationPage.customMessage'|translate}}" ng-disabled="ctrl.readOnly"></textarea>
+                <md-input-container class="md-block">
+                    <mw-label label-for="customConfirmationMessage" label-key="mwForm.confirmationPage.customMessage"></mw-label>
+                     <textarea id="customConfirmationMessage" msd-elastic class="form-control" name="confirmationMessage" ng-model="ctrl.formObject.confirmationMessage"  ng-disabled="ctrl.readOnly"></textarea>
+                </md-input-container>
             </div>
         </div>
     </div>

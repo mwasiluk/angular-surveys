@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>angular-surveys demo</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="../dist/form-builder-material.min.css">
+    <link rel="stylesheet" href="../dist/form-viewer-material.min.css">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body ng-controller="DemoController as ctrl" ng-cloak>
+
+
+<div ng-cloak>
+    <md-content ng-if="ctrl.formData">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Builder">
+                <md-content class="md-padding tab-content">
+                    <div layout="row" layout-align="center">
+                        <div flex="66">
+                            <div layout="row" layout-align="center center">
+                                <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
+                                    Reset
+                                </md-button>
+                                <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
+                                    Read only
+                                </md-checkbox>
+                            </div>
+
+                            <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly"
+                                             on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+                        </div>
+
+
+                    </div>
+
+
+                </md-content>
+            </md-tab>
+            <md-tab label="viewer">
+                <md-content class="md-padding tab-content">
+                </md-content>
+            </md-tab>
+            <md-tab label="model">
+                <md-content class="md-padding tab-content">
+                    <md-card>
+<pre>
+{{ctrl.formData|json}}
+</pre>
+                    </md-card>
+                </md-content>
+            </md-tab>
+            <md-tab label="utils">
+                <md-content class="md-padding tab-content">
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
+
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-material/angular-material.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="../bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+<script src="../bower_components/angular-elastic/elastic.js"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="../bower_components/Sortable/Sortable.min.js"></script>
+<script src="../bower_components/Sortable/ng-sortable.js"></script>
+<script src="../dist/form-utils.min.js"></script>
+<script src="../dist/form-builder.min.js"></script>
+<script src="../dist/form-builder-material-tpls.min.js"></script>
+<script src="../dist/form-viewer.min.js"></script>
+<script src="../dist/form-viewer-material-tpls.min.js"></script>
+
+<script src="demo.js"></script>
+
+
+</body>
+</html>
