@@ -1,58 +1,56 @@
-<div class="mw-form-builder">
+<div class="mw-form-builder" flex>
     <form name="ctrl.form" role="form" novalidate>
         <div class="mw-title-page">
-
-            <div class="form-group">
+            <md-input-container class="md-block">
                 <mw-label label-for="formName" label-key="mwForm.form.name"></mw-label>
-                <input type="text" class="form-control" name="formName" id="formName" ng-model="ctrl.formData.name" ng-readonly="ctrl.readOnly" placeholder="{{'mwForm.form.name.placeholder'|translate}}" required>
-            </div>
+                <input name="formName" id="formName" ng-model="ctrl.formData.name" ng-readonly="ctrl.readOnly" required aria-label="formName">
+            </md-input-container>
 
-            <div class="form-group">
+            <md-input-container class="md-block">
                 <mw-label label-for="formDescription" label-key="mwForm.form.description"></mw-label>
-                <textarea msd-elastic class="form-control" name="formDescription" ng-model="ctrl.formData.description" id="formDescription" ng-readonly="ctrl.readOnly"/>
-            </div>
+                <textarea name="formDescription" ng-model="ctrl.formData.description" id="formDescription" ng-readonly="ctrl.readOnly" md-select-on-focus aria-label="formDescription"/>
+            </md-input-container>
         </div>
-
-
 
         <div class="form-page-list">
             <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.pageSize | limitTo:ctrl.pageSize" form-page="page" form-object="ctrl.formData" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
         </div>
-        <div class="row">
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage === 0" ng-click="ctrl.currentPage = 0">
-                            <i class="fa fa-angle-double-left"></i>
-                        </button>
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage === 0" ng-click="ctrl.currentPage = ctrl.currentPage - 1">
-                            <i class="fa fa-angle-left"></i>
-                        </button>
-                        {{ctrl.currentPage + 1}}/{{ctrl.numberOfPages()}}
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
-                            <i class="fa fa-angle-right"></i>
-                        </button>
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.lastPage()">
-                            <i class="fa fa-angle-double-right"></i>
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <select ng-change="ctrl.onChangePageSize()" class="form-control" ng-model="ctrl.pageSize" ng-options="item for item in ctrl.pagesSize" />
-                    </div>
-                </div>
+        <div layout="row">
+            <div flex="75">
 
+                <md-button class="md-icon-button launch" ng-disabled="ctrl.currentPage === 0" ng-click="ctrl.currentPage = 0">
+                    <i class="fa fa-angle-double-left"></i>
+                </md-button>
+                <md-button class="md-icon-button launch" ng-disabled="ctrl.currentPage === 0" ng-click="ctrl.currentPage = ctrl.currentPage - 1">
+                    <i class="fa fa-angle-left"></i>
+                </md-button>
+                {{ctrl.currentPage + 1}}/{{ctrl.numberOfPages()}}
+                <md-button class="md-icon-button launch" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
+                    <i class="fa fa-angle-right"></i>
+                </md-button>
+                <md-button class="md-icon-button launch" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.lastPage()">
+                    <i class="fa fa-angle-double-right"></i>
+                </md-button>
             </div>
-            <div class="col-sm-3">
-                <div class="row">
+            <div flex="25">
+                <div layout="row">
+                  <md-select ng-change="ctrl.onChangePageSize()" ng-model="ctrl.pageSize">
+                      <md-option ng-repeat="item in ctrl.pagesSize" ng-value="item">{{item}}</md-option>
+                  </md-select>
 
-                    <div class="col-sm-12 text-right">
-                        <button type="button"  class="btn btn-default mw-add-new-page-button" ng-click="ctrl.addPage()" ng-if="!ctrl.readOnly"><i class="fa fa-plus"></i> <span translate="mwForm.buttons.addPage"></span></button>
+                    <div flex class="text-right">
+                        <md-button class="mw-add-new-page-button" ng-click="ctrl.addPage()" ng-if="!ctrl.readOnly">
+                            <i class="fa fa-plus"></i>
+                            <span translate="mwForm.buttons.addPage"></span>
+                        </md-button>
                     </div>
                 </div>
-
             </div>
         </div>
-        <mw-form-confirmation-page-builder form-object="ctrl.formData" read-only="ctrl.readOnly"></mw-form-confirmation-page-builder>
+
+        <div layout="row">
+            <mw-form-confirmation-page-builder flex form-object="ctrl.formData" read-only="ctrl.readOnly"></mw-form-confirmation-page-builder>
+        </div>
     </form>
 
 </div>

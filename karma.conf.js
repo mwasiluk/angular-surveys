@@ -17,7 +17,6 @@ module.exports = function(config) {
             'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
             'bower_components/Sortable/Sortable.min.js',
             'bower_components/Sortable/ng-sortable.js',
-            'bower_components/angular-elastic/elastic.js',
             'dist/*.js',
             'test/*.js'
 

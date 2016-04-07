@@ -1,1 +1,1 @@
-angular.module('mwFormBuilder', ['ngSanitize', 'ui.bootstrap','ng-sortable', 'pascalprecht.translate']);
+angular.module('mwFormBuilder', ['ngSanitize', 'ngMaterial', 'ng-sortable', 'pascalprecht.translate']);

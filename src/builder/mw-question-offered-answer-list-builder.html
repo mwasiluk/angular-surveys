@@ -1,54 +1,78 @@
 <div class="question-offered-answer-list-builder">
     <div class="question-offered-answer-list" ng-sortable="ctrl.offeredAnswersSortableConfig" ng-model="ctrl.question.offeredAnswers" role="list">
-        <div class="mw-question-offered-answer" ng-repeat="answer in ctrl.question.offeredAnswers" role="listitem">
-            <div class="drag-handle" ng-if="!ctrl.readOnly">
-                <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+        <div class="mw-question-offered-answer" layout="row" ng-repeat="answer in ctrl.question.offeredAnswers" role="listitem">
+          <div flex="5" class="drag-handle" ng-if="!ctrl.readOnly">
+              <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+          </div>
+            <div flex>
+                <md-input-container flex md-no-float class="md-block">
+                    <!-- <div class="option-type-indicator"> -->
+                    <!-- </div> -->
+                    <md-icon ng-show="ctrl.question.type=='radio'" class="fa fa-circle-thin"></md-icon>
+                    <md-icon ng-show="ctrl.question.type=='checkbox'" class="fa fa-square-o"></md-icon>
+
+                    <input wd-focus-me="ctrl.isNewAnswer[answer.id]" type="text" ng-model="answer.value" ng-keypress="ctrl.keyPressedOnInput($event,answer)" required class="offered-answer-value " ng-readonly="ctrl.readOnly">
+                </md-input-container>
+            </div>
+            <div flex>
+                <md-input-container md-no-float class="md-block">
+                    <md-select ng-model="answer.pageFlow" ng-disabled="ctrl.readOnly" ng-if="ctrl.question.pageFlowModifier">
+                        <md-option ng-bind-html="pageFlow.label|translate:pageFlow" ng-repeat="pageFlow in ctrl.possiblePageFlow" value="{{pageFlow}}"></md-option>
+                    </md-select>
+                </md-input-container>
 
             </div>
-            <div class="option-type-indicator">
-                <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
-                <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
-            </div>
-            <input wd-focus-me="ctrl.isNewAnswer[answer.id]" type="text" ng-model="answer.value" ng-keypress="ctrl.keyPressedOnInput($event,answer)" required class="form-control offered-answer-value " ng-readonly="ctrl.readOnly">
-            <button role="button" class="remove-item-button" ng-click="ctrl.removeOfferedAnswer(answer)" ng-if="!ctrl.readOnly"
-                    ng-attr-title="{{'mwForm.buttons.remove' | translate}}" uib-popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+            <!-- <div flex> -->
+            <md-button class="md-icon-button" ng-click="ctrl.removeOfferedAnswer(answer)" ng-attr-title="{{'mwForm.buttons.remove' | translate}}" ng-if="!ctrl.readOnly">
+                <md-tooltip direction="top">
+                    {{'mwForm.buttons.remove' | translate}}
+                </md-tooltip>
                 <i class="fa fa-times"></i>
-            </button>
-            <span ng-if="ctrl.question.pageFlowModifier" class="form-inline">
-                 <select ng-options="pageFlow.label|translate:pageFlow for pageFlow in ctrl.possiblePageFlow" ng-model="answer.pageFlow"  class="form-control" ng-disabled="ctrl.readOnly"></select>
+            </md-button>
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <div class="mw-question-offered-answer add-new-answer-widget" ng-if="!ctrl.readOnly" layout="row">
+        <div class="drag-handle" flex="5"></div>
+        <div class="flex">
+          <md-input-container flex md-no-float class="md-block">
+              <!-- <div class="option-type-indicator"> -->
+              <!-- </div> -->
+              <md-icon ng-show="ctrl.question.type=='radio'" class="fa fa-circle-thin"></md-icon>
+              <md-icon ng-show="ctrl.question.type=='checkbox'" class="fa fa-square-o"></md-icon>
+
+              <input type="text" ng-click="ctrl.addNewOfferedAnswer()" class="offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
+          </md-input-container>
+
+        </div>
+        <span flex class="add-custom-answer" ng-if="!ctrl.question.otherAnswer">
+            <span translate="mwForm.question.orLabel">lub
             </span>
-
-        </div>
-
-    </div>
-    <div class="mw-question-offered-answer add-new-answer-widget" ng-if="!ctrl.readOnly">
-        <div class="drag-handle">
-        </div>
-        <div class="option-type-indicator">
-            <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
-            <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
-        </div>
-        <span ng-click="ctrl.addNewOfferedAnswer()" role="button">
-            <input type="text" class="form-control  offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
-        </span>
-        <span class="add-custom-answer"  ng-if="!ctrl.question.otherAnswer">
-            <span translate="mwForm.question.orLabel">lub </span>
-            <button role="button" ng-click="ctrl.addCustomAnswer()" translate="mwForm.question.buttons.addOther">Dodaj "Inne"</button>
+            <md-button class="md-raised" ng-click="ctrl.addCustomAnswer()" translate="mwForm.question.buttons.addOther">Dodaj "Inne"</md-button>
         </span>
     </div>
-    <div class="mw-question-offered-answer custom-answer" ng-if="ctrl.question.otherAnswer">
-        <div class="drag-handle"  ng-if="!ctrl.readOnly">
 
+
+    <div class="mw-question-offered-answer custom-answer" ng-if="ctrl.question.otherAnswer" layout="row">
+        <div class="drag-handle" ng-if="!ctrl.readOnly" flex="5"></div>
+        <div flex>
+          <md-input-container flex class="md-block">
+
+            <md-icon ng-show="ctrl.question.type=='radio'" class="fa fa-circle-thin"></md-icon>
+            <md-icon ng-show="ctrl.question.type=='checkbox'" class="fa fa-square-o"></md-icon>
+            <label translate="mwForm.question.otherLabel">Inna:
+            </label>
+            <input type="text" value="{{'mwForm.question.userAnswer'|translate}}" class=" offered-answer-value " readonly>
+
+          </md-input-container>
         </div>
-        <div class="option-type-indicator">
-            <i ng-if="ctrl.question.type=='radio'" class="fa fa-circle-thin fa-fw"></i>
-            <i ng-if="ctrl.question.type=='checkbox'" class="fa fa-square-o fa-fw"></i>
-        </div>
-        <label translate="mwForm.question.otherLabel">Inna: </label>
-        <input  type="text" value="{{'mwForm.question.userAnswer'|translate}}"  class="form-control offered-answer-value " readonly>
-        <button type="button" role="button" class="remove-item-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly"
-                ng-attr-title="{{'mwForm.buttons.remove' | translate}}" uib-popover="{{'mwForm.buttons.remove' | translate}}" popover-trigger="mouseenter" popover-placement="top">
+
+        <md-button class="md-icon-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly" ng-attr-title="{{'mwForm.buttons.remove' | translate}}">
+            <md-tooltip direction="top">
+                {{'mwForm.buttons.remove' | translate}}
+            </md-tooltip>
             <i class="fa fa-times"></i>
-        </button>
+        </md-button>
     </div>
 </div>
