@@ -15,27 +15,18 @@
                     </div>
                 </div>
 
-
-                <div class="form-horizontal">
-
-
-                    <div class="form-group">
-                        <label ng-attr-for="image-caption-{{ctrl.id}}" class="col-sm-2 control-label">Podpis</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="text" ng-attr-id="image-caption-{{ctrl.id}}" ng-model="ctrl.image.caption" ng-readonly="ctrl.readOnly">
-                        </div>
-
-
-                    </div>
-                </div>
+                <md-input-container class="md-block">
+                    <mw-label label-for="image-caption-{{ctrl.id}}" label-key="mwForm.image.caption">Image caption</mw-label>
+                    <input type="text" class="form-control" name="text" ng-attr-id="image-caption-{{ctrl.id}}" ng-model="ctrl.image.caption" ng-readonly="ctrl.readOnly">
+                </md-input-container>
             </div>
 
 
-            <div class="row"  ng-if="ctrl.image.src">
+            <div ng-if="ctrl.image.src">
                 <br/> <br/>
-                <div class="col-xs-2">
-                    <button type="button" class="btn btn-primary" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">Gotowe</button>
-                </div>
+                <md-button class="md-primary md-raised" type="button" role="button" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">
+                    Ready
+                </md-button>
             </div>
 
         </div>

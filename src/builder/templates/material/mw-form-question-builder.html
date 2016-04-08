@@ -34,8 +34,8 @@
                 </div>
             </div>
 
-            <div class="row" ng-if="ctrl.question.type">
-                <div class="mw-form-question-answers-builder col-sm-10 col-sm-offset-2  col-md-8" ng-switch="ctrl.question.type">
+            <div ng-if="ctrl.question.type">
+                <div class="mw-form-question-answers-builder" ng-switch="ctrl.question.type">
                     <div ng-if="ctrl.question.type=='text'">
                         <md-input-container class="md-block">
                             <input class="form-control" type="text" disabled value="{{'mwForm.question.preview.text'|translate}}">
@@ -110,18 +110,16 @@
             </div>
 
             <br/> <br/>
-            <div class="row">
-                <div class="col-xs-2">
+            <div layout="row" layout-align="start center">
+                <div flex="20">
                     <md-button class="md-primary md-raised" type="button" role="button" ng-click="ctrl.save()" translate="mwForm.buttons.questionReady">
                         Ready
                     </md-button>
                 </div>
-                <div class="col-xs-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="ctrl.question.required" ng-disabled="ctrl.readOnly"><span translate="mwForm.question.required">Required</span>
-                        </label>
-                    </div>
+                <div flex>
+                    <md-checkbox  ng-model="ctrl.question.required" ng-disabled="ctrl.readOnly" flex>
+                        <span translate="mwForm.question.required">Required</span>
+                    </md-checkbox>
                 </div>
 
             </div>
@@ -176,32 +174,47 @@
                     </md-input-container>
                 </div>
                 <div ng-switch-when="radio">
-                    <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
-                        <label>
-                            <input type="radio">
+                    <md-radio-group disabled>
+                        <md-radio-button  ng-repeat="answer in ctrl.question.offeredAnswers" aria-label="{{ answer.value }}">
                             {{answer.value}}
-                        </label>
-                    </div>
-                    <div class="radio" ng-if="ctrl.question.otherAnswer">
-                        <label><input type="radio"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:</label>
-                        <span class="form-inline">
-                            <input type="text" class="form-control" disabled>
-                        </span>
+                        </md-radio-button>
+                        <div layout="row" layout-align="start center" class="mw-question-other-answer"  ng-if="ctrl.question.otherAnswer">
+                            <div>
+                                <md-radio-button disabled>
+                                    <span translate="mwForm.question.preview.otherAnswer">Inna</span>:
+                                </md-radio-button>
+                            </div>
 
-                    </div>
+                            <div>
+                                <md-input-container>
+                                    <input type="text" class="form-control" disabled>
+                                </md-input-container>
+                            </div>
+
+
+                        </div>
+                    </md-radio-group>
                 </div>
                 <div ng-switch-when="checkbox">
-                    <div class="checkbox" ng-repeat="answer in ctrl.question.offeredAnswers">
-                        <label>
-                            <input type="checkbox">
+                    <div ng-repeat="answer in ctrl.question.offeredAnswers">
+                        <md-checkbox disabled>
                             {{answer.value}}
-                        </label>
+                        </md-checkbox>
                     </div>
-                    <div class="checkbox" ng-if="ctrl.question.otherAnswer">
-                        <label><input type="checkbox"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:</label>
-                        <span class="form-inline">
-                            <input type="text" class="form-control" disabled>
-                        </span>
+
+                    <div layout="row" layout-align="start center" class="mw-question-other-answer" ng-if="ctrl.question.otherAnswer">
+                        <div>
+                            <md-checkbox disabled >
+                                <span translate="mwForm.question.preview.otherAnswer">Inna</span>:
+                            </md-checkbox>
+                        </div>
+
+                        <div>
+                            <md-input-container>
+                                <input type="text" class="form-control" disabled>
+                            </md-input-container>
+                        </div>
+
 
                     </div>
                 </div>

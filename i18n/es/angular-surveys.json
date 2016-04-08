@@ -132,7 +132,8 @@
       }
     },
     "image": {
-      "selectImageButton": "Seleccionar imagen"
+      "selectImageButton": "Seleccionar imagen",
+      "caption": "Image caption"
     },
     "paragraph": {
       "placeholder": "Digite texto de párrafo"

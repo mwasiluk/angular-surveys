@@ -136,7 +136,8 @@
 
         },
         "image":{
-            "selectImageButton": "Select image"
+            "selectImageButton": "Select image",
+            "caption": "Image caption"
         },
         "paragraph":{
             "placeholder": "Enter paragraph text"
