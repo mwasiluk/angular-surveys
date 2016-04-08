@@ -5,6 +5,9 @@
   .mw-form-page-builder {
     .mw-form-page-element-builder{
       padding: 20px 10px;
+      &.inactive{
+        padding: 10px 7px;
+      }
     }
     .mw-form-question-builder-wrapper {
 
