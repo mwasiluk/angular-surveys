@@ -41,13 +41,15 @@
             <md-content class="md-padding tab-content">
                 <div layout="row" layout-align="center">
                     <div flex-gt-sm="66" flex-sm="90" >
-                        <div layout="row" layout-align="center center">
-                            <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
-                                Reset
-                            </md-button>
-                            <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
-                                Read only
-                            </md-checkbox>
+                        <div layout="row" layout-align="center">
+                            <div>
+                                <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
+                                    Reset
+                                </md-button>
+                                <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
+                                    Read only
+                                </md-checkbox>
+                            </div>
                         </div>
 
                         <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly"
