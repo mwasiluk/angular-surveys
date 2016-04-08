@@ -14,53 +14,72 @@
 <body ng-controller="DemoController as ctrl" ng-cloak>
 
 
-<div ng-cloak>
-    <md-content ng-if="ctrl.formData">
-        <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="Builder">
-                <md-content class="md-padding tab-content">
-                    <div layout="row" layout-align="center">
-                        <div flex="66">
-                            <div layout="row" layout-align="center center">
-                                <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
-                                    Reset
-                                </md-button>
-                                <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
-                                    Read only
-                                </md-checkbox>
-                            </div>
+<md-toolbar class="md-hue-2">
+    <div class="md-toolbar-tools" style="border-bottom: 1px solid #e7e7e7;">
+        <h2>
+            <span>angular-surveys demo</span>
+        </h2>
+        <md-menu>
+            <md-button aria-label="Change language" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon class="fa fa-flag"></md-icon>
+                Language
+            </md-button>
+            <md-menu-content width="1">
+                <md-menu-item ng-repeat="language in ctrl.languages">
+                    <md-button ng-click="ctrl.changeLanguage(language)">
+                        {{language}}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-toolbar>
 
-                            <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly"
-                                             on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
+<md-content ng-if="ctrl.formData">
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Builder">
+            <md-content class="md-padding tab-content">
+                <div layout="row" layout-align="center">
+                    <div flex-gt-sm="66" flex-sm="90" >
+                        <div layout="row" layout-align="center center">
+                            <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
+                                Reset
+                            </md-button>
+                            <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
+                                Read only
+                            </md-checkbox>
                         </div>
 
-
+                        <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly"
+                                         on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
                     </div>
 
 
-                </md-content>
-            </md-tab>
-            <md-tab label="viewer">
-                <md-content class="md-padding tab-content">
-                </md-content>
-            </md-tab>
-            <md-tab label="model">
-                <md-content class="md-padding tab-content">
-                    <md-card>
+                </div>
+
+
+            </md-content>
+        </md-tab>
+        <md-tab label="viewer">
+            <md-content class="md-padding tab-content">
+            </md-content>
+        </md-tab>
+        <md-tab label="model">
+            <md-content class="md-padding tab-content">
+                <md-card>
 <pre>
 {{ctrl.formData|json}}
 </pre>
-                    </md-card>
-                </md-content>
-            </md-tab>
-            <md-tab label="utils">
-                <md-content class="md-padding tab-content">
+                </md-card>
+            </md-content>
+        </md-tab>
+        <md-tab label="utils">
+            <md-content class="md-padding tab-content">
 
-                </md-content>
-            </md-tab>
-        </md-tabs>
-    </md-content>
-</div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>
 
 
 <script src="../bower_components/angular/angular.js"></script>
