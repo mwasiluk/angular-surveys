@@ -53,8 +53,8 @@
 
 
 
-            <md-menu>
-                <md-button class="md-raised" aria-label="Open phone interactions menu"  ng-click="$mdOpenMenu($event)" translate="mwForm.buttons.addElement">
+            <md-menu ng-if="!ctrl.readOnly">
+                <md-button class="md-raised" aria-label="{{'mwForm.buttons.addElement'|translate}}"    ng-click="$mdOpenMenu($event)" translate="mwForm.buttons.addElement">
                     Add element
                 </md-button>
                 <md-menu-content width="4">
