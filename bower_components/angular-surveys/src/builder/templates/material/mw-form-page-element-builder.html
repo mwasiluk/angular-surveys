@@ -1,0 +1,55 @@
+<div class="mw-form-page-element-builder-wrapper">
+    <div class="mw-form-page-element-builder" ng-class="{'active': ctrl.isActive, 'inactive draggable': !ctrl.isActive}">
+        <!--{{ctrl.pageElement.orderNo}}-->
+        <div class="mw-page-element-actions-tab" ng-switch="ctrl.isActive&&!ctrl.readOnly">
+            <span class="mw-additional-buttons">
+                <button type="button" ng-click="ctrl.callback($event,button)"
+                        ng-attr-title="{{button.title | translate}}" ng-class="button.cssClass" class="edit-button"
+                        aria-label="{{button.title | translate}}"  aria-hidden="false" ng-if="ctrl.filter(button) && !ctrl.readOnly"
+                        ng-repeat="button in ctrl.options.elementButtons"
+                >
+                    <md-tooltip md-direction="top"><span>{{button.title | translate}}</span></md-tooltip>
+                    <i class="{{button.icon}}"></i> {{button.text}}
+                </button>
+            </span>
+            <span ng-switch-when="true">
+                <button type="button" class="move-down-button" ng-click="ctrl.moveDown()" ng-if="!ctrl.isLast" ng-attr-title="{{'mwForm.buttons.moveDown' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.moveDown">moveDown</span></md-tooltip>
+                    <i class="fa  fa-chevron-down"></i>
+                </button>
+                <button type="button" class="move-up-button" ng-click="ctrl.moveUp()" ng-if="!ctrl.isFirst" ng-attr-title="{{'mwForm.buttons.moveUp' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.moveUp">moveUp</span></md-tooltip>
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+                <button type="button" class="remove-button" mw-confirm-click confirmed-action="ctrl.removeElement()" ng-attr-title="{{'mwForm.buttons.remove' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.remove">remove</span></md-tooltip>
+                    <i class="fa fa-trash"></i></button>
+            </span>
+            <span ng-switch-when="false">
+                <button type="button" aria-label="{{'mwForm.buttons.clone' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.cloneElement($event)" ng-if="!ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.clone' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.clone">clone</span></md-tooltip>
+                    <i class="fa fa-clone"></i>
+                </button>
+                <button type="button" aria-label="{{'mwForm.buttons.edit' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="!ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.edit' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.edit">edit</span></md-tooltip>
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" aria-label="{{'mwForm.buttons.view' | translate}}" aria-hidden="false" class="edit-button" ng-click="ctrl.editElement()" ng-if="ctrl.readOnly"
+                        ng-attr-title="{{'mwForm.buttons.view' | translate}}">
+                    <md-tooltip md-direction="top"><span translate="mwForm.buttons.view">view</span></md-tooltip>
+                    <i class="fa fa-eye"></i>
+                </button>
+
+            </span>
+
+        </div>
+        <div ng-switch="ctrl.pageElement.type">
+            <mw-form-question-builder ng-switch-when="question" question="ctrl.pageElement.question"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-question-builder>
+            <mw-form-image-builder ng-switch-when="image" image="ctrl.pageElement.image"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-image-builder>
+            <mw-form-paragraph-builder ng-switch-when="paragraph" paragraph="ctrl.pageElement.paragraph"  form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-paragraph-builder>
+        </div>
+    </div>
+
+</div>

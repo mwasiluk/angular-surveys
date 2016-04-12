@@ -84,6 +84,7 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
 
             };
             ctrl.otherAnswerRadioChanged= function(){
+                console.log('otherAnswerRadioChanged');
                 if(ctrl.isOtherAnswer){
                     ctrl.questionResponse.selectedAnswer=null;
                 }

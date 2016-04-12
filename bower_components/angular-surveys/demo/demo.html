@@ -6,11 +6,11 @@
         <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
         <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../dist/form-builder.min.css">
+        <link rel="stylesheet" href="../dist/form-builder-bootstrap.min.css">
         <link rel="stylesheet" href="../dist/form-viewer.min.css">
         <link rel="stylesheet" href="demo.css">
     </head>
-    <body ng-controller="DemoController as ctrl">
+    <body ng-controller="DemoController as ctrl" ng-cloak>
 
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid" style="border-bottom: 1px solid #e7e7e7;" role="presentation">
@@ -47,7 +47,7 @@
         </nav>
 
 
-        <div class="demo-container">
+        <div class="demo-container" ng-if="ctrl.formData">
 
             <uib-tabset active="active">
                 <uib-tab index="0" heading="Builder">
@@ -180,8 +180,9 @@
         <script src="../bower_components/Sortable/ng-sortable.js"></script>
         <script src="../dist/form-utils.min.js"></script>
         <script src="../dist/form-builder.min.js"></script>
+        <script src="../dist/form-builder-bootstrap-tpls.min.js"></script>
         <script src="../dist/form-viewer.min.js"></script>
-
+        <script src="../dist/form-viewer-bootstrap-tpls.min.js"></script>
         <script src="demo.js"></script>
 
 

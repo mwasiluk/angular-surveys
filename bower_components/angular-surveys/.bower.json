@@ -35,18 +35,20 @@
     "Sortable": "dev"
   },
   "devDependencies": {
+    "bootstrap-sass": "3.x",
     "angular-translate-loader-partial": "2.x",
     "angular-translate-loader-static-files": "2.x",
-    "angular-mocks": "~1.4.8"
+    "angular-mocks": "~1.4.8",
+    "angular-material": "^1.0.7"
   },
-  "version": "0.6.2",
-  "_release": "0.6.2",
+  "version": "0.7.0",
+  "_release": "0.7.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.6.2",
-    "commit": "396e7377f813473f683eedbca5eedd0a89b87109"
+    "tag": "0.7.0",
+    "commit": "eb1a2cd7caf9e76e92908e0e3b372e788bec013a"
   },
-  "_source": "git://github.com/mwasiluk/angular-surveys.git",
-  "_target": "^0.6.0",
+  "_source": "https://github.com/mwasiluk/angular-surveys.git",
+  "_target": "*",
   "_originalSource": "angular-surveys"
 }

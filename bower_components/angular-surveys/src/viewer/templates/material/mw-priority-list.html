@@ -1,0 +1,39 @@
+<div class="mw-priority-list">
+    <table>
+        <thead>
+        <tr>
+            <th translate="mwForm.question.priority.sorted">Sorted</th>
+            <th translate="mwForm.question.priority.available">Available</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+
+            <td class="mw-ordered-items" ng-sortable="ctrl.orderedConfig" ng-model="ctrl.questionResponse.priorityList">
+
+                <div class="mw-item" ng-repeat="item in ctrl.questionResponse.priorityList">
+
+                    <strong>{{$index+1}}.</strong> {{::ctrl.print(ctrl.idToItem[item.id].value)}}
+                </div>
+                
+                
+            </td>
+
+            <td class="mw-available-items" ng-sortable="ctrl.availableConfig" ng-model="ctrl.availableItems">
+
+                <div class="mw-item" ng-repeat="item in ctrl.availableItems">
+
+                    {{::ctrl.print(ctrl.idToItem[item.id].value)}}
+                </div>
+
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <input type="hidden" ng-model="ctrl.allItemsOrdered" ng-required="ctrl.question.required"/>
+</div>
+
+
+

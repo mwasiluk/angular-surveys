@@ -1,7 +1,7 @@
 angular.module('app', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
-            prefix: '../dist/i18n/',
+            prefix: '../bower_components/angular-surveys/dist/i18n/',
             suffix: '/angular-surveys.json'
         });
         $translateProvider.preferredLanguage('en');

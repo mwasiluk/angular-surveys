@@ -419,6 +419,9 @@
                 }
 
                 .add-new-item-widget{
+                    label{
+                        opacity: 0.5;
+                    }
 
                     margin-top: 0;
 
@@ -488,7 +491,7 @@
                 }
 
                 .beingDragged {
-                    height: 20px;
+                    //height: 20px;
                 }
 
                 .add-new-item-widget{

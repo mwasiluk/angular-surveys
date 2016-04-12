@@ -1,0 +1,17 @@
+<div class="mw-form-page-builder mw-confirmation-page">
+    <div>
+        <div class="mw-page-tab-container">
+            <div class="mw-form-page-tab">
+                <span class="mw-page-tab-text" role="heading" translate="mwForm.confirmationPage.title">Strona potwierdzenia</span></div>
+            <div class="mw-page-tab-triangle"></div>
+        </div>
+        <div ng-form="ctrl.form" role="form" novalidate class="form-page-builder-body">
+            <div class="form-group">
+                <md-input-container class="md-block">
+                    <mw-label label-for="customConfirmationMessage" label-key="mwForm.confirmationPage.customMessage"></mw-label>
+                     <textarea id="customConfirmationMessage" msd-elastic class="form-control" name="confirmationMessage" ng-model="ctrl.formObject.confirmationMessage"  ng-disabled="ctrl.readOnly"></textarea>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
+angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic'])
     .config(function($translateProvider){
         $translateProvider.useStaticFilesLoader({
             prefix: '../dist/i18n/',
@@ -18,8 +18,8 @@ angular.module('app', ['mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalpr
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
         ctrl.languages = ['en', 'pl', "es"];
-        ctrl.formData = {};
-        $http.get('form-data.json')
+        ctrl.formData = null;
+        $http.get('form-data2.json')
             .then(function(res){
                 ctrl.formData = res.data;
             });

@@ -1,0 +1,50 @@
+@import "form-builder";
+@import "material-data-table";
+
+.mw-form-builder{
+  .mw-form-page-builder {
+    .mw-form-page-element-builder{
+      padding: 20px 10px;
+      &.inactive{
+        padding: 10px 7px;
+      }
+    }
+    .mw-form-question-builder-wrapper {
+
+      .mw-question-text {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .mw-question-other-answer{
+        md-input-container{
+          margin: 0;
+        }
+      }
+    }
+
+    .mw-question-division-builder{
+      margin-top: 15px;
+
+    }
+    .mw-division-list{
+      md-input-container{
+        margin: 0;
+      }
+    }
+  }
+  .mw-title-page{
+    padding-top: 20px;
+  }
+  md-input-container{
+    margin: 7px 0;
+  }
+
+  .mw-question-other-answer{
+    md-input-container{
+      margin: 0 5px;
+    }
+  }
+
+}
+

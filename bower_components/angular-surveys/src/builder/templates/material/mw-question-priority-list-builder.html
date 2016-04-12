@@ -1,0 +1,33 @@
+<div class="mw-question-priority-list-builder">
+    <div class="question-priority-list" ng-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.priorityList" role="list">
+
+
+        <div class="mw-question-priority-list-item" ng-repeat="item in ctrl.question.priorityList" role="listitem">
+            <div class="drag-handle" ng-if="!ctrl.readOnly">
+                <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+            </div>
+
+            <md-input-container>
+                <input wd-focus-me="ctrl.isNewItem[item.id]" type="text" ng-model="item.value" ng-keypress="ctrl.keyPressedOnInput($event,item)" required class="form-control item-value "
+                       ng-readonly="ctrl.readOnly">
+            </md-input-container>
+            <md-button role="button" class="md-raised md-icon-button remove-item-button" ng-click="ctrl.removeItem(item)" ng-if="!ctrl.readOnly"
+                       ng-attr-title="{{'mwForm.buttons.remove' | translate}}">
+                <md-tooltip md-direction="top">
+                    {{'mwForm.buttons.remove' | translate}}
+                </md-tooltip>
+                <i class="fa fa-times"></i>
+            </md-button>
+        </div>
+    </div>
+
+    <div class="mw-question-priority-list-item add-new-item-widget">
+        <div class="drag-handle"></div>
+        <span ng-click="ctrl.addNewItem()" role="button">
+            <md-input-container>
+                <input type="text" required class="form-control" value="{{'mwForm.question.priority.clickToAddItem'|translate}}">
+            </md-input-container>
+
+        </span>
+    </div>
+</div>

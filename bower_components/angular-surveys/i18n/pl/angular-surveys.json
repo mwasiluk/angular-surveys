@@ -136,7 +136,9 @@
 
         },
         "image":{
-            "selectImageButton": "Wybierz obraz"
+            "selectImageButton": "Wybierz obraz",
+            "caption": "Podpis"
+
         },
         "paragraph":{
             "placeholder": "Wpisz treść paragrafu"

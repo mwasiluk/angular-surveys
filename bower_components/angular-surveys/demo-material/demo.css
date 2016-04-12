@@ -1,0 +1,18 @@
+body{
+
+}
+
+.demo-container{
+
+    padding: 80px 25px;
+}
+
+.tab-content{
+    background-color: #e4e5e6;
+    min-height: 600px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    background-color: #e4e5e6;
+    font-weight: bold;
+}

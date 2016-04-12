@@ -18,7 +18,10 @@ module.exports = function(config) {
             'bower_components/Sortable/Sortable.min.js',
             'bower_components/Sortable/ng-sortable.js',
             'bower_components/angular-elastic/elastic.js',
-            'dist/*.js',
+            'dist/form-builder.min.js',
+            'dist/form-builder-bootstrap-tpls.min.js',
+            'dist/form-viewer.min.js',
+            'dist/form-viewer-bootstrap-tpls.min.js',
             'test/*.js'
 
 
