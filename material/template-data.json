@@ -1,0 +1,9 @@
+{
+    "price": 1.13,
+    "noAnswer" : "no",
+    "person": {
+        "name": "Bob",
+        "age": 33
+    },
+    "templateData": "from template"
+}
