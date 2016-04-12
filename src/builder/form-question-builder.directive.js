@@ -24,7 +24,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         templateUrl: 'mw-form-question-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
+        controller: function($timeout,FormQuestionBuilderId, mwFormBuilderOptions, $scope){
             var ctrl = this;
             ctrl.id = FormQuestionBuilderId.next();
             ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
