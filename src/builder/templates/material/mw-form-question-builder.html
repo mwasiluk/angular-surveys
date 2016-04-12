@@ -221,7 +221,7 @@
 
                 <div ng-switch-when="grid">
                     <div class="table-responsive">
-                        <table class="table table-condensed table-striped" border="0" cellpadding="5" cellspacing="0">
+                        <table class="mw-data-table mw-no-border" border="0" cellpadding="5" cellspacing="0">
                             <thead>
                             <tr>
                                 <td></td>
@@ -237,7 +237,9 @@
                                     {{row.label}}
                                 </td>
                                 <td ng-repeat="col in ctrl.question.grid.cols">
-                                    <input type="radio">
+                                    <md-radio-group>
+                                        <md-radio-button></md-radio-button>
+                                    </md-radio-group>
                                 </td>
                             </tr>
                             </tbody>
@@ -268,13 +270,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div ng-switch-when="division" class="">
+                <div ng-switch-when="division" class="mw-division-list" >
                     <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
                         <div class="form-group">
                             <label>
                                 {{item.value}}
                             </label>
-                            <input type="number" class="form-control" style="width: 80px" >
+                            <md-input-container md-no-float>
+                                <input type="number" class="form-control" style="width: 80px" >
+                            </md-input-container>
                             <span>{{ctrl.question.unit}}</span>
                         </div>
 
@@ -284,7 +288,9 @@
                             <label translate="mwForm.question.division.assignedSumLabel">
                                 Przydzielono
                             </label>
-                            <input type="number" class="form-control strict-validation" style="width: 80px" readonly value="0">
+                            <md-input-container md-no-float>
+                                <input type="number" class="form-control strict-validation" style="width: 80px" readonly value="0">
+                            </md-input-container>
                             <span>{{ctrl.question.unit}} <span translate="mwForm.question.division.fromRequiredLabel">z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}}</span>
                         </div>
 

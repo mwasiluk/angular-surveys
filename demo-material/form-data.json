@@ -162,23 +162,24 @@
               }
             ]
           }
-        }
-      ],
-      "namedPage": false
-    },
-    {
-      "id": "d7b158cc2aff4c00b3d452006d79368d",
-      "number": 2,
-      "name": null,
-      "description": null,
-      "pageFlow": {
-        "nextPage": true,
-        "label": "mwForm.pageFlow.goToNextPage"
-      },
-      "elements": [
+        },
+        {
+          "id": "d3c87dfb2945a84ad79e9c4b888d7df3",
+          "orderNo": 7,
+          "type": "question",
+          "question": {
+            "id": "f9c1586e1f1f40705e1eefbd00224218",
+            "text": "range",
+            "type": "range",
+            "required": true,
+            "pageFlowModifier": false,
+            "min": 1,
+            "max": 10
+          }
+        },
         {
           "id": "1b183679857291f8ad46c03c3173e64d",
-          "orderNo": 1,
+          "orderNo": 8,
           "type": "question",
           "question": {
             "id": "10b08afca4dff80e975f4910ee85ef3f",
@@ -213,10 +214,25 @@
             },
             "pageFlowModifier": false
           }
-        },
+        }
+      ],
+      "namedPage": false,
+      "isFirst": true,
+      "isLast": false
+    },
+    {
+      "id": "d7b158cc2aff4c00b3d452006d79368d",
+      "number": 2,
+      "name": null,
+      "description": null,
+      "pageFlow": {
+        "nextPage": true,
+        "label": "mwForm.pageFlow.goToNextPage"
+      },
+      "elements": [
         {
           "id": "82332304478a82ee69f2d60157930e0a",
-          "orderNo": 2,
+          "orderNo": 1,
           "type": "question",
           "question": {
             "id": "dc640ed493ba5a00d4a44f3a216cfa34",
@@ -245,7 +261,7 @@
         },
         {
           "id": "358c65a9f3590235b3b9d019722f2372",
-          "orderNo": 3,
+          "orderNo": 2,
           "type": "question",
           "question": {
             "id": "8666ad943291900f0e5b34bc14bb18dc",
@@ -275,7 +291,9 @@
           }
         }
       ],
-      "namedPage": false
+      "namedPage": false,
+      "isFirst": false,
+      "isLast": false
     },
     {
       "id": "5d9fc08eaac5739f574db0e5b86a6a36",
@@ -320,7 +338,9 @@
           }
         }
       ],
-      "namedPage": true
+      "namedPage": true,
+      "isFirst": false,
+      "isLast": true
     }
   ]
 }

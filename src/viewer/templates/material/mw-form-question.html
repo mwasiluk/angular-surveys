@@ -6,51 +6,60 @@
 
     <div class="mw-question-answers" ng-switch="ctrl.question.type">
         <div ng-switch-when="text">
-            <input class="form-control" type="text" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.text'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container class="md-block" md-no-float>
+                <input class="form-control" type="text" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.text'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="textarea">
-            <textarea msd-elastic class="form-control" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"></textarea>
+            <md-input-container class="md-block" md-no-float>
+                <textarea msd-elastic class="form-control" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"></textarea>
+            </md-input-container>
         </div>
         <div ng-switch-when="radio">
-            <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
-                <label>
-                    <input type="radio" ng-model="ctrl.questionResponse.selectedAnswer" ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.selectedAnswerChanged()" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">
+            <md-radio-group ng-model="ctrl.questionResponse.selectedAnswer"  ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly" ng-change="ctrl.selectedAnswerChanged()">
+                <md-radio-button  ng-repeat="answer in ctrl.question.offeredAnswers" aria-label="{{ answer.value }}"  ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-readonly="ctrl.readOnly">
                     {{::ctrl.print(answer.value)}}
-                </label>
-            </div>
-            <div class="radio" ng-if="ctrl.question.otherAnswer">
-                <label>
-                    <input type="radio" ng-model="ctrl.isOtherAnswer" ng-value="true" name="other-answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.otherAnswerRadioChanged()" ng-disabled="ctrl.readOnly"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:
-                </label>
-                <span class="form-inline">
-                    <input type="text" name="other-answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.questionResponse.other" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly"
+                </md-radio-button>
+            </md-radio-group>
+            <md-radio-group ng-model="ctrl.isOtherAnswer" ng-change="ctrl.otherAnswerRadioChanged()" ng-disabled="ctrl.readOnly" ng-readonly="ctrl.readOnly">
+                <div layout="row" layout-align="start center" class="mw-question-other-answer"  ng-if="ctrl.question.otherAnswer">
+                    <div>
+                        <md-radio-button  ng-model="ctrl.isOtherAnswer" ng-value="true" name="other-answer-for-question-{{ctrl.question.id}}" ng-disabled="ctrl.readOnly" ng-readonly="ctrl.readOnly">
+                            <span translate="mwForm.question.preview.otherAnswer">Inna</span>:
+                        </md-radio-button>
+                    </div>
+                    <div>
+                        <md-input-container>
+                            <input type="text" name="other-answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.questionResponse.other" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly"
                                    ng-required="ctrl.isOtherAnswer">
-                </span>
-            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+            </md-radio-group>
         </div>
 
         <div ng-switch-when="checkbox">
-            <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers">
-                <label>
-                    <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly">
+            <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers" ng-disabled="ctrl.readOnly" ng-readonly="ctrl.readOnly">
+                <md-checkbox name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly"  ng-readonly="ctrl.readOnly" >
                     {{::ctrl.print(answer.value)}}
-                </label>
+                </md-checkbox>
             </div>
-            <div class="checkbox"  ng-if="ctrl.question.otherAnswer">
-                <label>
-                    <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.isOtherAnswer" ng-change="ctrl.otherAnswerCheckboxChanged()" ng-disabled="ctrl.readOnly"><span translate="mwForm.question.preview.otherAnswer">Inna</span>:
-                </label>
-                <span class="form-inline">
-                    <input type="text" ng-model="ctrl.questionResponse.other" name="other-answer-for-question-{{ctrl.question.id}}" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required="ctrl.isOtherAnswer">
-                </span>
-
+            <div layout="row" layout-align="start center" class="mw-question-other-answer"  ng-if="ctrl.question.otherAnswer">
+                <md-checkbox name="answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.isOtherAnswer" ng-change="ctrl.otherAnswerCheckboxChanged()" ng-readonly="ctrl.readOnly" ng-disabled="ctrl.readOnly">
+                    <span translate="mwForm.question.preview.otherAnswer">Inna</span>:
+                </md-checkbox>
+                <div>
+                    <md-input-container>
+                        <input type="text" ng-model="ctrl.questionResponse.other" name="other-answer-for-question-{{ctrl.question.id}}" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required="ctrl.isOtherAnswer">
+                    </md-input-container>
+                </div>
             </div>
             <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"/>
         </div>
 
         <div ng-switch-when="grid">
-            <div class="table-responsive">
-                <table class="table table-condensed table-striped" border="0" cellpadding="5" cellspacing="0">
+            <div class="">
+                <table class="mw-data-table mw-no-border" border="0" cellpadding="5" cellspacing="0">
                     <thead>
                     <tr>
                         <td></td>
@@ -66,7 +75,9 @@
                             {{::ctrl.print(row.label)}}
                         </td>
                         <td ng-repeat="col in ::ctrl.question.grid.cols">
-                            <input type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                            <md-radio-group ng-model="ctrl.questionResponse[row.id]"  ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                                <md-radio-button ng-value="col.id" name="answer-for-question-{{row.id}}" ng-disabled="ctrl.readOnly"></md-radio-button>
+                            </md-radio-group>
                         </td>
                     </tr>
                     </tbody>
@@ -74,13 +85,15 @@
             </div>
 
         </div>
-        <div ng-switch-when="division" class="division-list" ng-form="ctrl.divisionForm">
+        <div ng-switch-when="division" class="mw-division-list" ng-form="ctrl.divisionForm">
             <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
                 <div class="form-group">
                     <label>
                         {{::ctrl.print(item.value)}}
                     </label>
-                    <input type="number" class="form-control" ng-model="ctrl.questionResponse[item.id]" min="0" max="{{ctrl.question.quantity}}" required style="width: 80px" ng-change="ctrl.computeDivisionSum()" ng-readonly="ctrl.readOnly">
+                    <md-input-container md-no-float>
+                        <input type="number" class="form-control" ng-model="ctrl.questionResponse[item.id]" min="0" max="{{ctrl.question.quantity}}" required style="width: 80px" ng-change="ctrl.computeDivisionSum()" ng-readonly="ctrl.readOnly">
+                    </md-input-container>
                     <span>{{::ctrl.print(ctrl.question.unit)}}</span>
                 </div>
 
@@ -90,7 +103,9 @@
                     <label translate="mwForm.question.division.assignedSumLabel">
                         Przydzielono
                     </label>
-                    <input type="number" class="form-control strict-validation" ng-model="ctrl.divisionSum" min="{{ctrl.question.quantity}}" max="{{ctrl.question.quantity}}" style="width: 80px" readonly>
+                    <md-input-container md-no-float>
+                        <input type="number" class="form-control strict-validation" ng-model="ctrl.divisionSum" min="{{ctrl.question.quantity}}" max="{{ctrl.question.quantity}}" style="width: 80px" readonly>
+                    </md-input-container>
                     <span>{{ctrl.question.unit}} <span translate="mwForm.question.division.fromRequiredLabel">z wymaganych</span> <strong>{{ctrl.question.quantity}}</strong> {{ctrl.question.unit}}  <i ng-show="ctrl.divisionForm.$valid" class="fa fa-check" style="color:#008000;"></i></span>
                 </div>
 
@@ -101,25 +116,38 @@
         <mw-priority-list ng-switch-when="priority" question-response="ctrl.questionResponse" question="ctrl.question" read-only="ctrl.readOnly"></mw-priority-list>
 
         <div ng-switch-when="number" class="form-inline">
-            <input class="form-control" min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="date" class="form-inline">
-            <input class="form-control" type="date" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" type="date" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="datetime" class="form-inline">
-            <input class="form-control" type="datetime" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" type="datetime" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="time" class="form-inline">
-            <input class="form-control" type="time" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" type="time" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="email" class="form-inline">
-            <input class="form-control" type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
         <div ng-switch-when="range" class="mw-range">
-            <input class="" ng-attr-min="{{ctrl.question.min}}" ng-attr-max="{{ctrl.question.max}}" type="range" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"><strong class="mw-range-value-label">{{ctrl.questionResponse.answer}}</strong>
+            <md-slider min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="range" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly"></md-slider>
+            <strong class="mw-range-value-label">{{ctrl.questionResponse.answer}}</strong>
         </div>
         <div ng-switch-when="url" class="form-inline">
-            <input class="form-control" type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            <md-input-container>
+                <input class="form-control" type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
         </div>
 
     </div>
