@@ -43,9 +43,18 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
               return result;
             }                                  
             
-            ctrl.toggleVisibleIf = function(){
-               ctrl.radioQuestions = getRadioQuestions();
-            };
+             $scope.$watchCollection('ctrl.formObject.pages', function(pages) {
+              pages.forEach(function(page) {                
+                $scope.$watchCollection(function(){return page.elements;}, function(elements) {
+                  if (!elements) return;
+                  elements.forEach(function(element) {
+                    $scope.$watch(function(){return element;}, function(element) {
+                      ctrl.radioQuestions = getRadioQuestions();
+                    }, true);
+                  });
+                }, true);
+              });
+            }, true);  
 
             sortAnswersByOrderNo();
             function updateAnswersOrderNo() {
