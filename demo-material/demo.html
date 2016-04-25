@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="../dist/form-builder-material.min.css">
     <link rel="stylesheet" href="../dist/form-viewer-material.min.css">
     <link rel="stylesheet" href="demo.css">
+    <script type="text/javascript">
+        //hack to remove ARIA warinings
+        console.realWarn = console.warn;
+        console.warn = function (message) {
+            if (message.indexOf("ARIA") == -1) {
+                console.realWarn.apply(console, arguments);
+            }
+        };
+    </script>
 </head>
 <body ng-controller="DemoController as ctrl" ng-cloak>
 

@@ -3,6 +3,8 @@ var del = require('del');
 var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
 var Server = require('karma').Server;
+var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync').create();
 
 gulp.task('clean', function (cb) {
     return del(['tmp', 'dist'], cb);
@@ -10,6 +12,7 @@ gulp.task('clean', function (cb) {
 
 gulp.task('build-css', ['clean'], function () {
     return gulp.src('./styles/*')
+        .pipe(plumber({ errorHandler: onError }))
         .pipe(plugins.sass())
         .pipe(plugins.minifyCss())
         .pipe(plugins.rename({
@@ -68,6 +71,7 @@ function buildModuleStream(destPrefix, moduleName) {
     var materialTemplates = buildTemplates(tmpDir+'/templates/material/', moduleName, 'dist', destPrefix+'-material');
 
     var module =  gulp.src(tmpDir + '/**/*.js')
+        .pipe(plumber({ errorHandler: onError }))
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify())
@@ -85,4 +89,34 @@ gulp.task('test', function (done) {
     }, function() {
         done();
     }).start();
+});
+
+/**
+ * Serve
+ */
+
+// error function for plumber
+var onError = function (err) {
+  console.log(err);
+  this.emit('end');
+};
+
+gulp.task('default-watch', ['default'], ()=>{ browserSync.reload() });
+
+gulp.task('serve', ['default'], ()=>{
+        browserSync.init({
+            server: {
+                baseDir: "demo-material",
+                index: "demo.html",
+                routes: {
+                    "/bower_components": "bower_components",
+                    "/dist": "dist",
+                    "/i18n": "i18n"
+                }
+            },
+            port: 8080,
+            open: 'local',
+            browser: "google chrome"
+        });
+    gulp.watch(['i18n/**/*.json', './src/**/*.html', './styles/*.*css', 'src/**/*.js'], ['default-watch']); 
 });
