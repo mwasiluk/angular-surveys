@@ -3,7 +3,6 @@ var del = require('del');
 var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
 var Server = require('karma').Server;
-var plumber = require('gulp-plumber');
 var browserSync = require('browser-sync').create();
 
 gulp.task('clean', function (cb) {
@@ -12,7 +11,7 @@ gulp.task('clean', function (cb) {
 
 gulp.task('build-css', ['clean'], function () {
     return gulp.src('./styles/*')
-        .pipe(plumber({ errorHandler: onError }))
+        .pipe(plugins.plumber({ errorHandler: onError }))
         .pipe(plugins.sass())
         .pipe(plugins.minifyCss())
         .pipe(plugins.rename({
@@ -71,7 +70,7 @@ function buildModuleStream(destPrefix, moduleName) {
     var materialTemplates = buildTemplates(tmpDir+'/templates/material/', moduleName, 'dist', destPrefix+'-material');
 
     var module =  gulp.src(tmpDir + '/**/*.js')
-        .pipe(plumber({ errorHandler: onError }))
+        .pipe(plugins.plumber({ errorHandler: onError }))
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify())
