@@ -1,0 +1,79 @@
+<div class="response-expected-answer-list-builder">
+    <div class="response-expected-answer-list" ng-sortable="ctrl.responseAnswersSortableConfig" ng-model="ctrl.response.responseAnswers" role="list">
+        <div class="mw-response-expected-answer" layout="row" ng-repeat="answer in ctrl.response.responseAnswers" role="listitem">
+            <div flex="5" class="drag-handle" ng-if="!ctrl.readOnly">
+                <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+            </div>
+            <div flex>
+                <md-input-container flex md-no-float class="md-block">
+                    <!-- <div class="option-type-indicator"> -->
+                    <!-- </div> -->
+                    <md-icon ng-show="ctrl.response.type=='radio'" class="fa fa-circle-thin" ng-click="ctrl.expected(answer)"></md-icon>
+                    <md-icon ng-show="ctrl.response.type=='checkbox'" class="fa fa-square-o"></md-icon>
+
+                    <input wd-focus-me="ctrl.isNewAnswer[answer.id]" type="text" ng-model="answer.value" ng-keypress="ctrl.keyPressedOnInput($event,answer)" required class="expected-answer-value " ng-readonly="ctrl.readOnly">
+
+                    <span ng-show="answer.expected">이거여야함</span>
+                </md-input-container>
+            </div>
+            <div flex>
+                <md-input-container md-no-float class="md-block">
+                    <md-select ng-model="answer.pageFlow" ng-disabled="ctrl.readOnly" ng-if="ctrl.response.pageFlowModifier">
+                        <md-option ng-bind-html="pageFlow.label|translate:pageFlow" ng-repeat="pageFlow in ctrl.possiblePageFlow" value="{{pageFlow}}"></md-option>
+                    </md-select>
+                </md-input-container>
+
+            </div>
+            <!-- <div flex> -->
+            <md-button class="md-icon-button" ng-click="ctrl.removeResponseAnswer(answer)" ng-attr-title="{{'mwForm.buttons.remove' | translate}}" ng-if="!ctrl.readOnly">
+                <md-tooltip direction="top">
+                    {{'mwForm.buttons.remove' | translate}}
+                </md-tooltip>
+                <i class="fa fa-times"></i>
+            </md-button>
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <div class="mw-response-expected-answer add-new-answer-widget" ng-if="!ctrl.readOnly" layout="row">
+        <div class="drag-handle" flex="5"></div>
+        <div class="flex">
+            <md-input-container flex md-no-float class="md-block">
+                <!-- <div class="option-type-indicator"> -->
+                <!-- </div> -->
+                <md-icon ng-show="ctrl.response.type=='radio'" class="fa fa-circle-thin"></md-icon>
+                <md-icon ng-show="ctrl.response.type=='checkbox'" class="fa fa-square-o"></md-icon>
+
+                <input type="text" ng-click="ctrl.addNewResponseAnswer()" class="expected-answer-value" value="{{'mwForm.response.buttons.addOption'|translate}}">
+            </md-input-container>
+
+        </div>
+        <span flex class="add-custom-answer" ng-if="!ctrl.response.otherAnswer">
+            <span translate="mwForm.response.orLabel">lub
+            </span>
+            <md-button class="md-raised" ng-click="ctrl.addCustomAnswer()" translate="mwForm.response.buttons.addOther">Dodaj "Inne"</md-button>
+        </span>
+    </div>
+
+    <div class="mw-response-expected-answer custom-answer" ng-if="ctrl.response.otherAnswer" layout="row">
+        <div class="drag-handle" ng-if="!ctrl.readOnly" flex="5"></div>
+        <div flex>
+            <md-input-container flex class="md-block">
+
+                <md-icon ng-show="ctrl.response.type=='radio'" class="fa fa-circle-thin"></md-icon>
+                <md-icon ng-show="ctrl.response.type=='checkbox'" class="fa fa-square-o"></md-icon>
+                <label translate="mwForm.response.otherLabel">Inna:
+                </label>
+                <input type="text" value="{{'mwForm.response.userAnswer'|translate}}" class=" expected-answer-value " readonly>
+
+            </md-input-container>
+        </div>
+
+        <md-button class="md-icon-button" ng-click="ctrl.removeCustomAnswer()" ng-if="!ctrl.readOnly" ng-attr-title="{{'mwForm.buttons.remove' | translate}}">
+            <md-tooltip direction="top">
+                {{'mwForm.buttons.remove' | translate}}
+            </md-tooltip>
+            <i class="fa fa-times"></i>
+        </md-button>
+    </div>
+</div>

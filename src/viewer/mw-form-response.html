@@ -1,0 +1,38 @@
+<div class="mw-form-response">
+
+    <p class="mw-response-text">
+        {{::ctrl.print(ctrl.response.text)}}
+        <span ng-if="ctrl.response.required">*</span>
+    </p>
+
+    <div class="mw-response-answers" ng-switch="ctrl.response.type">
+        <div ng-switch-when="radio" ng-repeat="m in ctrl.multiple">
+          {{m}}
+            <md-radio-group ng-model="ctrl.responseResponse[m].selectedAnswer" ng-change="ctrl.selectedAnswerChanged()">
+                <md-radio-button ng-repeat="answer in ctrl.response.responseAnswers" ng-value="answer.id" name="answer-for-response-{{ctrl.response.id}}-{{$index}}" ng-required="ctrl.response.required && !ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">{{::ctrl.print(answer.value)}}
+                </md-radio-button>
+            </md-radio-group>
+            <div layout="row">
+                <md-radio-group ng-model="ctrl.isOtherAnswer" ng-change="ctrl.otherAnswerRadioChanged()" ng-if="ctrl.response.otherAnswer">
+                    <md-radio-button ng-value="true" name="other-answer-for-response-{{ctrl.response.id}}-{{$index}}" ng-disabled="ctrl.readOnly">
+                        <span translate="mwForm.response.preview.otherAnswer">Inna</span>
+                    </md-radio-button>
+                </md-radio-group>
+                <md-input-container ng-if="ctrl.response.otherAnswer" md-no-float>
+                    <input type="text" name="other-answer-for-response-{{ctrl.response.id}}-{{$index}}" ng-model="ctrl.responseResponse[m].other" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required="ctrl.isOtherAnswer" md-autofocus>
+                </md-input-container>
+            </div>
+        </div>
+
+        <div ng-switch-when="number" ng-repeat="m in ctrl.multiple" layout="row">
+            <md-input-container>
+              <label for="">{{m}}</label>
+                <input type="number" ng-model="ctrl.responseResponse[m].answer" ng-required="ctrl.response.required" ng-readonly="ctrl.readOnly">
+            </md-input-container>
+            <i class="fa fa-close" flex="nogrow" ng-click="ctrl.removeResponse(m)"></i>
+
+        </div>
+
+    </div>
+
+</div>

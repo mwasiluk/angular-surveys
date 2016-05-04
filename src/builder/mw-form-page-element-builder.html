@@ -56,6 +56,9 @@
         </div>
         <div ng-switch="ctrl.pageElement.type">
             <mw-form-question-builder ng-switch-when="question" question="ctrl.pageElement.question" form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-question-builder>
+
+            <mw-form-response-builder ng-switch-when="response" response="ctrl.pageElement.response" form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-response-builder>
+
             <mw-form-image-builder ng-switch-when="image" image="ctrl.pageElement.image" form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly" on-image-selection="ctrl.onImageSelection()"></mw-form-image-builder>
             <mw-form-paragraph-builder ng-switch-when="paragraph" paragraph="ctrl.pageElement.paragraph" form-object="ctrl.formObject" on-ready="ctrl.onReady()" is-preview="!ctrl.isActive" read-only="ctrl.readOnly"></mw-form-paragraph-builder>
         </div>

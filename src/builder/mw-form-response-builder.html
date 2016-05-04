@@ -1,0 +1,84 @@
+<div class="mw-form-response-builder-wrapper" flex>
+    <div class="mw-form-response-builder" ng-class="{'ng-submitted':ctrl.formSubmitted}">
+        <div ng-form="ctrl.form" ng-if="!ctrl.isPreview">
+            <div layout="row">
+                <div flex="60">
+                    <md-input-container class="md-block">
+                        <mw-label label-for="response-text-{{ctrl.id}}" label-key="mwForm.response.text"></mw-label>
+                        <input type="text" name="text" ng-attr-id="response-text-{{ctrl.id}}" ng-model="ctrl.response.text" ng-readonly="ctrl.readOnly" required>
+                    </md-input-container>
+                </div>
+                <div flex>
+                    <md-input-container flex>
+                        <mw-label label-for="response-type-{{ctrl.id}}" label-key="mwForm.response.type"></mw-label>
+                        <md-select ng-attr-id="response-type-{{ctrl.id}}" ng-model="ctrl.response.type" ng-change="ctrl.responseTypeChanged()" ng-disabled="ctrl.readOnly" required style="min-width: 100px;" aria-label="response Type">
+                            <md-option ng-repeat="type in ctrl.responseTypes" value="{{type}}" translate="{{'mwForm.response.types.' + type + '.name'}}">{{type}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div flex class="mw-response-type" ng-repeat="select in ctrl.options.customQuestionSelects">
+                    <md-input-container class="md-block">
+                        <mw-label label-for="response-{{select.key}}-{{ctrl.id}}" label-key="{{select.label}}"></mw-label>
+                        <md-select ng-attr-id="response-{{opt.key}}-{{ctrl.id}}" ng-model="ctrl.response[select.key]" ng-disabled="ctrl.readOnly" ng-required="select.required" aria-label="response Option">
+                            <md-option ng-repeat="opt in select.options track by opt.key" value="{{opt}}">{{opt.label}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div ng-if="ctrl.response.type" layout="row">
+                <div class="mw-form-response-answers-builder" ng-switch="ctrl.response.type" flex ng-if="ctrl.response.type">
+                    <div ng-switch-when="radio">
+                        <mw-response-expected-answer-list-builder response="ctrl.response" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-response-expected-answer-list-builder>
+                    </div>
+                    <div ng-switch-when="number">
+                        <div class="range-config" layout="row">
+                            <md-input-container flex>
+                                <span translate="mwForm.response.number.expectation">Expection</span>:
+                                <input type="number" ng-model="ctrl.response.expectation" ng-readonly="ctrl.readOnly"/>
+                            </md-input-container>
+                            <md-input-container flex>
+                                <span translate="mwForm.response.number.tolerance">Tolerance</span>:
+                                <input type="number" ng-model="ctrl.response.tolerance" ng-readonly="ctrl.readOnly"/>
+                            </md-input-container>
+                        </div>
+                        <input type="number" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div layout="row" layout-xs="column" class="mw-form-response-builder-bottom">
+                <md-switch ng-model="ctrl.response.required" ng-disabled="ctrl.readOnly">
+                    <span translate="mwForm.response.required">Required</span>
+                </md-switch>
+                <md-switch aria-label="after Question Answer" ng-model="ctrl.response.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly" ng-if="ctrl.response.type=='radio'">
+                    <span translate="mwForm.pageFlow.afterQuestionAnswer">Przejdź do strony w oparciu o odpowiedź</span>
+                </md-switch>
+                <md-button class="md-raised md-primary" ng-click="ctrl.save()" translate="mwForm.buttons.responseReady">Gotowe</md-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mw-preview" ng-if="ctrl.isPreview">
+        <p class="mw-response-text">
+            {{ctrl.response.text}}
+            <span ng-if="ctrl.response.required">*</span>
+        </p>
+        <div class="response-answers" ng-switch="ctrl.response.type" layout="row">
+
+            <md-input-container class="md-block" ng-switch-when="number">
+                <input type="number" disabled>
+            </md-input-container>
+
+            <md-radio-group ng-switch-when="radio">
+                <md-radio-button ng-repeat="answer in ctrl.response.responseAnswers">{{answer.value}}</md-radio-button>
+                <md-radio-button ng-if="ctrl.response.otherAnswer">{{answer.value}}
+                    <span translate="mwForm.response.preview.otherAnswer">Inna</span>
+                </md-radio-button>
+            </md-radio-group>
+
+        </div>
+    </div>
+</div>
+</div>

@@ -64,6 +64,14 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                     };
                 }
 
+            }else if(ctrl.pageElement.type=='response'){
+                if(!ctrl.pageElement.response){
+                    ctrl.pageElement.response={
+                        id: mwFormUuid.get(),
+                        html: ''
+                    };
+                }
+
             }
 
 

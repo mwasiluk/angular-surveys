@@ -89,6 +89,14 @@
                         </md-button>
                     </md-menu-item>
 
+                    <md-menu-item ng-if="ctrl.isElementTypeEnabled('response')">
+                        <md-button ng-click="ctrl.addResponse()">
+                            <i class="fa fa-response fa-lg fa-fw"></i>
+                            <span translate="mwForm.elements.response">Obraz</span>
+                        </md-button>
+                    </md-menu-item>
+
+
                 </md-menu-content>
             </md-menu>
         </div>

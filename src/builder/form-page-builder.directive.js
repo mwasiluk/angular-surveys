@@ -58,7 +58,6 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.addElement = function(type){
                 if(!type){
-
                     type=mwFormBuilderOptions.elementTypes[0];
                 }
                 var element = createEmptyElement(type, ctrl.formPage.elements.length + 1);
@@ -105,6 +104,10 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
             ctrl.addQuestion = function(){
                 ctrl.addElement('question');
+            };
+
+            ctrl.addResponse = function(){
+                ctrl.addElement('response');
             };
 
             ctrl.addImage = function(){

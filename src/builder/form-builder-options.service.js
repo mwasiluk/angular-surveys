@@ -1,7 +1,9 @@
 angular.module('mwFormBuilder')
     .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
-    .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph'])
-    .factory('mwFormBuilderOptions', function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES){
+    .constant('MW_RESPONSE_TYPES', ['radio', 'number'])
+
+    .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph', 'response'])
+    .factory('mwFormBuilderOptions', function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES, MW_RESPONSE_TYPES){
 
         var defaultElementButtonOptions={
             title: null,
@@ -24,6 +26,7 @@ angular.module('mwFormBuilder')
         var defaultOptions={
             elementTypes: MW_ELEMENT_TYPES,
             questionTypes: MW_QUESTION_TYPES,
+            responseTypes: MW_RESPONSE_TYPES,
             elementButtons: [],
             customQuestionSelects: [],
             customElements: [] //TODO

@@ -43,7 +43,8 @@
         "elements":{
             "question":"Question",
             "image":"Image",
-            "paragraph": "Paragraph"
+            "paragraph": "Paragraph",
+            "response": "Response"
         },
         "question":{
             "types":{
@@ -89,8 +90,6 @@
                 "url":{
                     "name": "URL"
                 }
-
-
             },
             "text": "Question text",
             "type": "Question type",
@@ -135,6 +134,40 @@
             }
 
         },
+
+
+
+        "response":{
+            "types":{
+                "radio":{
+                    "name": "Radio"
+                },
+                "number":{
+                    "name": "Number"
+                }
+            },
+            "text": "Response text",
+            "type": "Response type",
+            "required": "Required",
+            "preview":{
+                "text":"Short answer text",
+                "textarea":"Long answer text",
+                "otherAnswer": "Other"
+            },
+            "number": {
+                "expectation": "Expectation",
+                "tolerance": "Tolerance"
+            },
+            "orLabel": "or ",
+            "otherLabel": "Other: ",
+            "userAnswer": "User answer",
+            "buttons":{
+                "addOption":"Click to add option",
+                "addOther":"Add 'Other'"
+            }
+        },
+
+
         "image":{
             "selectImageButton": "Select image"
         },

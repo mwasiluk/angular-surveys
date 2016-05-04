@@ -43,9 +43,13 @@
                                 Read only
                             </md-switch>
                         </div>
+
                         <div layout="row">
                             <mw-form-builder api="vm.formBuilder" options="vm.optionsBuilder" form-data="vm.formData" form-status="vm.formStatus" read-only="vm.builderReadOnly" on-image-selection="vm.onImageSelection()"></mw-form-builder>
                         </div>
+
+                        <pre>{{vm.formData|json}}</pre>
+
                     </md-content>
                 </md-tab>
                 <md-tab select="vm.resetViewer()" label="Viewer">
@@ -57,10 +61,29 @@
                         <md-checkbox ng-model="vm.viewerReadOnly">
                             Read only
                         </md-checkbox>
-
+                        <!-- <input type="text" ng-model="vm.multiple"> -->
+                        {{vm.multiple}}
                     </md-content>
+                    <div layout="row">
+                        <md-input-container>
+                            <input type="text" ng-model="vm.id">
+                        </md-input-container>
 
-                    <mw-form-viewer form-data="vm.formData" template-data="vm.templateData" form-status="vm.formStatus" options="vm.formOptions" api="vm.formViewer" response-data="vm.responseData" read-only="vm.viewerReadOnly" on-submit="vm.saveResponse()"></mw-form-viewer>
+                        <md-input-container>
+                            <input type="text" ng-model="vm.value">
+                        </md-input-container>
+                        <md-button ng-click="vm.modify()">값 조작!</md-button>
+                    </div>
+                    <mw-form-viewer
+                        form-data="vm.formData"
+                        template-data="vm.templateData"
+                        form-status="vm.formStatus"
+                        options="vm.formOptions"
+                        api="vm.formViewer"
+                        response-data="vm.responseData"
+                        read-only="vm.viewerReadOnly"
+                        on-submit="vm.saveResponse()"
+                        multiple="vm.multiple"></mw-form-viewer>
 
                     <hr>
 
