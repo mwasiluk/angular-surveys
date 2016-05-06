@@ -7,7 +7,7 @@
 
     <div class="mw-response-answers" ng-switch="ctrl.response.type">
         <div ng-switch-when="radio" ng-repeat="m in ctrl.multiple">
-          {{m}}
+            <label for="">{{m}}</label>
             <md-radio-group ng-model="ctrl.responseResponse[m].selectedAnswer" ng-change="ctrl.selectedAnswerChanged()">
                 <md-radio-button ng-repeat="answer in ctrl.response.responseAnswers" ng-value="answer.id" name="answer-for-response-{{ctrl.response.id}}-{{$index}}" ng-required="ctrl.response.required && !ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">{{::ctrl.print(answer.value)}}
                 </md-radio-button>
@@ -26,13 +26,15 @@
 
         <div ng-switch-when="number" ng-repeat="m in ctrl.multiple" layout="row">
             <md-input-container>
-              <label for="">{{m}}</label>
+                <label for="">{{m}}</label>
                 <input type="number" ng-model="ctrl.responseResponse[m].answer" ng-required="ctrl.response.required" ng-readonly="ctrl.readOnly">
+                <span class="error" ng-show="(ctrl.responseResponse[m].answer > (ctrl.response.expectation + ctrl.response.tolerance))|| ctrl.responseResponse[m].answer < (ctrl.response.expectation - ctrl.response.tolerance)">기준값을 벗어났습니다. 기준값
+                    {{ctrl.response.expectation}}
+                    허용오차
+                    {{ctrl.response.tolerance}}
+                </span>
             </md-input-container>
             <i class="fa fa-close" flex="nogrow" ng-click="ctrl.removeResponse(m)"></i>
-
         </div>
-
     </div>
-
 </div>
