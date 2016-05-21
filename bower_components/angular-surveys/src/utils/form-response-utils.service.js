@@ -1,15 +1,28 @@
 angular.module('mwFormUtils.responseUtils', [])
-    .factory('mwFormResponseUtils', function  mwFormResponseMergerFactory() {
+    .factory('mwFormResponseUtils', function mwFormResponseMergerFactory() {
 
         var service = {};
+
+        //Question types whose response can be extracted with the .answer property. 
+        var questionTypesWithDefaultAnswer = [
+            'text',
+            'textarea',
+            'number',
+            'date',
+            'time',
+            'email',
+            'range',
+            'url'
+        ];
+
         service.$getObjectByIdMap = function (objectList, mappingFn) {
             var objectById = {};
-            if(!objectList){
+            if (!objectList) {
                 return objectById;
             }
             objectList.forEach(function (obj) {
                 var val = obj;
-                if(mappingFn){
+                if (mappingFn) {
                     val = mappingFn(obj);
                 }
                 objectById[obj.id] = val;
@@ -17,7 +30,7 @@ angular.module('mwFormUtils.responseUtils', [])
             return objectById;
         };
         service.$getOfferedAnswerByIdMap = function (question) {
-            return service.$getObjectByIdMap(question.offeredAnswers, function(offeredAnswer){
+            return service.$getObjectByIdMap(question.offeredAnswers, function (offeredAnswer) {
                 return {
                     id: offeredAnswer.id,
                     value: offeredAnswer.value
@@ -25,9 +38,9 @@ angular.module('mwFormUtils.responseUtils', [])
             });
         };
 
-        service.$extractResponseForRadioOrCheckboxQuestion= function(question, questionResponse) {
+        service.$extractResponseForRadioOrCheckboxQuestion = function (question, questionResponse) {
             var offeredAnswerById = service.$getOfferedAnswerByIdMap(question);
-            var result ={};
+            var result = {};
             if (questionResponse.selectedAnswers) {
                 result.selectedAnswers = [];
                 questionResponse.selectedAnswers.forEach(function (answerId) {
@@ -42,13 +55,13 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForPriorityQuestion= function(question, questionResponse) {
-            var result =[];
-            if(!questionResponse.priorityList){
+        service.$extractResponseForPriorityQuestion = function (question, questionResponse) {
+            var result = [];
+            if (!questionResponse.priorityList) {
                 return result;
             }
             var itemById = service.$getObjectByIdMap(question.priorityList);
-            questionResponse.priorityList.forEach(function(i){
+            questionResponse.priorityList.forEach(function (i) {
                 var item = itemById[i.id];
                 result.push({
                     id: item.id,
@@ -59,13 +72,13 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForDivisionQuestion= function(question, questionResponse) {
-            var result =[];
+        service.$extractResponseForDivisionQuestion = function (question, questionResponse) {
+            var result = [];
             var itemById = service.$getObjectByIdMap(question.divisionList);
-            Object.getOwnPropertyNames(questionResponse).forEach(function(itemId){
+            Object.getOwnPropertyNames(questionResponse).forEach(function (itemId) {
                 var value = questionResponse[itemId];
                 var item = itemById[itemId];
-                if(!item) {
+                if (!item) {
                     return;
                 }
                 result.push({
@@ -77,28 +90,28 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForGridQuestion= function(question, questionResponse) {
-            var result =[];
-            if(!question.grid || !question.grid.rows){
+        service.$extractResponseForGridQuestion = function (question, questionResponse) {
+            var result = [];
+            if (!question.grid || !question.grid.rows) {
                 return result;
             }
             var colById = service.$getObjectByIdMap(question.grid.cols);
-            question.grid.rows.forEach(function(row){
+            question.grid.rows.forEach(function (row) {
                 var selectedColId = questionResponse[row.id];
                 var selectedCol = null;
-                if(selectedColId){
+                if (selectedColId) {
                     selectedCol = colById[selectedColId];
                 }
 
-                var rowResponse= {
-                    row:{
+                var rowResponse = {
+                    row: {
                         id: row.id,
                         label: row.label
                     },
                     col: null
                 };
 
-                if(selectedCol){
+                if (selectedCol) {
                     rowResponse.col = {
                         id: selectedCol.id,
                         label: selectedCol.label
@@ -109,38 +122,41 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.extractResponse = function(question, questionResponse) {
-            if(question.type=='text' || question.type=='textarea'){
-                return  questionResponse.answer;
+        //Return the response data for the provided question. 
+        service.extractResponse = function (question, questionResponse) {
+            if (questionTypesWithDefaultAnswer.indexOf(question.type) !== -1) {
+                return questionResponse.answer;
+            } else {
+                if (question.type == 'radio' || question.type == 'checkbox') {
+                    return service.$extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
+                }
+                if (question.type == 'grid') {
+                    return service.$extractResponseForGridQuestion(question, questionResponse);
+                }
+                if (question.type == 'priority') {
+                    return service.$extractResponseForPriorityQuestion(question, questionResponse);
+                }
+                if (question.type == 'division') {
+                    return service.$extractResponseForDivisionQuestion(question, questionResponse);
+                }
             }
-            if(question.type=='radio' || question.type=='checkbox'){
-                return service.$extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
-            }
-            if(question.type=='grid'){
-                return service.$extractResponseForGridQuestion(question, questionResponse);
-            }
-            if(question.type=='priority'){
-                return service.$extractResponseForPriorityQuestion(question, questionResponse);
-            }
-            if(question.type=='division'){
-                return service.$extractResponseForDivisionQuestion(question, questionResponse);
-            }
+
             return null;
         };
 
-        service.mergeFormWithResponse = function(formData, responseData){
+        service.mergeFormWithResponse = function (formData, responseData) {
             var result = {};
             angular.copy(formData, result);
 
-            result.pages.forEach(function (page){
-                page.elements.forEach(function (element){
+            result.pages.forEach(function (page) {
+                page.elements.forEach(function (element) {
                     var question = element.question;
-                    if(!question){
+                    if (!question) {
                         return;
                     }
 
                     var questionResponse = responseData[question.id];
-                    if(!questionResponse){
+                    if (!questionResponse) {
                         return;
                     }
                     question.response = service.extractResponse(question, questionResponse);
@@ -151,16 +167,17 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.getQuestionList = function(formData, copy){
+        //Returns an array of all of the questions in the form. 
+        service.getQuestionList = function (formData, copy) {
             var result = [];
-            formData.pages.forEach(function (page){
-                page.elements.forEach(function (element){
+            formData.pages.forEach(function (page) {
+                page.elements.forEach(function (element) {
 
-                    if(!element.question){
+                    if (!element.question) {
                         return;
                     }
                     var question = element.question;
-                    if(copy){
+                    if (copy) {
                         question = {};
                         angular.copy(element.question, question);
                     }
@@ -171,13 +188,14 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.getQuestionWithResponseList = function(formData, responseData){
+        //For each question, attempt to extract the response (if any), then return an array of question objects with that response appened. 
+        service.getQuestionWithResponseList = function (formData, responseData) {
             var result = [];
             service.getQuestionList(formData, true).forEach(function (question) {
                 var questionResponse = responseData[question.id];
                 if (questionResponse) {
                     question.response = service.extractResponse(question, questionResponse);
-                }else{
+                } else {
                     question.response = null;
                 }
                 result.push(question);
@@ -185,33 +203,39 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$$getHeader = function(number, questionText, subQuestionNumber, subQuestionText, withQuestionNumber){
+        //Returns a formatted string with an optional question number and the text of the question. 
+        service.$$getHeader = function (number, questionText, subQuestionNumber, subQuestionText, withQuestionNumber) {
             var result = '';
 
-            if(withQuestionNumber){
-                if(number || number === 0){
-                    result+=number+'.';
+            if (withQuestionNumber) {
+                if (number || number === 0) {
+                    result += number + '.';
                 }
 
-                if(subQuestionNumber || subQuestionNumber === 0){
-                    result+=subQuestionNumber+'.';
+                if (subQuestionNumber || subQuestionNumber === 0) {
+                    result += subQuestionNumber + '.';
                 }
-                if(result.length){
-                    result+=' ';
+                if (result.length) {
+                    result += ' ';
                 }
             }
 
 
-            result +=questionText;
+            result += questionText;
 
-            if(subQuestionText){
-                result +=' ['+subQuestionText+']';
+            if (subQuestionText) {
+                result += ' [' + subQuestionText + ']';
             }
 
             return result;
         };
 
-        service.getResponseSheetHeaders = function(formData, withQuestionNumbers){
+        //Return an array which contains the text of each question. 
+        service.getResponseSheetHeaders = function (formData, withQuestionNumbers) {
+
+            //Questions which require additional processing (for example sub elements)
+            var specialCaseQuestions = ['grid', 'priority', 'division'];
+
             var result = [];
 
             var questionNumber = 0;
@@ -219,161 +243,173 @@ angular.module('mwFormUtils.responseUtils', [])
 
                 questionNumber++;
                 var subIndex = 1;
-                if(question.type=='text' || question.type=='textarea' || question.type=='radio' || question.type=='checkbox'){
-                    result.push(service.$$getHeader(questionNumber,question.text, null, null,withQuestionNumbers));
-                }
-                else if(question.type=='grid'){
-                    if(!question.grid){
-                        return;
+
+                if (specialCaseQuestions.indexOf(question.type) === -1) {
+                    result.push(service.$$getHeader(questionNumber, question.text, null, null, withQuestionNumbers));
+                } else {
+                    if (question.type == 'grid') {
+                        if (!question.grid) {
+                            return;
+                        }
+                        question.grid.rows.forEach(function (row) {
+                            result.push(service.$$getHeader(questionNumber, question.text, subIndex, row.label, withQuestionNumbers));
+                            subIndex++;
+                        });
                     }
-                    question.grid.rows.forEach(function(row){
-                        result.push(service.$$getHeader(questionNumber,question.text, subIndex, row.label, withQuestionNumbers));
-                        subIndex++;
-                    });
-                }
-                else if(question.type=='priority'){
-                    if(!question.priorityList){
-                        return;
+                    else if (question.type == 'priority') {
+                        if (!question.priorityList) {
+                            return;
+                        }
+                        question.priorityList.forEach(function (item) {
+                            result.push(service.$$getHeader(questionNumber, question.text, subIndex, item.value, withQuestionNumbers));
+                            subIndex++;
+                        });
                     }
-                    question.priorityList.forEach(function(item){
-                        result.push(service.$$getHeader(questionNumber,question.text, subIndex, item.value, withQuestionNumbers));
-                        subIndex++;
-                    });
-                }
-                else if(question.type=='division'){
-                    if(!question.divisionList){
-                        return;
+                    else if (question.type == 'division') {
+                        if (!question.divisionList) {
+                            return;
+                        }
+                        question.divisionList.forEach(function (item) {
+                            result.push(service.$$getHeader(questionNumber, question.text, subIndex, item.value, withQuestionNumbers));
+                            subIndex++;
+                        });
                     }
-                    question.divisionList.forEach(function(item){
-                        result.push(service.$$getHeader(questionNumber,question.text, subIndex, item.value, withQuestionNumbers));
-                        subIndex++;
-                    });
                 }
             });
             return result;
         };
 
-        service.getResponseSheetRow = function(formData, responseData){
+        //Get the answers for each question and return an arracy which contains the answer values. 
+        service.getResponseSheetRow = function (formData, responseData) {
             var answerDelimiter = '; ';
             var result = [];
-            if(!responseData){
+            if (!responseData) {
                 return result;
             }
             var questions = service.getQuestionWithResponseList(formData, responseData);
-            var colIndex =0;
-            for(var i=0; i< questions.length; i++){
+            var colIndex = 0;
+
+            var questionsWithSpecialFormatting = [
+                "radio",
+                "checkbox",
+                "grid",
+                "priority",
+                "division"
+            ];
+
+            for (var i = 0; i < questions.length; i++) {
                 var question = questions[i];
                 var response = question.response;
 
-                if(question.type=='text' || question.type=='textarea'){
-                    result.push(response? response : "");
-                }
-                else if(question.type=='radio'){
-                    if(!response){
-                        result.push("");
-                        continue;
-                    }
-                    var cellVal = "";
-                    if(response.selectedAnswer){
-                        cellVal = response.selectedAnswer.value;
-                    }
-
-                    if(response.other){
-                        if(cellVal){
-                            cellVal+=answerDelimiter
-                        }
-                        cellVal+=response.other;
-                    }
-                    result.push(cellVal);
-                }
-                else if(question.type=='checkbox'){
-                    if(!response || !response.selectedAnswers){
-                        result.push("");
-                        continue;
-                    }
-                    var cellVal="";
-                    response.selectedAnswers.forEach(function(selectedAnswer){
-                        if(cellVal){
-                            cellVal+=answerDelimiter;
-                        }
-                        cellVal+=selectedAnswer.value;
-
-                    });
-                    if(response.other){
-                        if(cellVal){
-                            cellVal+=answerDelimiter
-                        }
-                        cellVal+=response.other;
-                    }
-                    result.push(cellVal);
-                }
-                else if(question.type=='grid'){
-                    if(!question.grid){
-                        continue;
-                    }
-                    if(!response){
-                        question.grid.rows.forEach(function(){result.push("")});
-                        continue;
-                    }
-                    response.forEach(function(entry){
-                        result.push(entry.col ? entry.col.label:"");
-
-                    });
-                }
-                else if(question.type=='priority'){
-                    if(!question.priorityList){
-                        continue;
-                    }
-                    var orderedItemById = service.$getObjectByIdMap(response);
-                    question.priorityList.forEach(function(item){
-                        var orderedItem = orderedItemById[item.id];
-                        if(orderedItem){
-                            result.push(orderedItem.priority);
-                        }else{
+                if (questionsWithSpecialFormatting.indexOf(question.type) !== -1) {
+                    if (question.type == 'radio') {
+                        if (!response) {
                             result.push("");
+                            continue;
+                        }
+                        var cellVal = "";
+                        if (response.selectedAnswer) {
+                            cellVal = response.selectedAnswer.value;
                         }
 
-                    });
-                }
-                else if(question.type=='division'){
-                    if(!question.divisionList){
-                        continue;
+                        if (response.other) {
+                            if (cellVal) {
+                                cellVal += answerDelimiter
+                            }
+                            cellVal += response.other;
+                        }
+                        result.push(cellVal);
                     }
-                    var assignedItemById = service.$getObjectByIdMap(response);
-                    question.divisionList.forEach(function(item){
-                        var assignedItem = assignedItemById[item.id];
-                        if(assignedItem){
-                            result.push(assignedItem.value);
-                        }else{
+                    else if (question.type == 'checkbox') {
+                        if (!response || !response.selectedAnswers) {
                             result.push("");
+                            continue;
                         }
+                        var cellVal = "";
+                        response.selectedAnswers.forEach(function (selectedAnswer) {
+                            if (cellVal) {
+                                cellVal += answerDelimiter;
+                            }
+                            cellVal += selectedAnswer.value;
 
-                    });
+                        });
+                        if (response.other) {
+                            if (cellVal) {
+                                cellVal += answerDelimiter
+                            }
+                            cellVal += response.other;
+                        }
+                        result.push(cellVal);
+                    }
+                    else if (question.type == 'grid') {
+                        if (!question.grid) {
+                            continue;
+                        }
+                        if (!response) {
+                            question.grid.rows.forEach(function () { result.push("") });
+                            continue;
+                        }
+                        response.forEach(function (entry) {
+                            result.push(entry.col ? entry.col.label : "");
+
+                        });
+                    }
+                    else if (question.type == 'priority') {
+                        if (!question.priorityList) {
+                            continue;
+                        }
+                        var orderedItemById = service.$getObjectByIdMap(response);
+                        question.priorityList.forEach(function (item) {
+                            var orderedItem = orderedItemById[item.id];
+                            if (orderedItem) {
+                                result.push(orderedItem.priority);
+                            } else {
+                                result.push("");
+                            }
+
+                        });
+                    }
+                    else if (question.type == 'division') {
+                        if (!question.divisionList) {
+                            continue;
+                        }
+                        var assignedItemById = service.$getObjectByIdMap(response);
+                        question.divisionList.forEach(function (item) {
+                            var assignedItem = assignedItemById[item.id];
+                            if (assignedItem) {
+                                result.push(assignedItem.value);
+                            } else {
+                                result.push("");
+                            }
+
+                        });
+                    }
+                } else {
+                    result.push(response ? response : "");
                 }
-
-
             }
             return result;
         };
 
-        service.getResponseSheetRows = function(formData, responseDataList){
-            return responseDataList.map(function (response){
+        service.getResponseSheetRows = function (formData, responseDataList) {
+            return responseDataList.map(function (response) {
                 return service.getResponseSheetRow(formData, response);
             });
         };
 
-        service.getResponseSheet = function(formData, responseDataObjectOrList, headersWithQuestionNumber){
+        //Return [[Headers (Questions)], [Rows (Answers)]]
+        service.getResponseSheet = function (formData, responseDataObjectOrList, headersWithQuestionNumber) {
             var sheet = [];
-            var headers = service.getResponseSheetHeaders(formData,headersWithQuestionNumber);
+            var headers = service.getResponseSheetHeaders(formData, headersWithQuestionNumber);
             sheet.push(headers);
-            if(!responseDataObjectOrList){
+            if (!responseDataObjectOrList) {
                 return sheet;
             }
-            if(responseDataObjectOrList instanceof Array){
-                responseDataObjectOrList.forEach(function (response){
+            if (responseDataObjectOrList instanceof Array) {
+                responseDataObjectOrList.forEach(function (response) {
                     sheet.push(service.getResponseSheetRow(formData, response));
                 });
-            }else{
+            } else {
                 sheet.push(service.getResponseSheetRow(formData, responseDataObjectOrList));
             }
 

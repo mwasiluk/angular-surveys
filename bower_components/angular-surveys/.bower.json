@@ -41,12 +41,12 @@
     "angular-mocks": "~1.4.8",
     "angular-material": "^1.0.7"
   },
-  "version": "0.7.0",
-  "_release": "0.7.0",
+  "version": "0.7.1",
+  "_release": "0.7.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.7.0",
-    "commit": "eb1a2cd7caf9e76e92908e0e3b372e788bec013a"
+    "tag": "0.7.1",
+    "commit": "986da7dad34c2a7b784bdef1d562e7b8770b3c56"
   },
   "_source": "https://github.com/mwasiluk/angular-surveys.git",
   "_target": "*",
