@@ -1,5 +1,5 @@
 angular.module('mwFormBuilder')
-    .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
+    .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'select', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
     .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph'])
     .factory('mwFormBuilderOptions', function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES){
 

@@ -14,7 +14,7 @@
                     <div class="col-sm-10 form-inline">
                         <select ng-attr-id="question-type-{{ctrl.id}}" ng-options="'mwForm.question.types.'+type+'.name'|translate for type in ctrl.questionTypes" ng-model="ctrl.question.type" ng-change="ctrl.questionTypeChanged()" class="form-control" ng-disabled="ctrl.readOnly" required></select>
 
-                        <div class="checkbox" ng-if="ctrl.question.type=='radio'">
+                        <div class="checkbox" ng-if="ctrl.question.type=='radio' || ctrl.question.type=='select'">
                             <label>
                                 <input type="checkbox" ng-model="ctrl.question.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly"> <span translate="mwForm.pageFlow.afterQuestionAnswer">Przejdź do strony w oparciu o odpowiedź</span>
                             </label>
@@ -40,6 +40,9 @@
                     </div>
                     <div ng-switch-when="radio">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
+                    </div>
+                    <div ng-switch-when="select">
+                        <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly" disable-other-answer="true"></mw-question-offered-answer-list-builder>
                     </div>
                     <div ng-switch-when="checkbox">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
@@ -167,6 +170,9 @@
                         </span>
 
                     </div>
+                </div>
+                <div ng-switch-when="select">
+                    <select ng-options="answer.value for answer in ctrl.question.offeredAnswers"   class="form-control" ng-disabled="true"></select>
                 </div>
 
                 <div ng-switch-when="grid">

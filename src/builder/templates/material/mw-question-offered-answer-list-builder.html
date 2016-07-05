@@ -41,7 +41,7 @@
                 <input type="text" class="form-control  offered-answer-value" value="{{'mwForm.question.buttons.addOption'|translate}}">
             </md-input-container>
         </span>
-        <span class="add-custom-answer"  ng-if="!ctrl.question.otherAnswer">
+        <span class="add-custom-answer"  ng-if="!ctrl.disableOtherAnswer && !ctrl.question.otherAnswer">
             <span translate="mwForm.question.orLabel">or </span>
             <md-button role="button" ng-click="ctrl.addCustomAnswer()" translate="mwForm.question.buttons.addOther">Dodaj "Inne"</md-button>
         </span>

@@ -56,7 +56,15 @@
             </div>
             <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"/>
         </div>
-
+        <div ng-switch-when="select">
+            <md-input-container >
+                <md-select ng-disabled="ctrl.readOnly" ng-required="ctrl.question.required" ng-model="ctrl.questionResponse.selectedAnswer">
+                    <md-option ng-repeat="answer in ctrl.question.offeredAnswers" ng-value="answer.id">
+                        {{::ctrl.print(answer.value)}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
         <div ng-switch-when="grid">
             <div class="">
                 <table class="mw-data-table mw-no-border" border="0" cellpadding="5" cellspacing="0">

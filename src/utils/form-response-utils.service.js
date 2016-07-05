@@ -38,7 +38,7 @@ angular.module('mwFormUtils.responseUtils', [])
             });
         };
 
-        service.$extractResponseForRadioOrCheckboxQuestion = function (question, questionResponse) {
+        service.$extractResponseForQuestionWithOfferedAnswers = function (question, questionResponse) {
             var offeredAnswerById = service.$getOfferedAnswerByIdMap(question);
             var result = {};
             if (questionResponse.selectedAnswers) {
@@ -127,8 +127,8 @@ angular.module('mwFormUtils.responseUtils', [])
             if (questionTypesWithDefaultAnswer.indexOf(question.type) !== -1) {
                 return questionResponse.answer;
             } else {
-                if (question.type == 'radio' || question.type == 'checkbox') {
-                    return service.$extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
+                if (question.type == 'radio' || question.type == 'checkbox' || question.type == 'select') {
+                    return service.$extractResponseForQuestionWithOfferedAnswers(question, questionResponse);
                 }
                 if (question.type == 'grid') {
                     return service.$extractResponseForGridQuestion(question, questionResponse);
@@ -292,6 +292,7 @@ angular.module('mwFormUtils.responseUtils', [])
             var questionsWithSpecialFormatting = [
                 "radio",
                 "checkbox",
+                "select",
                 "grid",
                 "priority",
                 "division"
@@ -302,7 +303,7 @@ angular.module('mwFormUtils.responseUtils', [])
                 var response = question.response;
 
                 if (questionsWithSpecialFormatting.indexOf(question.type) !== -1) {
-                    if (question.type == 'radio') {
+                    if (question.type == 'radio' || question.type == 'select') {
                         if (!response) {
                             result.push("");
                             continue;

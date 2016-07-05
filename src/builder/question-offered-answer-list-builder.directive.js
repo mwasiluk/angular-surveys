@@ -9,7 +9,8 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
             question: '=',
             formObject: '=',
             readOnly: '=?',
-            options: '=?'
+            options: '=?',
+            disableOtherAnswer: '=?'
         },
         templateUrl: 'mw-question-offered-answer-list-builder.html',
         controllerAs: 'ctrl',

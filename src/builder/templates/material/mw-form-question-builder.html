@@ -18,7 +18,7 @@
                         </md-select>
                     </md-input-container>
                     <div flex flex-offset-gt-md="5">
-                        <md-checkbox  ng-if="ctrl.question.type=='radio'" ng-model="ctrl.question.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly" aria-label="Go to page">
+                        <md-checkbox  ng-if="ctrl.question.type=='radio' || ctrl.question.type=='select'" ng-model="ctrl.question.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly" aria-label="Go to page">
                             <span translate="mwForm.pageFlow.afterQuestionAnswer">Przejdź do strony w oparciu o odpowiedź</span>
                         </md-checkbox>
 
@@ -48,6 +48,9 @@
                     </div>
                     <div ng-switch-when="radio">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
+                    </div>
+                    <div ng-switch-when="select">
+                        <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly" disable-other-answer="true"></mw-question-offered-answer-list-builder>
                     </div>
                     <div ng-switch-when="checkbox">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
@@ -218,7 +221,15 @@
 
                     </div>
                 </div>
-
+                <div ng-switch-when="select">
+                    <md-input-container >
+                        <md-select ng-disabled="true" ng-model="ctrl.selectAnswerMock">
+                            <md-option ng-repeat="answer in ctrl.question.offeredAnswers" ng-value="answer.id">
+                                {{answer.value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
                 <div ng-switch-when="grid">
                     <div class="table-responsive">
                         <table class="mw-data-table mw-no-border" border="0" cellpadding="5" cellspacing="0">
