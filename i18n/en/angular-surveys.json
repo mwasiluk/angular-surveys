@@ -116,6 +116,15 @@
                 "clickToAddItem": "Click to add item"
             },
             "grid":{
+                "cellInputType": "Cell input type",
+                "cellInputTypes":{
+                    "radio": "Radio",
+                    "checkbox": "Checkbox",
+                    "text": "Text",
+                    "number": "Number",
+                    "date": "Date",
+                    "time": "Time"
+                },
                 "rowLabel": "Row {{row}}",
                 "clickToAddRow": "Click to add row",
                 "columnLabel": "Column {{col}}",

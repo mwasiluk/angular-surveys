@@ -1,5 +1,21 @@
 <div class="mw-question-grid-builder">
-    <div class="form-horizontal mw-grid-rows-builder">
+    <div class="mw-grid-rows-builder">
+
+        <div>
+            <div style="margin-top: 20px;" layout="row" layout-align="start center">
+                <md-input-container  flex-gt-md="30" >
+                    <mw-label label-for="mw-grid-cell-input-type-{{ctrl.question.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.grid.cellInputType"></mw-label>
+                    <md-select ng-attr-id="mw-grid-cell-input-type-{{ctrl.question.id}}" ng-model="ctrl.question.grid.cellInputType"  ng-disabled="ctrl.readOnly" required>
+                        <md-option ng-repeat="opt in ctrl.cellInputTypes" ng-value="opt">
+                            {{'mwForm.question.grid.cellInputTypes.'+opt|translate}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+            </div>
+
+        </div>
+
         <div class="mw-grid-row-list" ng-sortable="ctrl.rowsSortableConfig" ng-model="ctrl.question.grid.rows" role="list">
             <div class="mw-grid-item form-group" ng-repeat="row in ctrl.question.grid.rows" role="listitem" layout="row" layout-align="start center">
                 <div flex-gt-xs="20">

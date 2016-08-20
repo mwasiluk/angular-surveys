@@ -14,8 +14,10 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         templateUrl: 'mw-question-grid-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid){
+        controller: function(mwFormUuid, MW_GRID_CELL_INPUT_TYPES){
             var ctrl = this;
+            ctrl.cellInputTypes = MW_GRID_CELL_INPUT_TYPES;
+
             ctrl.isNewInput = {};
             ctrl.addNewRow=function(noFocus){
 
@@ -47,6 +49,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
 
             if(!ctrl.question.grid){
+
                 ctrl.question.grid = {
                     rows:[],
                     cols:[]
@@ -55,6 +58,9 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                 ctrl.addNewCol(true);
             }
 
+            if(!ctrl.question.grid.cellInputType){
+                ctrl.question.grid.cellInputType = ctrl.cellInputTypes[0];
+            }
 
 
 

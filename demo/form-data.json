@@ -122,6 +122,7 @@
             "type": "grid",
             "required": true,
             "grid": {
+              "cellInputType": "radio",
               "rows": [
                 {
                   "id": "36683a4385337df9ab6b580207272b5b",

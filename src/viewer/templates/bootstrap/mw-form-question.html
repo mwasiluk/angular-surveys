@@ -67,11 +67,14 @@
                         <td>
                             {{::ctrl.print(row.label)}}
                         </td>
-                        <td ng-repeat="col in ::ctrl.question.grid.cols">
-                            <input type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                        <td ng-repeat="col in ::ctrl.question.grid.cols" ng-switch="ctrl.question.grid.cellInputType">
+                            <input ng-switch-when="radio"  type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                            <input ng-switch-when="checkbox"  type="checkbox" ng-model="ctrl.questionResponse[row.id][col.id]" name="answer-for-question-{{row.id}}-{{col.id}}" ng-required="ctrl.question.required"  ng-disabled="ctrl.readOnly">
+                            <input ng-switch-default  ng-attr-type="{{ctrl.question.grid.cellInputType}}" ng-model="ctrl.questionResponse[row.id][col.id]" name="answer-for-question-{{row.id}}-{{col.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly" ng-class="'form-control'">
                         </td>
                     </tr>
                     </tbody>
+
                 </table>
             </div>
 

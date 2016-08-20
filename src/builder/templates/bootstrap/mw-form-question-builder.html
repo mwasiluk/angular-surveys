@@ -172,7 +172,9 @@
                     </div>
                 </div>
                 <div ng-switch-when="select">
-                    <select ng-options="answer.value for answer in ctrl.question.offeredAnswers"   class="form-control" ng-disabled="true"></select>
+                    <select   class="form-control" ng-disabled="true">
+                        <option ng-repeat="answer in ctrl.question.offeredAnswers">{{answer.value}}</option>
+                    </select>
                 </div>
 
                 <div ng-switch-when="grid">
@@ -192,8 +194,10 @@
                                 <td>
                                     {{row.label}}
                                 </td>
-                                <td ng-repeat="col in ctrl.question.grid.cols">
-                                    <input type="radio">
+                                <td ng-repeat="col in ctrl.question.grid.cols"  ng-switch="ctrl.question.grid.cellInputType">
+                                    <input ng-switch-when="radio"  type="radio" disabled>
+                                    <input ng-switch-when="checkbox"  type="checkbox" disabled>
+                                    <input ng-switch-default  ng-attr-type="{{ctrl.question.grid.cellInputType}}" disabled ng-class="'form-control'">
                                 </td>
                             </tr>
                             </tbody>
