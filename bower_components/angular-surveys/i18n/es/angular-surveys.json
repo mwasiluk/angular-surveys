@@ -56,6 +56,9 @@
         "radio": {
           "name": "Radio"
         },
+        "select":{
+          "name": "Select"
+        },
         "checkbox": {
           "name": "Checkboxes"
         },
@@ -110,6 +113,16 @@
         "clickToAddItem": "Click para agregar ítem"
       },
       "grid": {
+        "cellInputType": "Cell input type",
+        "cellInputTypes":{
+          "radio": "Radio",
+          "checkbox": "Checkbox",
+          "text": "Texto",
+          "number": "Número",
+          "date": "Fecha",
+          "time": "Hora"
+
+        },
         "rowLabel": "Fila {{row}}",
         "clickToAddRow": "Click para agregar fila",
         "columnLabel": "Columna {{col}}",

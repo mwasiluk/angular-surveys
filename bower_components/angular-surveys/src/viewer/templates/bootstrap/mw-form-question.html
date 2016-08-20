@@ -47,7 +47,9 @@
             </div>
             <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"/>
         </div>
-
+        <div ng-switch-when="select">
+            <select ng-options="answer.id as ctrl.print(answer.value) for answer in ::ctrl.question.offeredAnswers" ng-model="ctrl.questionResponse.selectedAnswer" class="form-control"  ng-disabled="ctrl.readOnly" ng-required="ctrl.question.required"></select>
+        </div>
         <div ng-switch-when="grid">
             <div class="table-responsive">
                 <table class="table table-condensed table-striped" border="0" cellpadding="5" cellspacing="0">
@@ -65,11 +67,14 @@
                         <td>
                             {{::ctrl.print(row.label)}}
                         </td>
-                        <td ng-repeat="col in ::ctrl.question.grid.cols">
-                            <input type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                        <td ng-repeat="col in ::ctrl.question.grid.cols" ng-switch="ctrl.question.grid.cellInputType">
+                            <input ng-switch-when="radio"  type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
+                            <input ng-switch-when="checkbox"  type="checkbox" ng-model="ctrl.questionResponse[row.id][col.id]" name="answer-for-question-{{row.id}}-{{col.id}}" ng-required="ctrl.question.required"  ng-disabled="ctrl.readOnly">
+                            <input ng-switch-default  ng-attr-type="{{ctrl.question.grid.cellInputType}}" ng-model="ctrl.questionResponse[row.id][col.id]" name="answer-for-question-{{row.id}}-{{col.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly" ng-class="'form-control'">
                         </td>
                     </tr>
                     </tbody>
+
                 </table>
             </div>
 

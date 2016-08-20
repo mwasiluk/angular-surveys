@@ -65,8 +65,10 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 }
             };
 
+            var questionTypesWithOfferedAnswers = ['radio', 'checkbox', 'select'];
+
             ctrl.questionTypeChanged = function(){
-                if( ctrl.question.type == 'radio' || ctrl.question.type == 'checkbox'){
+                if( questionTypesWithOfferedAnswers.indexOf(ctrl.question.type) !== -1){
                     if(!ctrl.question.offeredAnswers){
                         ctrl.question.offeredAnswers=[];
                     }
@@ -79,7 +81,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                     });
 
                 }
-                if( ctrl.question.type != 'radio' && ctrl.question.type != 'checkbox'){
+                if( questionTypesWithOfferedAnswers.indexOf(ctrl.question.type) === -1){
                     delete ctrl.question.offeredAnswers;
                 }
                 if(ctrl.question.type != 'grid'){

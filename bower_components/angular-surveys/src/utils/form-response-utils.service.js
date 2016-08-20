@@ -38,7 +38,7 @@ angular.module('mwFormUtils.responseUtils', [])
             });
         };
 
-        service.$extractResponseForRadioOrCheckboxQuestion = function (question, questionResponse) {
+        service.$extractResponseForQuestionWithOfferedAnswers = function (question, questionResponse) {
             var offeredAnswerById = service.$getOfferedAnswerByIdMap(question);
             var result = {};
             if (questionResponse.selectedAnswers) {
@@ -91,10 +91,41 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         service.$extractResponseForGridQuestion = function (question, questionResponse) {
-            var result = [];
+
             if (!question.grid || !question.grid.rows) {
                 return result;
             }
+
+            if(question.grid.cellInputType == 'radio'){
+                return service.$extractResponseForRadioGridQuestion(question, questionResponse);
+            }
+            var result = [];
+            question.grid.rows.forEach(function (row) {
+                question.grid.cols.forEach(function (col) {
+                    var res = {
+                        row: {
+                            id: row.id,
+                            label: row.label
+                        },
+                        col: {
+                            id: col.id,
+                            label: col.label
+                        },
+                        value: null
+                    };
+
+                    if(questionResponse.hasOwnProperty(row.id) && questionResponse[row.id].hasOwnProperty(col.id)){
+                        res.value = questionResponse[row.id][col.id];
+                    }
+
+                    result.push(res);
+                });
+            });
+            return result;
+        };
+
+        service.$extractResponseForRadioGridQuestion= function (question, questionResponse) {
+            var result = [];
             var colById = service.$getObjectByIdMap(question.grid.cols);
             question.grid.rows.forEach(function (row) {
                 var selectedColId = questionResponse[row.id];
@@ -102,6 +133,8 @@ angular.module('mwFormUtils.responseUtils', [])
                 if (selectedColId) {
                     selectedCol = colById[selectedColId];
                 }
+
+
 
                 var rowResponse = {
                     row: {
@@ -127,8 +160,8 @@ angular.module('mwFormUtils.responseUtils', [])
             if (questionTypesWithDefaultAnswer.indexOf(question.type) !== -1) {
                 return questionResponse.answer;
             } else {
-                if (question.type == 'radio' || question.type == 'checkbox') {
-                    return service.$extractResponseForRadioOrCheckboxQuestion(question, questionResponse);
+                if (question.type == 'radio' || question.type == 'checkbox' || question.type == 'select') {
+                    return service.$extractResponseForQuestionWithOfferedAnswers(question, questionResponse);
                 }
                 if (question.type == 'grid') {
                     return service.$extractResponseForGridQuestion(question, questionResponse);
@@ -204,7 +237,7 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Returns a formatted string with an optional question number and the text of the question. 
-        service.$$getHeader = function (number, questionText, subQuestionNumber, subQuestionText, withQuestionNumber) {
+        service.$$getHeader = function (number, questionText, subQuestionNumbers, subQuestionTexts, withQuestionNumber) {
             var result = '';
 
             if (withQuestionNumber) {
@@ -212,9 +245,17 @@ angular.module('mwFormUtils.responseUtils', [])
                     result += number + '.';
                 }
 
-                if (subQuestionNumber || subQuestionNumber === 0) {
-                    result += subQuestionNumber + '.';
+                if(subQuestionNumbers!==null && subQuestionNumbers!==undefined){
+                    if(!Array.isArray(subQuestionNumbers)){
+                        subQuestionNumbers = [subQuestionNumbers]
+                    }
+
+
+                    subQuestionNumbers.forEach(function(num){
+                        result += num + '.';
+                    });
                 }
+
                 if (result.length) {
                     result += ' ';
                 }
@@ -223,9 +264,16 @@ angular.module('mwFormUtils.responseUtils', [])
 
             result += questionText;
 
-            if (subQuestionText) {
-                result += ' [' + subQuestionText + ']';
+            if(subQuestionTexts===null || subQuestionTexts===undefined){
+                return result;
             }
+
+            if(!Array.isArray(subQuestionTexts)){
+                subQuestionTexts = [subQuestionTexts]
+            }
+            subQuestionTexts.forEach(function(txt){
+                result += ' [' + txt + ']';
+            });
 
             return result;
         };
@@ -251,10 +299,21 @@ angular.module('mwFormUtils.responseUtils', [])
                         if (!question.grid) {
                             return;
                         }
-                        question.grid.rows.forEach(function (row) {
-                            result.push(service.$$getHeader(questionNumber, question.text, subIndex, row.label, withQuestionNumbers));
-                            subIndex++;
-                        });
+                        if(question.grid.cellInputType=='radio'){
+                            question.grid.rows.forEach(function (row) {
+                                result.push(service.$$getHeader(questionNumber, question.text, subIndex, row.label, withQuestionNumbers));
+                                subIndex++;
+                            });
+                        }else{
+                            question.grid.rows.forEach(function (row, rowIndex) {
+
+                                question.grid.cols.forEach(function (col, colIndex) {
+                                    result.push(service.$$getHeader(questionNumber, question.text, [rowIndex+1, colIndex+1], [row.label, col.label], withQuestionNumbers));
+                                    subIndex++;
+                                });
+                            });
+                        }
+
                     }
                     else if (question.type == 'priority') {
                         if (!question.priorityList) {
@@ -292,6 +351,7 @@ angular.module('mwFormUtils.responseUtils', [])
             var questionsWithSpecialFormatting = [
                 "radio",
                 "checkbox",
+                "select",
                 "grid",
                 "priority",
                 "division"
@@ -302,7 +362,7 @@ angular.module('mwFormUtils.responseUtils', [])
                 var response = question.response;
 
                 if (questionsWithSpecialFormatting.indexOf(question.type) !== -1) {
-                    if (question.type == 'radio') {
+                    if (question.type == 'radio' || question.type == 'select') {
                         if (!response) {
                             result.push("");
                             continue;
@@ -346,13 +406,24 @@ angular.module('mwFormUtils.responseUtils', [])
                             continue;
                         }
                         if (!response) {
-                            question.grid.rows.forEach(function () { result.push("") });
+                            if(question.grid.cellInputType=='radio'){
+                                question.grid.rows.forEach(function () { result.push("") });
+                            }else{
+                                question.grid.rows.forEach(function () { question.grid.cols.forEach(function () { result.push("") }); });
+                            }
+
                             continue;
                         }
-                        response.forEach(function (entry) {
-                            result.push(entry.col ? entry.col.label : "");
+                        if(question.grid.cellInputType=='radio'){
+                            response.forEach(function (entry) {
+                                result.push(entry.col ? entry.col.label : "");
+                            });
+                        }else{
+                            response.forEach(function (entry) {
+                                result.push(entry.value);
+                            });
+                        }
 
-                        });
                     }
                     else if (question.type == 'priority') {
                         if (!question.priorityList) {

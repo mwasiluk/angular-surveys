@@ -100,22 +100,37 @@ var onError = function (err) {
   this.emit('end');
 };
 
+
+var browserSyncInit = function(baseDir){
+    browserSync.init({
+        server: {
+            baseDir: baseDir,
+            index: "demo.html",
+            routes: {
+                "/bower_components": "bower_components",
+                "/vendor": "vendor",
+                "/dist": "dist",
+                "/i18n": "i18n"
+            }
+        },
+        port: 8080,
+        open: 'local',
+        browser: "google chrome"
+    });
+};
+
+var gulpWatch = function(){
+    gulp.watch(['i18n/**/*.json', './src/**/*.html', './styles/*.*css', 'src/**/*.js'], ['default-watch']);
+};
+
 gulp.task('default-watch', ['default'], ()=>{ browserSync.reload() });
 
 gulp.task('serve', ['default'], ()=>{
-        browserSync.init({
-            server: {
-                baseDir: "demo-material",
-                index: "demo.html",
-                routes: {
-                    "/bower_components": "bower_components",
-                    "/dist": "dist",
-                    "/i18n": "i18n"
-                }
-            },
-            port: 8080,
-            open: 'local',
-            browser: "google chrome"
-        });
-    gulp.watch(['i18n/**/*.json', './src/**/*.html', './styles/*.*css', 'src/**/*.js'], ['default-watch']); 
+    browserSyncInit("demo-material");
+    gulpWatch();
+});
+
+gulp.task('serve-bootstrap', ['default'], ()=>{
+    browserSyncInit("demo");
+gulpWatch();
 });

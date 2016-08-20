@@ -1,4 +1,4 @@
- {
+{
   "name": "form name",
   "description": "description",
   "pages": [
@@ -122,6 +122,7 @@
             "type": "grid",
             "required": true,
             "grid": {
+              "cellInputType": "radio",
               "rows": [
                 {
                   "id": "36683a4385337df9ab6b580207272b5b",
@@ -290,6 +291,47 @@
             "pageFlowModifier": false,
             "quantity": 100,
             "unit": "%"
+          }
+        },
+        {
+          "id": "71bf4665af4980cc5ee093ec9f561ed1",
+          "orderNo": 16,
+          "type": "question",
+          "question": {
+            "id": "4ec4b0f4267b38ac4a15c0fde0121a57",
+            "text": "Select",
+            "type": "select",
+            "required": true,
+            "offeredAnswers": [
+              {
+                "id": "9e70c289904bdc73a5a035bf078030e4",
+                "orderNo": 1,
+                "value": "aaaaaaaaaaaaaaa",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "f3f2f089ce2bc01041db8dc7048630c9",
+                "orderNo": 2,
+                "value": "bbbbbbbbbbb",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              },
+              {
+                "id": "90af60470f0d550b1ba27b8b5b0c4383",
+                "orderNo": 3,
+                "value": "cccccccccccccc",
+                "pageFlow": {
+                  "nextPage": true,
+                  "label": "mwForm.pageFlow.goToNextPage"
+                }
+              }
+            ],
+            "pageFlowModifier": false
           }
         }
       ],

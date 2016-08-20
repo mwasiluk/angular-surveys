@@ -48,6 +48,9 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
 
 
             }else if(ctrl.question.type=='grid'){
+                if(!ctrl.question.grid.cellInputType){
+                    ctrl.question.grid.cellInputType = "radio";
+                }
                 //if(ctrl.questionResponse.selectedAnswers){
                 //
                 //}else{

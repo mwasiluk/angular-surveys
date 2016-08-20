@@ -56,6 +56,9 @@
                 "radio":{
                     "name": "Jednokrotny wybór"
                 },
+                "select":{
+                    "name": "Lista rozwijana"
+                },
                 "checkbox":{
                     "name": "Wielokrotny wybór"
                 },
@@ -113,6 +116,15 @@
                 "clickToAddItem": "Kliknij aby dodać pozycję"
             },
             "grid":{
+                "cellInputType": "Typ komórki",
+                "cellInputTypes":{
+                    "radio": "Radio",
+                    "checkbox": "Checkbox",
+                    "text": "Tekst",
+                    "number": "Liczba",
+                    "date": "Data",
+                    "time": "Godzina"
+                },
                 "rowLabel": "Etykieta wiersza {{row}}",
                 "clickToAddRow": "Kliknij aby dodać wiersz",
                 "columnLabel": "Etykieta kolumny {{col}}",

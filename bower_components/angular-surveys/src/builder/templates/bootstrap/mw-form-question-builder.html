@@ -14,7 +14,7 @@
                     <div class="col-sm-10 form-inline">
                         <select ng-attr-id="question-type-{{ctrl.id}}" ng-options="'mwForm.question.types.'+type+'.name'|translate for type in ctrl.questionTypes" ng-model="ctrl.question.type" ng-change="ctrl.questionTypeChanged()" class="form-control" ng-disabled="ctrl.readOnly" required></select>
 
-                        <div class="checkbox" ng-if="ctrl.question.type=='radio'">
+                        <div class="checkbox" ng-if="ctrl.question.type=='radio' || ctrl.question.type=='select'">
                             <label>
                                 <input type="checkbox" ng-model="ctrl.question.pageFlowModifier" ng-change="ctrl.pageFlowModifierChanged()" ng-readonly="ctrl.readOnly"> <span translate="mwForm.pageFlow.afterQuestionAnswer">Przejdź do strony w oparciu o odpowiedź</span>
                             </label>
@@ -40,6 +40,9 @@
                     </div>
                     <div ng-switch-when="radio">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
+                    </div>
+                    <div ng-switch-when="select">
+                        <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly" disable-other-answer="true"></mw-question-offered-answer-list-builder>
                     </div>
                     <div ng-switch-when="checkbox">
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
@@ -168,6 +171,11 @@
 
                     </div>
                 </div>
+                <div ng-switch-when="select">
+                    <select   class="form-control" ng-disabled="true">
+                        <option ng-repeat="answer in ctrl.question.offeredAnswers">{{answer.value}}</option>
+                    </select>
+                </div>
 
                 <div ng-switch-when="grid">
                     <div class="table-responsive">
@@ -186,8 +194,10 @@
                                 <td>
                                     {{row.label}}
                                 </td>
-                                <td ng-repeat="col in ctrl.question.grid.cols">
-                                    <input type="radio">
+                                <td ng-repeat="col in ctrl.question.grid.cols"  ng-switch="ctrl.question.grid.cellInputType">
+                                    <input ng-switch-when="radio"  type="radio" disabled>
+                                    <input ng-switch-when="checkbox"  type="checkbox" disabled>
+                                    <input ng-switch-default  ng-attr-type="{{ctrl.question.grid.cellInputType}}" disabled ng-class="'form-control'">
                                 </td>
                             </tr>
                             </tbody>
