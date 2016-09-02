@@ -1,0 +1,166 @@
+{
+	"mwForm": {
+		"form": {
+			"name": "Название формуляра",
+			"name.placeholder": "Заголовок формуляра",
+			"description": "Описание"
+		},
+		"buttons": {
+			"addPage": "Добавить страницу",
+			"moveDown": "Вниз",
+			"moveUp": "Вверх",
+			"removePage": "Удалить страницу",
+			"remove": "Удалить",
+			"addElement": "Добавить элемент",
+			"questionReady": "Готово",
+			"next": "Вперёд",
+			"back": "Назад",
+			"submit": "Отослать",
+			"begin": "Начало",
+			"fold": "Свернуть",
+			"unfold": "Развернуть",
+			"edit": "Обработать",
+			"clone": "Сделать копию",
+			"view": "Показать"
+		},
+		"page": {
+			"tab": {
+				"heading": "Страница {{page}} из {{allPages}}"
+			},
+			"elements": {
+				"empty": "Пустая страница"
+			},
+			"pageWithNameCheckbox": "с названием",
+			"name": "Название страницы"
+		},
+		"pageFlow": {
+			"afterPage": "После страницы {{page}}:",
+			"afterQuestionAnswer": "Перейти к странице по итогам ответа",
+			"goToPage": "Перейти к странице {{page.number}}",
+			"goToNextPage": "Продолжить на следующей странице",
+			"submitForm": "Отослать формуляр"
+		},
+		"elements": {
+			"question": "Вопрос",
+			"image": "Картинка",
+			"paragraph": "Параграф"
+		},
+		"question": {
+			"types": {
+				"text": {
+					"name": "Короткий техт"
+				},
+				"textarea": {
+					"name": "Длинный техт"
+				},
+				"radio": {
+					"name": "Радио"
+				},
+				"select": {
+					"name": "Выбор"
+				},
+				"checkbox": {
+					"name": "Чекбокс"
+				},
+				"grid": {
+					"name": "Таблица"
+				},
+				"priority": {
+					"name": "Важность"
+				},
+				"division": {
+					"name": "Деление"
+				},
+				"number": {
+					"name": "Номер"
+				},
+				"date": {
+					"name": "Дата"
+				},
+				"datetime": {
+					"name": "Дата и время"
+				},
+				"time": {
+					"name": "Время"
+				},
+				"email": {
+					"name": "Електронная почта"
+				},
+				"range": {
+					"name": "Интервал"
+				},
+				"url": {
+					"name": "Ссылка"
+				}
+
+
+			},
+			"text": "Техт вопроса",
+			"type": "Тип вопроса",
+			"required": "Ответ обязателен",
+			"preview": {
+				"text": "Короткий ответ",
+				"textarea": "Длинный ответ",
+				"otherAnswer": "Прочее"
+			},
+			"division": {
+				"quantity": "Количество",
+				"unit": "Единица",
+				"assignedSumLabel": "Просвоенно",
+				"fromRequiredLabel": "из необходимово"
+
+			},
+			"priority": {
+				"sorted": "По порядку",
+				"available": "В наличии",
+				"clickToAddItem": "Щелкни что-бы добавить элемент"
+			},
+			"grid": {
+				"cellInputType": "Тип ввода ячейки",
+				"cellInputTypes": {
+					"radio": "Радио",
+					"checkbox": "Чекбокс",
+					"text": "Текст",
+					"number": "Номер",
+					"date": "Дата",
+					"time": "Время"
+				},
+				"rowLabel": "Стока {{row}}",
+				"clickToAddRow": "Добавить строку",
+				"columnLabel": "Колонка {{col}}",
+				"clickToAddColumn": "Добавить колонку"
+			},
+			"range": {
+				"from": "Интервал от",
+				"to": "до"
+			},
+			"number": {
+				"min": "Мин",
+				"max": "Макс"
+			},
+			"orLabel": "или ",
+			"otherLabel": "Прочее: ",
+			"userAnswer": "Ответ ",
+			"buttons": {
+				"addOption": "Добавить опцию",
+				"addOther": "Добавить 'Прочее'"
+			}
+
+		},
+		"image": {
+			"selectImageButton": "Выбрать картинку",
+			"caption": "Название картинки"
+		},
+		"paragraph": {
+			"placeholder": "Добавить параграф текста"
+		},
+		"confirmationPage": {
+			"title": "Страница подтверждения",
+			"customMessage": "Страница подтверждения пользователя",
+			"defaultMessage": "Ваш ответ сохранён",
+			"errorMessage": "Ошибка! Ваш ответ не сохранён",
+			"pendingMessage": "Ваш ответ сохраняется"
+		}
+	}
+
+}
