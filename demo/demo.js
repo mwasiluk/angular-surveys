@@ -17,7 +17,7 @@ angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormU
         ctrl.headersWithQuestionNumber = true;
         ctrl.builderReadOnly = false;
         ctrl.viewerReadOnly = false;
-        ctrl.languages = ['en', 'pl', "es"];
+        ctrl.languages = ['en', 'pl', "es", "ru"];
         ctrl.formData = null;
         $http.get('form-data.json')
             .then(function(res){
