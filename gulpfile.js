@@ -4,6 +4,7 @@ var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
 var Server = require('karma').Server;
 var browserSync = require('browser-sync').create();
+var argv = require('yargs').argv;
 
 gulp.task('clean', function (cb) {
     return del(['tmp', 'dist'], cb);
@@ -73,10 +74,17 @@ function buildModuleStream(destPrefix, moduleName) {
         .pipe(plugins.plumber({ errorHandler: onError }))
         .pipe(plugins.angularFilesort())
         .pipe(plugins.ngAnnotate())
-        .pipe(plugins.uglify())
-        .pipe(plugins.stripDebug())
-        .pipe(plugins.concat(destPrefix+'.min.js'))
+        .pipe(plugins.concat(destPrefix+'.js'))
         .pipe(gulp.dest('dist'));
+    var development = (argv.dev === undefined) ? false : true;
+    if(!development){
+        module.pipe(plugins.uglify())
+            .pipe(plugins.stripDebug())
+            .pipe(plugins.concat(destPrefix+'.min.js'))
+            .pipe(gulp.dest('dist'));
+    }
+
+
 
     return merge(module, bootstrapTemplates, materialTemplates);
 }

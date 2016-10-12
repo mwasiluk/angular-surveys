@@ -23,7 +23,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
             ctrl.defaultOptions = {
                 nestedForm: false,
-                autoStart: false
+                autoStart: false,
+                disableSubmit: false
             };
             ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 

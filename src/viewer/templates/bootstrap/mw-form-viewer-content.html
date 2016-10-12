@@ -36,6 +36,6 @@
 
             <button type="button"  ng-if="ctrl.buttons.prevPage.visible" class="btn btn-default prev-page-button" ng-click="ctrl.goToPrevPage()"><i class="fa fa-chevron-left"></i> <span translate="mwForm.buttons.back">Wstecz</span></button>
             <button type="button" ng-disabled="ctrl.form.$invalid" ng-if="ctrl.buttons.nextPage.visible" class="btn btn-default next-page-button" ng-click="ctrl.goToNextPage()"><span translate="mwForm.buttons.next">Dalej</span> <i class="fa fa-chevron-right"></i></button>
-            <button type="submit" ng-disabled="ctrl.form.$invalid" ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="btn btn-default next-page-button" ng-click="ctrl.submitForm()"> <span translate="mwForm.buttons.submit">Submit</span></button>
+            <button type="submit" ng-disabled="ctrl.options.disableSubmit || ctrl.form.$invalid" ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="btn btn-default next-page-button" ng-click="ctrl.submitForm()"> <span translate="mwForm.buttons.submit">Submit</span></button>
         </div>
 </div>

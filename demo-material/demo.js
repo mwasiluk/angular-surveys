@@ -26,7 +26,8 @@ angular.module('app', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUti
         ctrl.formBuilder={};
         ctrl.formViewer = {};
         ctrl.formOptions = {
-            autoStart: false
+            autoStart: false,
+            disableSubmit: false
         };
         ctrl.optionsBuilder={
             /*elementButtons:   [{title: 'My title tooltip', icon: 'fa fa-database', text: '', callback: ctrl.callback, filter: ctrl.filter, showInOpen: true}],
