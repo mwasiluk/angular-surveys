@@ -17,18 +17,30 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
         bindToController: true,
         controller: function(FormQuestionBuilderId, mwFormUuid){
             var ctrl = this;
-            ctrl.config={
-                radio:{
 
-                },
-                checkbox:{
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                ctrl.config={
+                    radio:{},
+                    checkbox:{}
+                };
 
-                }
+                ctrl.isNewAnswer = {};
+
+                sortAnswersByOrderNo();
+
+                ctrl.offeredAnswersSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateAnswersOrderNo();
+                    }
+                };
             };
 
-            ctrl.isNewAnswer = {};
 
-            sortAnswersByOrderNo();
             function updateAnswersOrderNo() {
                 if(ctrl.question.offeredAnswers){
                     for(var i=0; i<ctrl.question.offeredAnswers.length; i++){
@@ -48,17 +60,6 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                     });
                 }
             }
-
-            ctrl.offeredAnswersSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateAnswersOrderNo();
-                }
-            };
-
-
 
             ctrl.addNewOfferedAnswer=function(){
 
@@ -97,6 +98,12 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
 
 
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;

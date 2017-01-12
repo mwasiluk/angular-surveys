@@ -51,7 +51,7 @@
     <md-tabs md-dynamic-height md-border-bottom md-selected="ctrl.selectedTabIndex">
         <md-tab label="Builder">
             <md-content class="md-padding tab-content">
-                <div layout="row" layout-align="center" ctrl.selectedTabIndex===0>
+                <div layout="row" layout-align="center" ng-if="ctrl.selectedTabIndex===0">
                     <div flex-gt-sm="66" flex-sm="90" >
                         <div layout="row" layout-align="center">
                             <div>
@@ -133,7 +133,7 @@
             </md-content>
         </md-tab>
         <md-tab label="utils">
-            <md-content class="md-padding tab-content" ctrl.selectedTabIndex===3>
+            <md-content class="md-padding tab-content" ng-if="ctrl.selectedTabIndex===3">
                 <md-card class="md-padding">
                 <h3>mwFormResponseUtils service</h3>
                 <br />

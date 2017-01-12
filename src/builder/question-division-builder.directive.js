@@ -15,7 +15,26 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
         bindToController: true,
         controller: function(mwFormUuid){
             var ctrl = this;
-            ctrl.isNewItem = {};
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.isNewItem = {};
+                if(!ctrl.question.divisionList){
+                    ctrl.question.divisionList = [];
+                    ctrl.addNewItem();
+                }
+                sortByOrderNo(ctrl.question.divisionList);
+
+                ctrl.itemsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.divisionList);
+                    }
+                };
+            };
+
 
             ctrl.addNewItem=function(noFocus){
 
@@ -31,14 +50,6 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                 ctrl.question.divisionList.push(item);
             };
 
-
-            if(!ctrl.question.divisionList){
-                ctrl.question.divisionList = [];
-                ctrl.addNewItem();
-            }
-
-
-            sortByOrderNo(ctrl.question.divisionList);
 
             function updateOrderNo(array) {
                 if(array){
@@ -56,15 +67,6 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                });
             }
 
-            ctrl.itemsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.divisionList);
-                }
-            };
-
             ctrl.removeItem=function(item){
                 var index =  ctrl.question.divisionList.indexOf(item);
                 if(index!=-1){
@@ -79,6 +81,12 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                     ctrl.addNewItem();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
         },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;

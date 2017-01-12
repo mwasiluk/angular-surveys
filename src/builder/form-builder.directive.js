@@ -17,15 +17,35 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         bindToController: true,
         controller: function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.currentPage = 0;
-            ctrl.pageSize = 10;
-            ctrl.pagesSize = [10,25,50,100];
-            if(!ctrl.formData.pages || !ctrl.formData.pages.length){
-                ctrl.formData.pages = [];
-                ctrl.formData.pages.push(createEmptyPage(1));
-            }
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.currentPage = 0;
+                ctrl.pageSize = 10;
+                ctrl.pagesSize = [10,25,50,100];
 
-            ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
+                if(!ctrl.formData.pages || !ctrl.formData.pages.length){
+                    ctrl.formData.pages = [];
+                    ctrl.formData.pages.push(createEmptyPage(1));
+                }
+
+                ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
+
+                if(ctrl.api){
+                    ctrl.api.reset = function(){
+                        for (var prop in ctrl.formData) {
+                            if (ctrl.formData.hasOwnProperty(prop) && prop != 'pages') {
+                                delete ctrl.formData[prop];
+                            }
+                        }
+
+                        ctrl.formData.pages.length=0;
+                        ctrl.formData.pages.push(createEmptyPage(1));
+
+                    }
+                }
+            };
+
             ctrl.numberOfPages=function(){
                 return Math.ceil(ctrl.formData.pages.length/ctrl.pageSize);                
             };
@@ -108,18 +128,10 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 arr.splice(toIndex, 0, element);
             }
 
-            if(ctrl.api){
-                ctrl.api.reset = function(){
-                    for (var prop in ctrl.formData) {
-                        if (ctrl.formData.hasOwnProperty(prop) && prop != 'pages') {
-                            delete ctrl.formData[prop];
-                        }
-                    }
-
-                    ctrl.formData.pages.length=0;
-                    ctrl.formData.pages.push(createEmptyPage(1));
-
-                }
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
 
         },

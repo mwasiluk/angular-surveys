@@ -23,6 +23,8 @@ angular.module('app', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUti
             .then(function(res){
                 ctrl.formData = res.data;
             });
+
+        ctrl.selectedTabIndex = 0;
         ctrl.formBuilder={};
         ctrl.formViewer = {};
         ctrl.formOptions = {

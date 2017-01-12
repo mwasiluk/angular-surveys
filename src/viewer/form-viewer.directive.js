@@ -20,36 +20,58 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         bindToController: true,
         controller: function($timeout, $interpolate){
             var ctrl = this;
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.defaultOptions = {
+                    nestedForm: false,
+                    autoStart: false,
+                    disableSubmit: false
+                };
+                ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 
-            ctrl.defaultOptions = {
-                nestedForm: false,
-                autoStart: false,
-                disableSubmit: false
-            };
-            ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
+                ctrl.submitStatus='NOT_SUBMITTED';
+                ctrl.formSubmitted=false;
 
-            ctrl.submitStatus='NOT_SUBMITTED';
-            ctrl.formSubmitted=false;
-
-            sortPagesByNumber();
-            ctrl.pageIdToPage={};
-            ctrl.formData.pages.forEach(function(page){
-                ctrl.pageIdToPage[page.id]=page;
-            });
+                sortPagesByNumber();
+                ctrl.pageIdToPage={};
+                ctrl.formData.pages.forEach(function(page){
+                    ctrl.pageIdToPage[page.id]=page;
+                });
 
 
-            ctrl.buttons={
-                prevPage: {
-                    visible: false,
-                    disabled: false
-                },
-                nextPage: {
-                    visible: false,
-                    disabled: false
-                },
-                submitForm: {
-                    visible: false,
-                    disabled: false
+                ctrl.buttons={
+                    prevPage: {
+                        visible: false,
+                        disabled: false
+                    },
+                    nextPage: {
+                        visible: false,
+                        disabled: false
+                    },
+                    submitForm: {
+                        visible: false,
+                        disabled: false
+                    }
+                };
+
+                ctrl.resetPages();
+
+                if(ctrl.api){
+                    ctrl.api.reset = function(){
+                        for (var prop in ctrl.responseData) {
+                            if (ctrl.responseData.hasOwnProperty(prop)) {
+                                delete ctrl.responseData[prop];
+                            }
+                        }
+
+                        ctrl.buttons.submitForm.visible=false;
+                        ctrl.buttons.prevPage.visible=false;
+                        ctrl.buttons.nextPage.visible=false;
+                        ctrl.currentPage=null;
+                        $timeout(ctrl.resetPages, 0);
+
+                    }
                 }
             };
 
@@ -148,7 +170,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 }
 
             };
-            ctrl.resetPages();
+
 
             ctrl.goToPrevPage= function(){
                 var prevPage = ctrl.prevPages.pop();
@@ -195,23 +217,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 ctrl.updateNextPageBasedOnAllAnswers();
             };
 
-            if(ctrl.api){
-                ctrl.api.reset = function(){
-                    for (var prop in ctrl.responseData) {
-                        if (ctrl.responseData.hasOwnProperty(prop)) {
-                            delete ctrl.responseData[prop];
-                        }
-                    }
-
-                    ctrl.buttons.submitForm.visible=false;
-                    ctrl.buttons.prevPage.visible=false;
-                    ctrl.buttons.nextPage.visible=false;
-                    ctrl.currentPage=null;
-                    $timeout(ctrl.resetPages, 0);
-
-                }
-            }
-
             function sortPagesByNumber() {
                 ctrl.formData.pages.sort(function(a,b){
                     return a.number - b.number;
@@ -219,10 +224,16 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             }
 
             ctrl.print=function(input){
-                if (ctrl.templateData){
+                if (input&&ctrl.templateData){
                     return $interpolate(input)(ctrl.templateData);
                 }
                 return input;
+            };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
 
         },

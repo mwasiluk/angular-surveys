@@ -26,11 +26,28 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         bindToController: true,
         controller: function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.id = FormQuestionBuilderId.next();
-            ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
-            ctrl.formSubmitted=false;
 
-            sortAnswersByOrderNo();
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.id = FormQuestionBuilderId.next();
+                ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
+                ctrl.formSubmitted=false;
+
+                sortAnswersByOrderNo();
+
+                ctrl.offeredAnswersSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateAnswersOrderNo();
+                    }
+                };
+            };
+
+
             function updateAnswersOrderNo() {
                 if(ctrl.question.offeredAnswers){
                     for(var i=0; i<ctrl.question.offeredAnswers.length; i++){
@@ -56,14 +73,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
 
             };
 
-            ctrl.offeredAnswersSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateAnswersOrderNo();
-                }
-            };
+
 
             var questionTypesWithOfferedAnswers = ['radio', 'checkbox', 'select'];
 
@@ -114,6 +124,12 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
             ctrl.pageFlowModifierChanged = function(){
                 clearCustomPageFlow();
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
 
         },
         link: function (scope, ele, attrs, formPageElementBuilder){

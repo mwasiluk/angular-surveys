@@ -105,6 +105,26 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
             var ctrl = this;
             ctrl.isNewItem = {};
 
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                if(!ctrl.question.priorityList){
+                    ctrl.question.priorityList = [];
+                    ctrl.addNewItem();
+                }
+
+                sortByOrderNo(ctrl.question.priorityList);
+
+                ctrl.itemsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.priorityList);
+                    }
+                };
+            };
+
             ctrl.addNewItem=function(noFocus){
 
                 var item = {
@@ -118,15 +138,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
 
                 ctrl.question.priorityList.push(item);
             };
-
-
-            if(!ctrl.question.priorityList){
-                ctrl.question.priorityList = [];
-                ctrl.addNewItem();
-            }
-
-
-            sortByOrderNo(ctrl.question.priorityList);
 
             function updateOrderNo(array) {
                 if(array){
@@ -144,15 +155,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                });
             }
 
-            ctrl.itemsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.priorityList);
-                }
-            };
-
             ctrl.removeItem=function(item){
                 var index =  ctrl.question.priorityList.indexOf(item);
                 if(index!=-1){
@@ -167,6 +169,12 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                     ctrl.addNewItem();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
@@ -193,18 +201,30 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
         bindToController: true,
         controller: ["FormQuestionBuilderId", "mwFormUuid", function(FormQuestionBuilderId, mwFormUuid){
             var ctrl = this;
-            ctrl.config={
-                radio:{
 
-                },
-                checkbox:{
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                ctrl.config={
+                    radio:{},
+                    checkbox:{}
+                };
 
-                }
+                ctrl.isNewAnswer = {};
+
+                sortAnswersByOrderNo();
+
+                ctrl.offeredAnswersSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateAnswersOrderNo();
+                    }
+                };
             };
 
-            ctrl.isNewAnswer = {};
 
-            sortAnswersByOrderNo();
             function updateAnswersOrderNo() {
                 if(ctrl.question.offeredAnswers){
                     for(var i=0; i<ctrl.question.offeredAnswers.length; i++){
@@ -224,17 +244,6 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                     });
                 }
             }
-
-            ctrl.offeredAnswersSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateAnswersOrderNo();
-                }
-            };
-
-
 
             ctrl.addNewOfferedAnswer=function(){
 
@@ -273,6 +282,12 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
 
 
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
@@ -299,9 +314,54 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         bindToController: true,
         controller: ["mwFormUuid", "MW_GRID_CELL_INPUT_TYPES", function(mwFormUuid, MW_GRID_CELL_INPUT_TYPES){
             var ctrl = this;
-            ctrl.cellInputTypes = MW_GRID_CELL_INPUT_TYPES;
 
-            ctrl.isNewInput = {};
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                ctrl.cellInputTypes = MW_GRID_CELL_INPUT_TYPES;
+                ctrl.isNewInput = {};
+
+                if(!ctrl.question.grid){
+
+                    ctrl.question.grid = {
+                        rows:[],
+                        cols:[]
+                    };
+                    ctrl.addNewRow();
+                    ctrl.addNewCol(true);
+                }
+
+                if(!ctrl.question.grid.cellInputType){
+                    ctrl.question.grid.cellInputType = ctrl.cellInputTypes[0];
+                }
+
+
+
+                sortByOrderNo(ctrl.question.grid.rows);
+                sortByOrderNo(ctrl.question.grid.cols);
+
+                ctrl.rowsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.grid.rows);
+                    }
+                };
+                ctrl.colsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.grid.cols);
+                    }
+                };
+            };
+
+
+
+
+
             ctrl.addNewRow=function(noFocus){
 
                 var row = {
@@ -331,24 +391,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
             };
 
 
-            if(!ctrl.question.grid){
 
-                ctrl.question.grid = {
-                    rows:[],
-                    cols:[]
-                };
-                ctrl.addNewRow();
-                ctrl.addNewCol(true);
-            }
-
-            if(!ctrl.question.grid.cellInputType){
-                ctrl.question.grid.cellInputType = ctrl.cellInputTypes[0];
-            }
-
-
-
-            sortByOrderNo(ctrl.question.grid.rows);
-            sortByOrderNo(ctrl.question.grid.cols);
             function updateOrderNo(array) {
                 if(array){
                     for(var i=0; i<array.length; i++){
@@ -364,25 +407,6 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                    return a.orderNo - b.orderNo;
                });
             }
-
-            ctrl.rowsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.grid.rows);
-                }
-            };
-            ctrl.colsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.grid.cols);
-                }
-            };
-
-
 
             ctrl.removeRow=function(row){
                 var index =  ctrl.question.grid.rows.indexOf(row);
@@ -411,6 +435,12 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
 
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
@@ -435,7 +465,26 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
         bindToController: true,
         controller: ["mwFormUuid", function(mwFormUuid){
             var ctrl = this;
-            ctrl.isNewItem = {};
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.isNewItem = {};
+                if(!ctrl.question.divisionList){
+                    ctrl.question.divisionList = [];
+                    ctrl.addNewItem();
+                }
+                sortByOrderNo(ctrl.question.divisionList);
+
+                ctrl.itemsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.divisionList);
+                    }
+                };
+            };
+
 
             ctrl.addNewItem=function(noFocus){
 
@@ -451,14 +500,6 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                 ctrl.question.divisionList.push(item);
             };
 
-
-            if(!ctrl.question.divisionList){
-                ctrl.question.divisionList = [];
-                ctrl.addNewItem();
-            }
-
-
-            sortByOrderNo(ctrl.question.divisionList);
 
             function updateOrderNo(array) {
                 if(array){
@@ -476,15 +517,6 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                });
             }
 
-            ctrl.itemsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.divisionList);
-                }
-            };
-
             ctrl.removeItem=function(item){
                 var index =  ctrl.question.divisionList.indexOf(item);
                 if(index!=-1){
@@ -499,6 +531,12 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
                     ctrl.addNewItem();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
         }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
@@ -559,11 +597,28 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         bindToController: true,
         controller: ["$timeout", "FormQuestionBuilderId", "mwFormBuilderOptions", function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.id = FormQuestionBuilderId.next();
-            ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
-            ctrl.formSubmitted=false;
 
-            sortAnswersByOrderNo();
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.id = FormQuestionBuilderId.next();
+                ctrl.questionTypes = mwFormBuilderOptions.questionTypes;
+                ctrl.formSubmitted=false;
+
+                sortAnswersByOrderNo();
+
+                ctrl.offeredAnswersSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateAnswersOrderNo();
+                    }
+                };
+            };
+
+
             function updateAnswersOrderNo() {
                 if(ctrl.question.offeredAnswers){
                     for(var i=0; i<ctrl.question.offeredAnswers.length; i++){
@@ -589,14 +644,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
 
             };
 
-            ctrl.offeredAnswersSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateAnswersOrderNo();
-                }
-            };
+
 
             var questionTypesWithOfferedAnswers = ['radio', 'checkbox', 'select'];
 
@@ -648,6 +696,12 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 clearCustomPageFlow();
             };
 
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
+
         }],
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
@@ -685,8 +739,13 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         bindToController: true,
         controller: ["$timeout", "FormParagraphBuilderId", function($timeout,FormParagraphBuilderId){
             var ctrl = this;
-            ctrl.id = FormParagraphBuilderId.next();
-            ctrl.formSubmitted=false;
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.id = FormParagraphBuilderId.next();
+                ctrl.formSubmitted=false;
+            };
 
             ctrl.save=function(){
                 ctrl.formSubmitted=true;
@@ -694,6 +753,12 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
                     ctrl.onReady();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
 
         }],
         link: function (scope, ele, attrs, formPageElementBuilder){
@@ -723,6 +788,37 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         bindToController: true,
         controller: ["mwFormUuid", function(mwFormUuid){
             var ctrl = this;
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                if(ctrl.pageElement.type=='question'){
+                    if(!ctrl.pageElement.question){
+                        ctrl.pageElement.question={
+                            id: mwFormUuid.get(),
+                            text: null,
+                            type:null,
+                            required:true
+                        };
+                    }
+                }else if(ctrl.pageElement.type=='image'){
+                    if(!ctrl.pageElement.image){
+                        ctrl.pageElement.image={
+                            id: mwFormUuid.get(),
+                            align: 'left'
+                        };
+                    }
+
+                }else if(ctrl.pageElement.type=='paragraph'){
+                    if(!ctrl.pageElement.paragraph){
+                        ctrl.pageElement.paragraph={
+                            id: mwFormUuid.get(),
+                            html: ''
+                        };
+                    }
+                }
+            };
+
             ctrl.callback = function($event,element){
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -743,36 +839,12 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                 }
                 return true;
             };
-            if(ctrl.pageElement.type=='question'){
-                if(!ctrl.pageElement.question){
-                    ctrl.pageElement.question={
-                        id: mwFormUuid.get(),
-                        text: null,
-                        type:null,
-                        required:true
-                    };
-                }
-            }else if(ctrl.pageElement.type=='image'){
-                if(!ctrl.pageElement.image){
-                    ctrl.pageElement.image={
-                        id: mwFormUuid.get(),
-                        align: 'left'
-                    };
-                }
 
-            }else if(ctrl.pageElement.type=='paragraph'){
-                if(!ctrl.pageElement.paragraph){
-                    ctrl.pageElement.paragraph={
-                        id: mwFormUuid.get(),
-                        html: ''
-                    };
-                }
-
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
-
-
-
-
         }],
         link: function (scope, ele, attrs, pageBuilderCtrl){
             var ctrl = scope.ctrl;
@@ -832,9 +904,28 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
         bindToController: true,
         controller: ["$timeout", "mwFormUuid", "mwFormClone", "mwFormBuilderOptions", function($timeout, mwFormUuid, mwFormClone, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.hoverEdit = false;
-            ctrl.formPage.namedPage = !!ctrl.formPage.name;
-            ctrl.isFolded = false;
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.hoverEdit = false;
+                ctrl.formPage.namedPage = !!ctrl.formPage.name;
+                ctrl.isFolded = false;
+                sortElementsByOrderNo();
+
+                ctrl.sortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    group: "survey",
+                    handle: ".inactive",
+                    //cancel: ".not-draggable",
+                    chosenClass: ".page-element-list",
+                    onEnd: function(e, ui) {
+                        updateElementsOrderNo();
+                    }
+                };
+
+                ctrl.activeElement = null;
+            };
 
             ctrl.unfold = function(){
                 ctrl.isFolded = false;
@@ -843,7 +934,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 ctrl.isFolded = true;
             };
 
-            sortElementsByOrderNo();
+
             function updateElementsOrderNo() {
                 for(var i=0; i<ctrl.formPage.elements.length; i++){
                     ctrl.formPage.elements[i].orderNo = i+1;
@@ -857,19 +948,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 });
             }
 
-            ctrl.sortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                group: "survey",
-                handle: ".inactive",
-                //cancel: ".not-draggable",
-                chosenClass: ".page-element-list",
-                onEnd: function(e, ui) {
-                    updateElementsOrderNo();
-                }
-            };
 
-            ctrl.activeElement = null;
 
             ctrl.addElement = function(type){
                 if(!type){
@@ -968,6 +1047,12 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
 
             ctrl.updateElementsOrderNo = updateElementsOrderNo;
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
 
         }],
         link: function (scope, ele, attrs, formBuilderCtrl){
@@ -1113,15 +1198,35 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
         bindToController: true,
         controller: ["mwFormUuid", "MW_QUESTION_TYPES", "mwFormBuilderOptions", function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.currentPage = 0;
-            ctrl.pageSize = 10;
-            ctrl.pagesSize = [10,25,50,100];
-            if(!ctrl.formData.pages || !ctrl.formData.pages.length){
-                ctrl.formData.pages = [];
-                ctrl.formData.pages.push(createEmptyPage(1));
-            }
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.currentPage = 0;
+                ctrl.pageSize = 10;
+                ctrl.pagesSize = [10,25,50,100];
 
-            ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
+                if(!ctrl.formData.pages || !ctrl.formData.pages.length){
+                    ctrl.formData.pages = [];
+                    ctrl.formData.pages.push(createEmptyPage(1));
+                }
+
+                ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
+
+                if(ctrl.api){
+                    ctrl.api.reset = function(){
+                        for (var prop in ctrl.formData) {
+                            if (ctrl.formData.hasOwnProperty(prop) && prop != 'pages') {
+                                delete ctrl.formData[prop];
+                            }
+                        }
+
+                        ctrl.formData.pages.length=0;
+                        ctrl.formData.pages.push(createEmptyPage(1));
+
+                    }
+                }
+            };
+
             ctrl.numberOfPages=function(){
                 return Math.ceil(ctrl.formData.pages.length/ctrl.pageSize);                
             };
@@ -1204,18 +1309,10 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 arr.splice(toIndex, 0, element);
             }
 
-            if(ctrl.api){
-                ctrl.api.reset = function(){
-                    for (var prop in ctrl.formData) {
-                        if (ctrl.formData.hasOwnProperty(prop) && prop != 'pages') {
-                            delete ctrl.formData[prop];
-                        }
-                    }
-
-                    ctrl.formData.pages.length=0;
-                    ctrl.formData.pages.push(createEmptyPage(1));
-
-                }
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
 
         }],
@@ -1363,7 +1460,10 @@ angular.module('mwFormBuilder')
                     }
                 });
                 element.bind('blur', function() {
-                    scope.$apply(model.assign(scope, false));
+                    $timeout(function() {
+                        scope.$apply(model.assign(scope, false));
+                    });
+
                 });
             }
         };

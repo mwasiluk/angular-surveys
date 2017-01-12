@@ -29,6 +29,7 @@ angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormU
             autoStart: false,
             disableSubmit: false
         };
+        ctrl.selectedTabIndex=0;
         ctrl.optionsBuilder={
             /*elementButtons:   [{title: 'My title tooltip', icon: 'fa fa-database', text: '', callback: ctrl.callback, filter: ctrl.filter, showInOpen: true}],
             customQuestionSelects:  [
@@ -72,6 +73,13 @@ angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormU
             }
 
             return d.promise;
+        };
+
+        ctrl.setSelectedTabIndex= function(index){
+            ctrl.selectedTabIndex=index;
+            if(index===1){
+                ctrl.resetViewer();
+            }
         };
 
         ctrl.resetViewer = function(){

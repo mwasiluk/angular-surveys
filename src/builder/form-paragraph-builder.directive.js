@@ -26,8 +26,13 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         bindToController: true,
         controller: function($timeout,FormParagraphBuilderId){
             var ctrl = this;
-            ctrl.id = FormParagraphBuilderId.next();
-            ctrl.formSubmitted=false;
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.id = FormParagraphBuilderId.next();
+                ctrl.formSubmitted=false;
+            };
 
             ctrl.save=function(){
                 ctrl.formSubmitted=true;
@@ -35,6 +40,12 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
                     ctrl.onReady();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
 
         },
         link: function (scope, ele, attrs, formPageElementBuilder){

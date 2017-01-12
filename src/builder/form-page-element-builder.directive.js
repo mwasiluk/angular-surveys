@@ -19,6 +19,37 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         bindToController: true,
         controller: function(mwFormUuid){
             var ctrl = this;
+
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                if(ctrl.pageElement.type=='question'){
+                    if(!ctrl.pageElement.question){
+                        ctrl.pageElement.question={
+                            id: mwFormUuid.get(),
+                            text: null,
+                            type:null,
+                            required:true
+                        };
+                    }
+                }else if(ctrl.pageElement.type=='image'){
+                    if(!ctrl.pageElement.image){
+                        ctrl.pageElement.image={
+                            id: mwFormUuid.get(),
+                            align: 'left'
+                        };
+                    }
+
+                }else if(ctrl.pageElement.type=='paragraph'){
+                    if(!ctrl.pageElement.paragraph){
+                        ctrl.pageElement.paragraph={
+                            id: mwFormUuid.get(),
+                            html: ''
+                        };
+                    }
+                }
+            };
+
             ctrl.callback = function($event,element){
                 $event.preventDefault();
                 $event.stopPropagation();
@@ -39,36 +70,12 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
                 }
                 return true;
             };
-            if(ctrl.pageElement.type=='question'){
-                if(!ctrl.pageElement.question){
-                    ctrl.pageElement.question={
-                        id: mwFormUuid.get(),
-                        text: null,
-                        type:null,
-                        required:true
-                    };
-                }
-            }else if(ctrl.pageElement.type=='image'){
-                if(!ctrl.pageElement.image){
-                    ctrl.pageElement.image={
-                        id: mwFormUuid.get(),
-                        align: 'left'
-                    };
-                }
 
-            }else if(ctrl.pageElement.type=='paragraph'){
-                if(!ctrl.pageElement.paragraph){
-                    ctrl.pageElement.paragraph={
-                        id: mwFormUuid.get(),
-                        html: ''
-                    };
-                }
-
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
-
-
-
-
         },
         link: function (scope, ele, attrs, pageBuilderCtrl){
             var ctrl = scope.ctrl;

@@ -22,30 +22,66 @@ angular.module('mwFormViewer')
         controller: function(){
             var ctrl = this;
 
-            if(!ctrl.questionResponse.priorityList){
-                ctrl.questionResponse.priorityList=[];
-            }
-            ctrl.idToItem = {};
-
-
-            sortByPriority(ctrl.questionResponse.priorityList);
-
-            ctrl.availableItems=[];
-            ctrl.question.priorityList.forEach(function(item){
-                ctrl.idToItem[item.id] = item;
-                var ordered = ctrl.questionResponse.priorityList.some(function(ordered){
-                    return item.id == ordered.id;
-                });
-                if(!ordered){
-                    ctrl.availableItems.push({
-                        priority: null,
-                        id: item.id
-                    });
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                if(!ctrl.questionResponse.priorityList){
+                    ctrl.questionResponse.priorityList=[];
                 }
-            });
+                ctrl.idToItem = {};
 
-            ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
 
+                sortByPriority(ctrl.questionResponse.priorityList);
+
+                ctrl.availableItems=[];
+                ctrl.question.priorityList.forEach(function(item){
+                    ctrl.idToItem[item.id] = item;
+                    var ordered = ctrl.questionResponse.priorityList.some(function(ordered){
+                        return item.id == ordered.id;
+                    });
+                    if(!ordered){
+                        ctrl.availableItems.push({
+                            priority: null,
+                            id: item.id
+                        });
+                    }
+                });
+
+                ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
+
+                var baseConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged"
+//                tolerance: 'pointer',
+//                items: 'div',
+//                revert: 100
+
+                };
+
+                ctrl.orderedConfig = angular.extend({}, baseConfig, {
+                    group:{
+                        name: 'A',
+                        pull: false,
+                        put: ['B']
+                    },
+                    onEnd: function(e, ui) {
+                        updatePriority(ctrl.questionResponse.priorityList);
+                    }
+                });
+
+                ctrl.availableConfig = angular.extend({}, baseConfig, {
+                    sort:false,
+                    group:{
+                        name: 'B',
+                        pull: ['A'],
+                        put: false
+                    },
+                    onEnd: function(e, ui) {
+                        updatePriority(ctrl.questionResponse.priorityList);
+                        ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
+                    }
+                });
+            };
 
             function updatePriority(array) {
                 if(array){
@@ -63,38 +99,11 @@ angular.module('mwFormViewer')
                 });
             }
 
-            var baseConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged"
-//                tolerance: 'pointer',
-//                items: 'div',
-//                revert: 100
-
-            };
-
-            ctrl.orderedConfig = angular.extend({}, baseConfig, {
-                group:{
-                    name: 'A',
-                    pull: false,
-                    put: ['B']
-                },
-                onEnd: function(e, ui) {
-                    updatePriority(ctrl.questionResponse.priorityList);
-                }
-            });
-
-            ctrl.availableConfig = angular.extend({}, baseConfig, {
-                sort:false,
-                 group:{
-                    name: 'B',
-                    pull: ['A'],
-                    put: false
-                },
-                onEnd: function(e, ui) {
-                    updatePriority(ctrl.questionResponse.priorityList);
-                    ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
-                }
-            });
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
 
         },
         link: function (scope, ele, attrs, mwFormQuestion){
@@ -126,36 +135,58 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
         bindToController: true,
         controller: ["$timeout", "$interpolate", function($timeout, $interpolate){
             var ctrl = this;
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.defaultOptions = {
+                    nestedForm: false,
+                    autoStart: false,
+                    disableSubmit: false
+                };
+                ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 
-            ctrl.defaultOptions = {
-                nestedForm: false,
-                autoStart: false,
-                disableSubmit: false
-            };
-            ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
+                ctrl.submitStatus='NOT_SUBMITTED';
+                ctrl.formSubmitted=false;
 
-            ctrl.submitStatus='NOT_SUBMITTED';
-            ctrl.formSubmitted=false;
-
-            sortPagesByNumber();
-            ctrl.pageIdToPage={};
-            ctrl.formData.pages.forEach(function(page){
-                ctrl.pageIdToPage[page.id]=page;
-            });
+                sortPagesByNumber();
+                ctrl.pageIdToPage={};
+                ctrl.formData.pages.forEach(function(page){
+                    ctrl.pageIdToPage[page.id]=page;
+                });
 
 
-            ctrl.buttons={
-                prevPage: {
-                    visible: false,
-                    disabled: false
-                },
-                nextPage: {
-                    visible: false,
-                    disabled: false
-                },
-                submitForm: {
-                    visible: false,
-                    disabled: false
+                ctrl.buttons={
+                    prevPage: {
+                        visible: false,
+                        disabled: false
+                    },
+                    nextPage: {
+                        visible: false,
+                        disabled: false
+                    },
+                    submitForm: {
+                        visible: false,
+                        disabled: false
+                    }
+                };
+
+                ctrl.resetPages();
+
+                if(ctrl.api){
+                    ctrl.api.reset = function(){
+                        for (var prop in ctrl.responseData) {
+                            if (ctrl.responseData.hasOwnProperty(prop)) {
+                                delete ctrl.responseData[prop];
+                            }
+                        }
+
+                        ctrl.buttons.submitForm.visible=false;
+                        ctrl.buttons.prevPage.visible=false;
+                        ctrl.buttons.nextPage.visible=false;
+                        ctrl.currentPage=null;
+                        $timeout(ctrl.resetPages, 0);
+
+                    }
                 }
             };
 
@@ -254,7 +285,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 }
 
             };
-            ctrl.resetPages();
+
 
             ctrl.goToPrevPage= function(){
                 var prevPage = ctrl.prevPages.pop();
@@ -301,23 +332,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 ctrl.updateNextPageBasedOnAllAnswers();
             };
 
-            if(ctrl.api){
-                ctrl.api.reset = function(){
-                    for (var prop in ctrl.responseData) {
-                        if (ctrl.responseData.hasOwnProperty(prop)) {
-                            delete ctrl.responseData[prop];
-                        }
-                    }
-
-                    ctrl.buttons.submitForm.visible=false;
-                    ctrl.buttons.prevPage.visible=false;
-                    ctrl.buttons.nextPage.visible=false;
-                    ctrl.currentPage=null;
-                    $timeout(ctrl.resetPages, 0);
-
-                }
-            }
-
             function sortPagesByNumber() {
                 ctrl.formData.pages.sort(function(a,b){
                     return a.number - b.number;
@@ -325,10 +339,16 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             }
 
             ctrl.print=function(input){
-                if (ctrl.templateData){
+                if (input&&ctrl.templateData){
                     return $interpolate(input)(ctrl.templateData);
                 }
                 return input;
+            };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
             }
 
         }],
@@ -371,37 +391,41 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
         bindToController: true,
         controller: ["$timeout", "FormQuestionId", function($timeout,FormQuestionId){
             var ctrl = this;
-            ctrl.id = FormQuestionId.next();
 
-            if(ctrl.question.type=='radio'){
-                if(!ctrl.questionResponse.selectedAnswer){
-                    ctrl.questionResponse.selectedAnswer=null;
-                }
-                if(ctrl.questionResponse.other){
-                    ctrl.isOtherAnswer=true;
-                }
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                ctrl.id = FormQuestionId.next();
 
-            }else if(ctrl.question.type=='checkbox'){
-                if(ctrl.questionResponse.selectedAnswers && ctrl.questionResponse.selectedAnswers.length){
-                    ctrl.selectedAnswer=true;
-                }else{
-                    ctrl.questionResponse.selectedAnswers=[];
-                }
-                if(ctrl.questionResponse.other){
-                    ctrl.isOtherAnswer=true;
-                }
+                if(ctrl.question.type=='radio'){
+                    if(!ctrl.questionResponse.selectedAnswer){
+                        ctrl.questionResponse.selectedAnswer=null;
+                    }
+                    if(ctrl.questionResponse.other){
+                        ctrl.isOtherAnswer=true;
+                    }
+
+                }else if(ctrl.question.type=='checkbox'){
+                    if(ctrl.questionResponse.selectedAnswers && ctrl.questionResponse.selectedAnswers.length){
+                        ctrl.selectedAnswer=true;
+                    }else{
+                        ctrl.questionResponse.selectedAnswers=[];
+                    }
+                    if(ctrl.questionResponse.other){
+                        ctrl.isOtherAnswer=true;
+                    }
 
 
-            }else if(ctrl.question.type=='grid'){
-                if(!ctrl.question.grid.cellInputType){
-                    ctrl.question.grid.cellInputType = "radio";
-                }
-                //if(ctrl.questionResponse.selectedAnswers){
-                //
-                //}else{
-                //    ctrl.questionResponse.selectedAnswers={};
-                //}
-            }else if(ctrl.question.type=='division'){
+                }else if(ctrl.question.type=='grid'){
+                    if(!ctrl.question.grid.cellInputType){
+                        ctrl.question.grid.cellInputType = "radio";
+                    }
+                    //if(ctrl.questionResponse.selectedAnswers){
+                    //
+                    //}else{
+                    //    ctrl.questionResponse.selectedAnswers={};
+                    //}
+                }else if(ctrl.question.type=='division'){
 
                     ctrl.computeDivisionSum = function(){
                         ctrl.divisionSum=0;
@@ -416,14 +440,18 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
                         });
                     };
 
-                ctrl.computeDivisionSum();
+                    ctrl.computeDivisionSum();
 
 
-            }
+                }else if(ctrl.question.type=='date' || ctrl.question.type=='datetime' || ctrl.question.type=='time'){
+                    if(ctrl.questionResponse.answer){
+                        ctrl.questionResponse.answer = new Date(ctrl.questionResponse.answer)
+                    }
+                }
 
-
-
-            ctrl.isAnswerSelected=false;
+                ctrl.isAnswerSelected=false;
+                ctrl.initialized = true;
+            };
 
             ctrl.selectedAnswerChanged=function(){
                 delete ctrl.questionResponse.other;
@@ -463,6 +491,12 @@ angular.module('mwFormViewer').factory("FormQuestionId", function(){
                 if(ctrl.onResponseChanged){
                     ctrl.onResponseChanged();
                 }
+            }
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
             }
 
         }],

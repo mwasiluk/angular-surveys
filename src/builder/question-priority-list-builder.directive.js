@@ -17,6 +17,26 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
             var ctrl = this;
             ctrl.isNewItem = {};
 
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                if(!ctrl.question.priorityList){
+                    ctrl.question.priorityList = [];
+                    ctrl.addNewItem();
+                }
+
+                sortByOrderNo(ctrl.question.priorityList);
+
+                ctrl.itemsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.priorityList);
+                    }
+                };
+            };
+
             ctrl.addNewItem=function(noFocus){
 
                 var item = {
@@ -30,15 +50,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
 
                 ctrl.question.priorityList.push(item);
             };
-
-
-            if(!ctrl.question.priorityList){
-                ctrl.question.priorityList = [];
-                ctrl.addNewItem();
-            }
-
-
-            sortByOrderNo(ctrl.question.priorityList);
 
             function updateOrderNo(array) {
                 if(array){
@@ -56,15 +67,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                });
             }
 
-            ctrl.itemsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.priorityList);
-                }
-            };
-
             ctrl.removeItem=function(item){
                 var index =  ctrl.question.priorityList.indexOf(item);
                 if(index!=-1){
@@ -79,6 +81,12 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                     ctrl.addNewItem();
                 }
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;

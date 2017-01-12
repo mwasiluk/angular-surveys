@@ -17,9 +17,28 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
         bindToController: true,
         controller: function($timeout, mwFormUuid, mwFormClone, mwFormBuilderOptions){
             var ctrl = this;
-            ctrl.hoverEdit = false;
-            ctrl.formPage.namedPage = !!ctrl.formPage.name;
-            ctrl.isFolded = false;
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            ctrl.$onInit = function() {
+                ctrl.hoverEdit = false;
+                ctrl.formPage.namedPage = !!ctrl.formPage.name;
+                ctrl.isFolded = false;
+                sortElementsByOrderNo();
+
+                ctrl.sortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    group: "survey",
+                    handle: ".inactive",
+                    //cancel: ".not-draggable",
+                    chosenClass: ".page-element-list",
+                    onEnd: function(e, ui) {
+                        updateElementsOrderNo();
+                    }
+                };
+
+                ctrl.activeElement = null;
+            };
 
             ctrl.unfold = function(){
                 ctrl.isFolded = false;
@@ -28,7 +47,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 ctrl.isFolded = true;
             };
 
-            sortElementsByOrderNo();
+
             function updateElementsOrderNo() {
                 for(var i=0; i<ctrl.formPage.elements.length; i++){
                     ctrl.formPage.elements[i].orderNo = i+1;
@@ -42,19 +61,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                 });
             }
 
-            ctrl.sortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                group: "survey",
-                handle: ".inactive",
-                //cancel: ".not-draggable",
-                chosenClass: ".page-element-list",
-                onEnd: function(e, ui) {
-                    updateElementsOrderNo();
-                }
-            };
 
-            ctrl.activeElement = null;
 
             ctrl.addElement = function(type){
                 if(!type){
@@ -153,6 +160,12 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
 
 
             ctrl.updateElementsOrderNo = updateElementsOrderNo;
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                ctrl.$onInit();
+            }
 
         },
         link: function (scope, ele, attrs, formBuilderCtrl){

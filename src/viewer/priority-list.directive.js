@@ -18,30 +18,66 @@ angular.module('mwFormViewer')
         controller: function(){
             var ctrl = this;
 
-            if(!ctrl.questionResponse.priorityList){
-                ctrl.questionResponse.priorityList=[];
-            }
-            ctrl.idToItem = {};
-
-
-            sortByPriority(ctrl.questionResponse.priorityList);
-
-            ctrl.availableItems=[];
-            ctrl.question.priorityList.forEach(function(item){
-                ctrl.idToItem[item.id] = item;
-                var ordered = ctrl.questionResponse.priorityList.some(function(ordered){
-                    return item.id == ordered.id;
-                });
-                if(!ordered){
-                    ctrl.availableItems.push({
-                        priority: null,
-                        id: item.id
-                    });
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                if(!ctrl.questionResponse.priorityList){
+                    ctrl.questionResponse.priorityList=[];
                 }
-            });
+                ctrl.idToItem = {};
 
-            ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
 
+                sortByPriority(ctrl.questionResponse.priorityList);
+
+                ctrl.availableItems=[];
+                ctrl.question.priorityList.forEach(function(item){
+                    ctrl.idToItem[item.id] = item;
+                    var ordered = ctrl.questionResponse.priorityList.some(function(ordered){
+                        return item.id == ordered.id;
+                    });
+                    if(!ordered){
+                        ctrl.availableItems.push({
+                            priority: null,
+                            id: item.id
+                        });
+                    }
+                });
+
+                ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
+
+                var baseConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged"
+//                tolerance: 'pointer',
+//                items: 'div',
+//                revert: 100
+
+                };
+
+                ctrl.orderedConfig = angular.extend({}, baseConfig, {
+                    group:{
+                        name: 'A',
+                        pull: false,
+                        put: ['B']
+                    },
+                    onEnd: function(e, ui) {
+                        updatePriority(ctrl.questionResponse.priorityList);
+                    }
+                });
+
+                ctrl.availableConfig = angular.extend({}, baseConfig, {
+                    sort:false,
+                    group:{
+                        name: 'B',
+                        pull: ['A'],
+                        put: false
+                    },
+                    onEnd: function(e, ui) {
+                        updatePriority(ctrl.questionResponse.priorityList);
+                        ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
+                    }
+                });
+            };
 
             function updatePriority(array) {
                 if(array){
@@ -59,38 +95,11 @@ angular.module('mwFormViewer')
                 });
             }
 
-            var baseConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged"
-//                tolerance: 'pointer',
-//                items: 'div',
-//                revert: 100
-
-            };
-
-            ctrl.orderedConfig = angular.extend({}, baseConfig, {
-                group:{
-                    name: 'A',
-                    pull: false,
-                    put: ['B']
-                },
-                onEnd: function(e, ui) {
-                    updatePriority(ctrl.questionResponse.priorityList);
-                }
-            });
-
-            ctrl.availableConfig = angular.extend({}, baseConfig, {
-                sort:false,
-                 group:{
-                    name: 'B',
-                    pull: ['A'],
-                    put: false
-                },
-                onEnd: function(e, ui) {
-                    updatePriority(ctrl.questionResponse.priorityList);
-                    ctrl.allItemsOrdered=ctrl.availableItems.length==0 ? true : null;
-                }
-            });
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
 
         },
         link: function (scope, ele, attrs, mwFormQuestion){

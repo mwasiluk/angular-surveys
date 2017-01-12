@@ -11,7 +11,10 @@ angular.module('mwFormBuilder')
                     }
                 });
                 element.bind('blur', function() {
-                    scope.$apply(model.assign(scope, false));
+                    $timeout(function() {
+                        scope.$apply(model.assign(scope, false));
+                    });
+
                 });
             }
         };

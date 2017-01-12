@@ -16,9 +16,54 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         bindToController: true,
         controller: function(mwFormUuid, MW_GRID_CELL_INPUT_TYPES){
             var ctrl = this;
-            ctrl.cellInputTypes = MW_GRID_CELL_INPUT_TYPES;
 
-            ctrl.isNewInput = {};
+            // Put initialization logic inside `$onInit()`
+            // to make sure bindings have been initialized.
+            this.$onInit = function() {
+                ctrl.cellInputTypes = MW_GRID_CELL_INPUT_TYPES;
+                ctrl.isNewInput = {};
+
+                if(!ctrl.question.grid){
+
+                    ctrl.question.grid = {
+                        rows:[],
+                        cols:[]
+                    };
+                    ctrl.addNewRow();
+                    ctrl.addNewCol(true);
+                }
+
+                if(!ctrl.question.grid.cellInputType){
+                    ctrl.question.grid.cellInputType = ctrl.cellInputTypes[0];
+                }
+
+
+
+                sortByOrderNo(ctrl.question.grid.rows);
+                sortByOrderNo(ctrl.question.grid.cols);
+
+                ctrl.rowsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.grid.rows);
+                    }
+                };
+                ctrl.colsSortableConfig = {
+                    disabled: ctrl.readOnly,
+                    ghostClass: "beingDragged",
+                    handle: ".drag-handle",
+                    onEnd: function(e, ui) {
+                        updateOrderNo(ctrl.question.grid.cols);
+                    }
+                };
+            };
+
+
+
+
+
             ctrl.addNewRow=function(noFocus){
 
                 var row = {
@@ -48,24 +93,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
             };
 
 
-            if(!ctrl.question.grid){
 
-                ctrl.question.grid = {
-                    rows:[],
-                    cols:[]
-                };
-                ctrl.addNewRow();
-                ctrl.addNewCol(true);
-            }
-
-            if(!ctrl.question.grid.cellInputType){
-                ctrl.question.grid.cellInputType = ctrl.cellInputTypes[0];
-            }
-
-
-
-            sortByOrderNo(ctrl.question.grid.rows);
-            sortByOrderNo(ctrl.question.grid.cols);
             function updateOrderNo(array) {
                 if(array){
                     for(var i=0; i<array.length; i++){
@@ -81,25 +109,6 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                    return a.orderNo - b.orderNo;
                });
             }
-
-            ctrl.rowsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.grid.rows);
-                }
-            };
-            ctrl.colsSortableConfig = {
-                disabled: ctrl.readOnly,
-                ghostClass: "beingDragged",
-                handle: ".drag-handle",
-                onEnd: function(e, ui) {
-                    updateOrderNo(ctrl.question.grid.cols);
-                }
-            };
-
-
 
             ctrl.removeRow=function(row){
                 var index =  ctrl.question.grid.rows.indexOf(row);
@@ -128,6 +137,12 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
 
             };
+
+            // Prior to v1.5, we need to call `$onInit()` manually.
+            // (Bindings will always be pre-assigned in these versions.)
+            if (angular.version.major === 1 && angular.version.minor < 5) {
+                this.$onInit();
+            }
         },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;

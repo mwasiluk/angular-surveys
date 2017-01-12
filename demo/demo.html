@@ -50,8 +50,8 @@
         <div class="demo-container" ng-if="ctrl.formData">
 
             <uib-tabset active="active">
-                <uib-tab index="0" heading="Builder">
-                    <div class="row">
+                <uib-tab select="ctrl.setSelectedTabIndex(0)" index="0" heading="Builder">
+                    <div class="row" ng-if="ctrl.selectedTabIndex===0">
                         <div class="col-md-offset-2 col-md-8">
                             <div class="form-inline">
                                 <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetBuilder()">Reset</button>
@@ -65,33 +65,36 @@
                         </div>
                     </div>
                 </uib-tab>
-                <uib-tab select="ctrl.resetViewer()"  heading="Viewer">
-                    <div class="form-inline">
-                        <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
+                <uib-tab select="ctrl.setSelectedTabIndex(1)"  heading="Viewer">
+                    <div ng-if="ctrl.selectedTabIndex===1">
+                        <div class="form-inline">
+                            <button type="button" style="margin-bottom: 15px" class="btn btn-default" ng-click="ctrl.resetViewer()">Reset</button>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.viewerReadOnly"> Read only
+                                </label>
+                            </div>
+                        </div>
+
+                        <mw-form-viewer form-data="ctrl.formData" template-data="ctrl.templateData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
+
+                        <hr>
+
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="ctrl.formOptions.autoStart"> Autostart
+                                <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
                             </label>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="ctrl.viewerReadOnly"> Read only
-                            </label>
-                        </div>
-                    </div>
-
-                    <mw-form-viewer form-data="ctrl.formData" template-data="ctrl.templateData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
-
-                    <hr>
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="ctrl.showResponseData"> Show response data
-                        </label>
-                    </div>
-                    <pre ng-if="ctrl.showResponseData">
+                        <pre ng-if="ctrl.showResponseData">
 {{ctrl.responseData|json}}
-                    </pre>
+                        </pre>
+                    </div>
+
                 </uib-tab>
                 <uib-tab  heading="Model">
                     <pre>
