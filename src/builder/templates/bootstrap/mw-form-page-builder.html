@@ -37,7 +37,7 @@
 
             <div class="form-group" ng-if="ctrl.formPage.namedPage">
                 <label ng-attr-for="page-name-{{ctrl.formPage.number}}" translate="mwForm.page.name">Nazwa strony</label>
-                <input type="text" class="form-control" name="pageName" ng-attr-id="page-name-{{ctrl.formPage.number}}" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
+                <input type="text" class="form-control" name="pageName" ng-attr-id="page-name-{{ctrl.formPage.number}}" ng-blur="ctrl.pageNameChanged()" ng-model="ctrl.formPage.name" ng-readonly="ctrl.readOnly">
             </div>
 
             <div class="page-element-list" ng-sortable="ctrl.sortableConfig" ng-model="ctrl.formPage.elements">

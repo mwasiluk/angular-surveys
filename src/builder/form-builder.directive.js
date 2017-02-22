@@ -1,5 +1,5 @@
 
-angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
+angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope) {
 
     return {
         replace: true,
@@ -54,6 +54,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             ctrl.addPage = function(){
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
                 ctrl.lastPage();
+                $rootScope.$broadcast("mwForm.pageEvents.pageAdded");
             };
             ctrl.onChangePageSize = function(){
                 if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1)){
@@ -95,6 +96,8 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     ctrl.formData.pages.push(newPage);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageAdded");
+
             };
 
             ctrl.moveDownPage= function(page){
@@ -104,6 +107,8 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     arrayMove(ctrl.formData.pages, fromIndex, toIndex);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageMoved");
+
             };
 
             ctrl.moveUpPage= function(page){
@@ -113,12 +118,15 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     arrayMove(ctrl.formData.pages, fromIndex, toIndex);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageMoved");
+
             };
 
             ctrl.removePage=function(page){
                 var index = ctrl.formData.pages.indexOf(page);
                 ctrl.formData.pages.splice(index,1);
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageRemoved");
             };
 
             function arrayMove(arr, fromIndex, toIndex) {
@@ -199,7 +207,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                 ctrl.updatePageFlow();
             });
             scope.$on('mwForm.pageEvents.changePage', function(event,data){
-                if(data && data.page && data.page < ctrl.numberOfPages()){
+                if(typeof data.page !== "undefined" && data.page < ctrl.numberOfPages()){
                    ctrl.currentPage = data.page;
                 }
             });
