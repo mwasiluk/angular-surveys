@@ -1311,6 +1311,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
                 ctrl.formData.pages.splice(index,1);
                 updatePageNumbers();
                 $rootScope.$broadcast("mwForm.pageEvents.pageRemoved");
+                ctrl.onChangePageSize();
             };
 
             function arrayMove(arr, fromIndex, toIndex) {
