@@ -214,6 +214,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope)
                    ctrl.currentPage = data.page;
                 }
             });
+            scope.$on('mwForm.pageEvents.addPage', function(event,data){
+                ctrl.addPage();
+            });
         }
     };
 });
