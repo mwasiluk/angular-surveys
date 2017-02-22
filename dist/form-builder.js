@@ -1390,6 +1390,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
             scope.$watch('ctrl.formData.pages.length', function(newVal, oldVal){
                 ctrl.updatePageFlow();
             });
+            scope.$watch('ctrl.currentPage', function(newVal, oldVal){
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{index:ctrl.currentPage});
+            });
             scope.$on('mwForm.pageEvents.changePage', function(event,data){
                 if(typeof data.page !== "undefined" && data.page < ctrl.numberOfPages()){
                    ctrl.currentPage = data.page;
