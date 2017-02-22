@@ -16,7 +16,7 @@
 
 
         <div class="form-page-list">
-            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.pageSize | limitTo:ctrl.pageSize" form-page="page" form-object="ctrl.formData" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
+            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.options.pageSize | limitTo:ctrl.options.pageSize" form-page="page" form-object="ctrl.formData" is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
         </div>
         <div class="row">
             <div class="col-sm-9">
@@ -29,15 +29,15 @@
                             <i class="fa fa-angle-left"></i>
                         </button>
                         {{ctrl.currentPage + 1}}/{{ctrl.numberOfPages()}}
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
+                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.options.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
                             <i class="fa fa-angle-right"></i>
                         </button>
-                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.lastPage()">
+                        <button class="btn btn-default" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.options.pageSize - 1" ng-click="ctrl.lastPage()">
                             <i class="fa fa-angle-double-right"></i>
                         </button>
                     </div>
                     <div class="col-sm-2">
-                        <select ng-change="ctrl.onChangePageSize()" class="form-control" ng-model="ctrl.pageSize" ng-options="item for item in ctrl.pagesSize" />
+                        <select ng-change="ctrl.onChangePageSize()" class="form-control" ng-model="ctrl.options.pageSize" ng-options="item for item in ctrl.options.pagesSize" />
                     </div>
                 </div>
 

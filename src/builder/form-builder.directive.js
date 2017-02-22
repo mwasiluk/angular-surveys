@@ -21,8 +21,6 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
                 ctrl.currentPage = 0;
-                ctrl.pageSize = 10;
-                ctrl.pagesSize = [10,25,50,100];
 
                 if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                     ctrl.formData.pages = [];
@@ -45,20 +43,21 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     }
                 }
             };
+            
 
             ctrl.numberOfPages=function(){
-                return Math.ceil(ctrl.formData.pages.length/ctrl.pageSize);                
+                return Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize);                
             };
             ctrl.lastPage = function(){
-               ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+               ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1); 
             };
             ctrl.addPage = function(){
-                ctrl.lastPage();
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
+                ctrl.lastPage();
             };
             ctrl.onChangePageSize = function(){
-                if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1)){
-                   ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+                if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1)){
+                   ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1); 
                 }
             };
             
@@ -198,6 +197,11 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
 
             scope.$watch('ctrl.formData.pages.length', function(newVal, oldVal){
                 ctrl.updatePageFlow();
+            });
+            scope.$on('mwForm.pageEvents.changePage', function(event,data){
+                if(data && data.page && data.page < ctrl.numberOfPages()){
+                   ctrl.currentPage = data.page;
+                }
             });
         }
     };

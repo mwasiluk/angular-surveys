@@ -26,6 +26,8 @@ angular.module('mwFormBuilder')
             elementTypes: MW_ELEMENT_TYPES,
             questionTypes: MW_QUESTION_TYPES,
             elementButtons: [],
+            pagesSize: [10,25,50,100],
+            pageSize: 10,
             customQuestionSelects: [],
             customElements: [] //TODO
         };
