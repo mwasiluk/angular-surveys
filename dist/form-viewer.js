@@ -114,7 +114,7 @@ angular.module('mwFormViewer')
 });
 
 
-angular.module('mwFormViewer').directive('mwFormViewer', function () {
+angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function ($rootScope) {
 
     return {
         replace: true,
@@ -271,6 +271,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
                 if(ctrl.formData.pages.length>0){
                     ctrl.setCurrentPage(ctrl.formData.pages[0]);
+                    $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
                 }
             };
 
@@ -291,6 +292,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 var prevPage = ctrl.prevPages.pop();
                 ctrl.setCurrentPage(prevPage);
                 ctrl.updateNextPageBasedOnAllAnswers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
             };
 
             ctrl.goToNextPage= function(){
@@ -299,6 +301,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 ctrl.updateNextPageBasedOnAllAnswers();
 
                 ctrl.setCurrentPage(ctrl.nextPage);
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
             };
 
             ctrl.updateNextPageBasedOnAllAnswers = function(){
@@ -361,7 +364,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
         }
     };
-});
+}]);
 
 
 angular.module('mwFormViewer').factory("FormQuestionId", function(){
