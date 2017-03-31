@@ -37,7 +37,10 @@ angular.module('app', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUti
                 {key:"category", label: 'Category', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}], required: false},
                 {key:"category2", label: 'Category2', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}]}
             ],
-            elementTypes: ['question', 'image']*/
+            elementTypes: ['question', 'image'],
+            pagesSize: [1,10,25,50,100],
+            pageSize: 1      
+                 */
         };
         ctrl.formStatus= {};
         ctrl.responseData={};

@@ -1,5 +1,5 @@
 
-angular.module('mwFormViewer').directive('mwFormViewer', function () {
+angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
 
     return {
         replace: true,
@@ -156,9 +156,10 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
 
                 if(ctrl.formData.pages.length>0){
                     ctrl.setCurrentPage(ctrl.formData.pages[0]);
+                    $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
                 }
             };
-
+            
             ctrl.resetPages = function(){
                 ctrl.prevPages=[];
 
@@ -176,6 +177,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 var prevPage = ctrl.prevPages.pop();
                 ctrl.setCurrentPage(prevPage);
                 ctrl.updateNextPageBasedOnAllAnswers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
             };
 
             ctrl.goToNextPage= function(){
@@ -184,6 +186,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
                 ctrl.updateNextPageBasedOnAllAnswers();
 
                 ctrl.setCurrentPage(ctrl.nextPage);
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:ctrl.currentPage});
             };
 
             ctrl.updateNextPageBasedOnAllAnswers = function(){
@@ -242,6 +245,19 @@ angular.module('mwFormViewer').directive('mwFormViewer', function () {
             if(ctrl.formStatus){
                 ctrl.formStatus.form = ctrl.form;
             }
+            
+            scope.$on('mwForm.pageEvents.changePage', function(event,data){
+                if(typeof data.page !== "undefined" && data.page < ctrl.formData.pages.length){
+                   ctrl.resetPages();
+                   for(var i =0; i < data.page;i++){
+                        ctrl.prevPages.push(ctrl.formData.pages[i]);
+                   } 
+                   var currenPge=ctrl.formData.pages[data.page];
+                   ctrl.setCurrentPage(currenPge);
+                   $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{currentPage:currenPge});
+                   ctrl.updateNextPageBasedOnAllAnswers();
+                }
+            });
 
 
         }

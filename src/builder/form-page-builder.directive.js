@@ -1,5 +1,5 @@
 
-angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
+angular.module('mwFormBuilder').directive('mwFormPageBuilder', function ($rootScope) {
 
     return {
         replace: true,
@@ -60,6 +60,9 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                     return a.orderNo - b.orderNo;
                 });
             }
+            ctrl.pageNameChanged = function(){
+                $rootScope.$broadcast('mwForm.pageEvents.pageNameChanged', {page: ctrl.formPage});
+            };
 
 
 

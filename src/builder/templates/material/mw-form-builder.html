@@ -18,7 +18,7 @@
 
 
         <div class="form-page-list">
-            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.pageSize | limitTo:ctrl.pageSize" form-page="page" form-object="ctrl.formData"
+            <mw-form-page-builder ng-repeat="page in ctrl.formData.pages| mwStartFrom:ctrl.currentPage * ctrl.options.pageSize | limitTo:ctrl.options.pageSize" form-page="page" form-object="ctrl.formData"
                                   is-first="$first" is-last="$last" read-only="ctrl.readOnly"></mw-form-page-builder>
         </div>
         <div layout="row" layout-align="center center">
@@ -32,17 +32,17 @@
                             <i class="fa fa-angle-left fa-lg"></i>
                         </md-button>
                         {{ctrl.currentPage + 1}}/{{ctrl.numberOfPages()}}
-                        <md-button class="md-icon-button md-raised" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
+                        <md-button class="md-icon-button md-raised" ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.options.pageSize - 1" ng-click="ctrl.currentPage = ctrl.currentPage + 1">
                             <i class="fa fa-angle-right fa-lg"></i>
                         </md-button>
-                        <md-button class="md-icon-button md-raised"  ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.pageSize - 1" ng-click="ctrl.lastPage()">
+                        <md-button class="md-icon-button md-raised"  ng-disabled="ctrl.currentPage >= ctrl.formData.pages.length / ctrl.options.pageSize - 1" ng-click="ctrl.lastPage()">
                             <i class="fa fa-angle-double-right fa-lg"></i>
                         </md-button>
                     </div>
                     <div flex-gt-xs="18">
                         <md-input-container>
-                            <md-select ng-change="ctrl.onChangePageSize()" class="form-control" ng-model="ctrl.pageSize">
-                                <md-option ng-repeat="item in ctrl.pagesSize" value="{{item}}">{{item}}</md-option>
+                            <md-select ng-change="ctrl.onChangePageSize()" class="form-control" ng-model="ctrl.options.pageSize">
+                                <md-option ng-repeat="item in ctrl.options.pagesSize" value="{{item}}">{{item}}</md-option>
                             </md-select>
                         </md-input-container>
                     </div>

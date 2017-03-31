@@ -886,7 +886,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
 });
 
 
-angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
+angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", function ($rootScope) {
 
     return {
         replace: true,
@@ -947,6 +947,9 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
                     return a.orderNo - b.orderNo;
                 });
             }
+            ctrl.pageNameChanged = function(){
+                $rootScope.$broadcast('mwForm.pageEvents.pageNameChanged', {page: ctrl.formPage});
+            };
 
 
 
@@ -1084,7 +1087,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', function () {
             ctrl.onImageSelection = formBuilderCtrl.onImageSelection;
         }
     };
-});
+}]);
 
 
 angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
@@ -1180,7 +1183,7 @@ angular.module('mwFormBuilder').directive('mwFormConfirmationPageBuilder', funct
 });
 
 
-angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
+angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", function ($rootScope) {
 
     return {
         replace: true,
@@ -1202,8 +1205,6 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
                 ctrl.currentPage = 0;
-                ctrl.pageSize = 10;
-                ctrl.pagesSize = [10,25,50,100];
 
                 if(!ctrl.formData.pages || !ctrl.formData.pages.length){
                     ctrl.formData.pages = [];
@@ -1226,20 +1227,22 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     }
                 }
             };
+            
 
             ctrl.numberOfPages=function(){
-                return Math.ceil(ctrl.formData.pages.length/ctrl.pageSize);                
+                return Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize);                
             };
             ctrl.lastPage = function(){
-               ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+               ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1); 
             };
             ctrl.addPage = function(){
-                ctrl.lastPage();
                 ctrl.formData.pages.push(createEmptyPage(ctrl.formData.pages.length+1));
+                ctrl.lastPage();
+                $rootScope.$broadcast("mwForm.pageEvents.pageAdded");
             };
             ctrl.onChangePageSize = function(){
-                if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1)){
-                   ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.pageSize - 1); 
+                if(ctrl.currentPage > Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1)){
+                   ctrl.currentPage = Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize - 1); 
                 }
             };
             
@@ -1277,6 +1280,8 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     ctrl.formData.pages.push(newPage);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageAdded");
+
             };
 
             ctrl.moveDownPage= function(page){
@@ -1286,6 +1291,8 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     arrayMove(ctrl.formData.pages, fromIndex, toIndex);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageMoved");
+
             };
 
             ctrl.moveUpPage= function(page){
@@ -1295,12 +1302,16 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
                     arrayMove(ctrl.formData.pages, fromIndex, toIndex);
                 }
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageMoved");
+
             };
 
             ctrl.removePage=function(page){
                 var index = ctrl.formData.pages.indexOf(page);
                 ctrl.formData.pages.splice(index,1);
                 updatePageNumbers();
+                $rootScope.$broadcast("mwForm.pageEvents.pageRemoved");
+                ctrl.onChangePageSize();
             };
 
             function arrayMove(arr, fromIndex, toIndex) {
@@ -1380,9 +1391,20 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function () {
             scope.$watch('ctrl.formData.pages.length', function(newVal, oldVal){
                 ctrl.updatePageFlow();
             });
+            scope.$watch('ctrl.currentPage', function(newVal, oldVal){
+                $rootScope.$broadcast("mwForm.pageEvents.pageCurrentChanged",{index:ctrl.currentPage});
+            });
+            scope.$on('mwForm.pageEvents.changePage', function(event,data){
+                if(typeof data.page !== "undefined" && data.page < ctrl.numberOfPages()){
+                   ctrl.currentPage = data.page;
+                }
+            });
+            scope.$on('mwForm.pageEvents.addPage', function(event,data){
+                ctrl.addPage();
+            });
         }
     };
-});
+}]);
 
 
 angular.module('mwFormBuilder').filter('mwStartFrom', function() {
@@ -1419,6 +1441,8 @@ angular.module('mwFormBuilder')
             elementTypes: MW_ELEMENT_TYPES,
             questionTypes: MW_QUESTION_TYPES,
             elementButtons: [],
+            pagesSize: [10,25,50,100],
+            pageSize: 10,
             customQuestionSelects: [],
             customElements: [] //TODO
         };
