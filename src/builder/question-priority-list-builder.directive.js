@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', function () {
 
     return {
@@ -13,7 +12,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
         templateUrl: 'mw-question-priority-list-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid){
+        controller: ["mwFormUuid", function(mwFormUuid){
             var ctrl = this;
             ctrl.isNewItem = {};
 
@@ -58,7 +57,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                         item.orderNo = i+1;
                     }
                 }
-
             }
 
             function sortByOrderNo(array) {
@@ -87,7 +85,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
             if (angular.version.major === 1 && angular.version.minor < 5) {
                 this.$onInit();
             }
-        },
+        }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
         }

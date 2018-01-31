@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
     return {
@@ -14,7 +13,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         templateUrl: 'mw-question-grid-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid, MW_GRID_CELL_INPUT_TYPES){
+        controller: ["mwFormUuid", "MW_GRID_CELL_INPUT_TYPES", function(mwFormUuid, MW_GRID_CELL_INPUT_TYPES){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -101,7 +100,6 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                         item.orderNo = i+1;
                     }
                 }
-
             }
 
             function sortByOrderNo(array) {
@@ -143,7 +141,7 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
             if (angular.version.major === 1 && angular.version.minor < 5) {
                 this.$onInit();
             }
-        },
+        }],
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
         }
