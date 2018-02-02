@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function () {
 
     return {
@@ -17,7 +16,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         templateUrl: 'mw-form-page-element-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid){
+        controller: ["mwFormUuid", function(mwFormUuid){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -76,7 +75,7 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
             if (angular.version.major === 1 && angular.version.minor < 5) {
                 ctrl.$onInit();
             }
-        },
+        }],
         link: function (scope, ele, attrs, pageBuilderCtrl){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = pageBuilderCtrl.possiblePageFlow;
