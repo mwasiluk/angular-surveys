@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
     var id = 0;
         return {
@@ -25,7 +24,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
         templateUrl: 'mw-form-image-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormImageBuilderId, mwFormUuid){
+        controller: ["$timeout", "FormImageBuilderId", "mwFormUuid", function($timeout,FormImageBuilderId, mwFormUuid){
             var ctrl = this;
             ctrl.id = FormImageBuilderId.next();
             ctrl.formSubmitted=false;
@@ -52,7 +51,7 @@ angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
             }
 
 
-        },
+        }],
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
         }

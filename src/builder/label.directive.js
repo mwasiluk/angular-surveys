@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').directive('mwLabel', function () {
 
     return {
@@ -14,9 +13,9 @@ angular.module('mwFormBuilder').directive('mwLabel', function () {
         templateUrl: 'mw-label.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function(mwFormUuid){
+        controller: ["mwFormUuid", function(mwFormUuid){
             var ctrl = this;
-        },
+        }],
         link: function (scope, ele, attrs){
 
         }
