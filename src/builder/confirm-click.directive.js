@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mwFormBuilder')
-    .directive('mwConfirmClick', ["$window", function($window){
+    .directive('mwConfirmClick', function($window){
         return {
             restrict: 'A',
             link: function (scope, element, attr) {
@@ -13,4 +13,4 @@ angular.module('mwFormBuilder')
                 });
             }
         }
-    }]);
+    });

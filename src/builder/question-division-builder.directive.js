@@ -1,3 +1,4 @@
+
 angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function () {
 
     return {
@@ -12,7 +13,7 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
         templateUrl: 'mw-question-division-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["mwFormUuid", function(mwFormUuid){
+        controller: function(mwFormUuid){
             var ctrl = this;
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
@@ -86,7 +87,7 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
             if (angular.version.major === 1 && angular.version.minor < 5) {
                 ctrl.$onInit();
             }
-        }],
+        },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
         }

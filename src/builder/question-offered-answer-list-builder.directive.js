@@ -1,3 +1,4 @@
+
 angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', function () {
 
     return {
@@ -14,7 +15,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
         templateUrl: 'mw-question-offered-answer-list-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["FormQuestionBuilderId", "mwFormUuid", function(FormQuestionBuilderId, mwFormUuid){
+        controller: function(FormQuestionBuilderId, mwFormUuid){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -94,6 +95,8 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                     keyEvent.preventDefault()
                     ctrl.addNewOfferedAnswer();
                 }
+
+
             };
 
             // Prior to v1.5, we need to call `$onInit()` manually.
@@ -101,7 +104,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
             if (angular.version.major === 1 && angular.version.minor < 5) {
                 this.$onInit();
             }
-        }],
+        },
         link: function (scope, ele, attrs, formQuestionBuilderCtrl){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = formQuestionBuilderCtrl.possiblePageFlow;

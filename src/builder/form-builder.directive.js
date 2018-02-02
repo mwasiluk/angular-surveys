@@ -1,4 +1,5 @@
-angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", function ($rootScope) {
+
+angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope) {
 
     return {
         replace: true,
@@ -14,7 +15,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
         templateUrl: 'mw-form-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["mwFormUuid", "MW_QUESTION_TYPES", "mwFormBuilderOptions", function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
+        controller: function(mwFormUuid, MW_QUESTION_TYPES, mwFormBuilderOptions){
             var ctrl = this;
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
@@ -141,7 +142,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
                 ctrl.$onInit();
             }
 
-        }],
+        },
         link: function (scope, ele, attrs){
             var ctrl = scope.ctrl;
             if(ctrl.formStatus){
@@ -219,7 +220,7 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
             });
         }
     };
-}]);
+});
 
 
 angular.module('mwFormBuilder').filter('mwStartFrom', function() {

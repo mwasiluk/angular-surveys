@@ -1,5 +1,5 @@
 angular.module('mwFormBuilder')
-    .directive('wdFocusMe', ["$timeout", "$parse", function($timeout, $parse) {
+    .directive('wdFocusMe', function($timeout, $parse) {
         return {
             link: function(scope, element, attrs) {
                 var model = $parse(attrs.wdFocusMe);
@@ -18,8 +18,8 @@ angular.module('mwFormBuilder')
                 });
             }
         };
-    }])
-    .factory('focus', ["$timeout", "$window", function($timeout, $window) {
+    })
+    .factory('focus', function($timeout, $window) {
         return function(id) {
             $timeout(function() {
                 var element = $window.document.getElementById(id);
@@ -27,4 +27,4 @@ angular.module('mwFormBuilder')
                     element.focus();
             });
         };
-    }]);
+    });

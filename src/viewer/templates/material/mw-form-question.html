@@ -164,23 +164,6 @@
                 <input class="form-control" type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
-        <div ng-switch-when="file" class="form-inline">
-            <md-input-container>
-                <input class="form-control" type="file" ng-model="ctrl.questionResponse.fileName" accept=".png, .tif, .jpg, .jpeg, .pdf" fileread="ctrl.questionResponse.answer"  ng-readonly="ctrl.readOnly" placeholder="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Max file size 1MB">
-            </md-input-container>
-            <span ng-if="ctrl.largeFileFlag" style="color:red;">
-                *File size is large
-            </span>
-            <md-input-container style="width: 200px;vertical-align: bottom;margin-left:20px">
-                <label class="form-control">{{ctrl.questionResponse.fileName_1}}</label>
-            </md-input-container>
-        </div>
-
-        <div ng-switch-when="phone" class="form-inline">
-            <md-input-container>
-                <input class="form-control" type="tel">
-            </md-input-container>
-        </div>
 
     </div>
 

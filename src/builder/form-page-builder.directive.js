@@ -1,4 +1,5 @@
-angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", function ($rootScope) {
+
+angular.module('mwFormBuilder').directive('mwFormPageBuilder', function ($rootScope) {
 
     return {
         replace: true,
@@ -14,7 +15,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", fu
         templateUrl: 'mw-form-page-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["$timeout", "mwFormUuid", "mwFormClone", "mwFormBuilderOptions", function($timeout, mwFormUuid, mwFormClone, mwFormBuilderOptions){
+        controller: function($timeout, mwFormUuid, mwFormClone, mwFormBuilderOptions){
             var ctrl = this;
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
@@ -169,7 +170,7 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", fu
                 ctrl.$onInit();
             }
 
-        }],
+        },
         link: function (scope, ele, attrs, formBuilderCtrl){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = formBuilderCtrl.possiblePageFlow;
@@ -199,4 +200,4 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", fu
             ctrl.onImageSelection = formBuilderCtrl.onImageSelection;
         }
     };
-}]);
+});

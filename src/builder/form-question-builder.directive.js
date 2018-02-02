@@ -1,3 +1,4 @@
+
 angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
     var id = 0;
         return {
@@ -23,7 +24,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
         templateUrl: 'mw-form-question-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: ["$timeout", "FormQuestionBuilderId", "mwFormBuilderOptions", function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
+        controller: function($timeout,FormQuestionBuilderId, mwFormBuilderOptions){
             var ctrl = this;
 
 
@@ -130,7 +131,7 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
                 ctrl.$onInit();
             }
 
-        }],
+        },
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
             ctrl.possiblePageFlow = formPageElementBuilder.possiblePageFlow;
