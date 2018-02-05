@@ -92,13 +92,8 @@
                 "url":{
                     "name": "Adres URL"
                 },
-<<<<<<< HEAD
-                "file": {
-                  "file": "Arquivo"
-=======
                 "file":{
                     "name": "plik"
->>>>>>> eb3818efeffdb9a1f9163b0898f73f731097cd8c
                 }
             },
             "text": "Treść pytania",

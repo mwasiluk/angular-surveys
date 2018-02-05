@@ -93,11 +93,7 @@
           "name": "URL"
         },
         "file": {
-<<<<<<< HEAD
-          "file": "File"
-=======
           "name": "archivo"
->>>>>>> eb3818efeffdb9a1f9163b0898f73f731097cd8c
         }
 
       },
