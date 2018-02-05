@@ -92,10 +92,14 @@
                 "url":{
                     "name": "URL"
                 },
+<<<<<<< HEAD
                 "file": {
                   "name": "File"
+=======
+                "file":{
+                    "name": "File"
+>>>>>>> eb3818efeffdb9a1f9163b0898f73f731097cd8c
                 }
-
 
             },
             "text": "Question text",
