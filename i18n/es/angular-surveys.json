@@ -91,7 +91,11 @@
         },
         "url": {
           "name": "URL"
+        },
+        "file": {
+          "name": "archivo"
         }
+
       },
       "text": "Texto de pregunta",
       "type": "Tipo de pregunta",
