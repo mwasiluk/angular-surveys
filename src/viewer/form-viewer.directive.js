@@ -20,6 +20,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
         bindToController: true,
         controller: ["$timeout", "$interpolate", function($timeout, $interpolate){
             var ctrl = this;
+            var rootScope = $rootScope;
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
@@ -54,8 +55,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                         disabled: false
                     }
                 };
-                $rootScope.submitButton = ctrl.buttons.submitForm.visible;
-                $rootScope.formValid = ctrl.form;
+                rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                rootScope.formValid = ctrl.form;
                 ctrl.resetPages();
 
                 if(ctrl.api){
@@ -67,8 +68,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                         }
 
                         ctrl.buttons.submitForm.visible=false;
-                        $rootScope.submitButton = ctrl.buttons.submitForm.visible;
-                        $rootScope.formValid = ctrl.form;
+                        rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                        rootScope.formValid = ctrl.form;
                         ctrl.buttons.prevPage.visible=false;
                         ctrl.buttons.nextPage.visible=false;
                         ctrl.currentPage=null;
