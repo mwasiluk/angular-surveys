@@ -91,6 +91,9 @@
                 },
                 "url":{
                     "name": "URL"
+                },
+                "file": {
+                  "name": "File"
                 }
 
 

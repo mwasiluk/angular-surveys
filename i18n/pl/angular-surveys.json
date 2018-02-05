@@ -91,9 +91,10 @@
                 },
                 "url":{
                     "name": "Adres URL"
+                },
+                "file": {
+                  "file": "Arquivo"
                 }
-
-
             },
             "text": "Treść pytania",
             "type": "Typ pytania",

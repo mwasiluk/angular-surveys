@@ -91,6 +91,9 @@
         },
         "url": {
           "name": "URL"
+        },
+        "file": {
+          "file": "File"
         }
       },
       "text": "Texto de pregunta",
