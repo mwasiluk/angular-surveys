@@ -91,6 +91,9 @@
                 },
                 "url":{
                     "name": "Adres URL"
+                },
+                "file":{
+                    "name": "plik"
                 }
 
 
