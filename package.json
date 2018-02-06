@@ -4,6 +4,7 @@
   "description": "Angular survey/form builder and viewer inspired by Google Forms",
   "main": "gulpfile.js",
   "devDependencies": {
+    "bower": "^1.8.2",
     "browser-sync": "^2.12.5",
     "del": "^2.1.0",
     "gulp": "^3.9.0",
@@ -35,7 +36,11 @@
     "yargs": "^6.0.0"
   },
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "postinstall" : "bower install",
+    "serve" : "gulp serve",
+    "serve-bootstrap" : "gulp serve-bootstrap",
+    "watch" : "gulp watch"
   },
   "repository": {
     "type": "git",
