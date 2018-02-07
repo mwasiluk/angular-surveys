@@ -1,5 +1,12 @@
 {
     "mwForm":{
+        "languages" : {
+            "en" : "English",
+            "af" : "Afrikaans",
+            "es" : "Spanish",
+            "pl" : "Polish",
+            "ru" : "Russian"
+        },
         "form":{
             "name": "Form name",
             "name.placeholder": "Form title",

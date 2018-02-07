@@ -39,7 +39,7 @@
             <md-menu-content width="1">
                 <md-menu-item ng-repeat="language in ctrl.languages">
                     <md-button ng-click="ctrl.changeLanguage(language)">
-                        {{language}}
+                        {{'mwForm.languages.' + language | translate}}
                     </md-button>
                 </md-menu-item>
             </md-menu-content>

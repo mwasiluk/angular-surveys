@@ -36,7 +36,7 @@
                             </a>
                             <ul uib-dropdown-menu  role="menu" aria-labelledby="language-menu-item">
                                 <li active-menu="{{language}}" ng-repeat="language in ctrl.languages" role="presentation">
-                                    <a href="" ng-click="ctrl.changeLanguage(language)"  role="menuitem">{{language}}</a>
+                                    <a href="" ng-click="ctrl.changeLanguage(language)"  role="menuitem">{{'mwForm.languages.' + language | translate}}</a>
                                 </li>
                             </ul>
                         </li>
