@@ -5,9 +5,9 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                 return ++id;
             }
         }
-    })
+    });
 
-    .directive('mwFormQuestion', ['$parse', function($parse) {
+    angular.module('mwFormViewer').directive('mwFormQuestion', ['$parse','$rootScope', function($parse, $rootScope) {
 
         return {
             replace: true,
@@ -82,8 +82,8 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                             ctrl.questionResponse.answer = new Date(ctrl.questionResponse.answer)
                         }
                     } else if (ctrl.question.type == 'file') {
-                        ctrl.questionResponse.fileName_1 = ctrl.questionResponse.fileName_1;
                         ctrl.questionResponse.fileName = ctrl.questionResponse.fileName_1;
+                        ctrl.questionResponse.answer = ctrl.questionResponse.answer;
                     }
 
                     ctrl.isAnswerSelected = false;
@@ -141,13 +141,13 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                 ctrl.print = mwFormViewer.print;
 
                 //file uploads
-                //
 
                 ele.bind("change", function(changeEvent) {
                     var fileSize = changeEvent.target.files[0].size / 1024;
                     console.log("file size.....................",fileSize);
                     if (fileSize <= 1024) {
                         ctrl.largeFileFlag = false;
+                        $rootScope.$broadcast('fileRequiredFlag', ctrl.largeFileFlag);
                         var reader = new FileReader();
                         var fileName = changeEvent.target.files[0];
                         reader.onload = function(loadEvent) {
@@ -159,8 +159,9 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                         
                         reader.readAsDataURL(changeEvent.target.files[0]); 
                     } else {
-                        ctrl.largeFileFlag = true;   
-                        alert("File size is larze; maximum file size 1 MB");          
+                        ctrl.largeFileFlag = true; 
+                        $rootScope.$broadcast('fileRequiredFlag', ctrl.largeFileFlag);
+                        alert("File size is larze; maximum file size 1 MB");           
                     }
                 });
             }
