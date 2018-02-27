@@ -10,7 +10,7 @@ angular.module('mwFormBuilder').directive('mwFormConfirmationPageBuilder', funct
         templateUrl: 'mw-form-confirmation-page-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout){
+        controller: ["$timeout", function($timeout){
             var ctrl = this;
             ctrl.hoverEdit = false;
 
@@ -23,7 +23,7 @@ angular.module('mwFormBuilder').directive('mwFormConfirmationPageBuilder', funct
                 ctrl.hoverEdit = false;
             };
 
-        },
+        }],
         link: function (scope, ele, attrs){
 
         }

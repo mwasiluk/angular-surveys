@@ -1,4 +1,3 @@
-
 angular.module('mwFormViewer')
     .directive('mwPriorityList', function () {
 
