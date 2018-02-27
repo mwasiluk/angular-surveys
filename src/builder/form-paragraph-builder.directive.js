@@ -1,4 +1,3 @@
-
 angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
     var id = 0;
         return {
@@ -24,7 +23,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         templateUrl: 'mw-form-paragraph-builder.html',
         controllerAs: 'ctrl',
         bindToController: true,
-        controller: function($timeout,FormParagraphBuilderId){
+        controller: ["$timeout", "FormParagraphBuilderId", function($timeout,FormParagraphBuilderId){
             var ctrl = this;
 
             // Put initialization logic inside `$onInit()`
@@ -47,7 +46,7 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
                 ctrl.$onInit();
             }
 
-        },
+        }],
         link: function (scope, ele, attrs, formPageElementBuilder){
             var ctrl = scope.ctrl;
         }
