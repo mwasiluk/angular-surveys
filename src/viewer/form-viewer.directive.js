@@ -21,6 +21,11 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
         controller: ["$timeout", "$interpolate", function($timeout, $interpolate){
             var ctrl = this;
             var rootScope = $rootScope;
+            ctrl.largeFileFlag = false;
+            $rootScope.$on("fileRequiredFlag", function(event, flag) {
+                ctrl.largeFileFlag = flag;
+            });
+
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
