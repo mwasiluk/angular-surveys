@@ -13,15 +13,16 @@ angular.module('mwFormUtils.responseUtils', [])
             'time',
             'email',
             'range',
-            'url'
+            'url', 
+            'file'
         ];
 
-        service.$getObjectByIdMap = function (objectList, mappingFn) {
+        service.$getObjectByIdMap = function(objectList, mappingFn) {
             var objectById = {};
             if (!objectList) {
                 return objectById;
             }
-            objectList.forEach(function (obj) {
+            objectList.forEach(function(obj) {
                 var val = obj;
                 if (mappingFn) {
                     val = mappingFn(obj);
@@ -30,8 +31,9 @@ angular.module('mwFormUtils.responseUtils', [])
             });
             return objectById;
         };
-        service.$getOfferedAnswerByIdMap = function (question) {
-            return service.$getObjectByIdMap(question.offeredAnswers, function (offeredAnswer) {
+        
+        service.$getOfferedAnswerByIdMap = function(question) {
+            return service.$getObjectByIdMap(question.offeredAnswers, function(offeredAnswer) {
                 return {
                     id: offeredAnswer.id,
                     value: offeredAnswer.value
@@ -39,12 +41,12 @@ angular.module('mwFormUtils.responseUtils', [])
             });
         };
 
-        service.$extractResponseForQuestionWithOfferedAnswers = function (question, questionResponse) {
+        service.$extractResponseForQuestionWithOfferedAnswers = function(question, questionResponse) {
             var offeredAnswerById = service.$getOfferedAnswerByIdMap(question);
             var result = {};
             if (questionResponse.selectedAnswers) {
                 result.selectedAnswers = [];
-                questionResponse.selectedAnswers.forEach(function (answerId) {
+                questionResponse.selectedAnswers.forEach(function(answerId) {
                     result.selectedAnswers.push(offeredAnswerById[answerId]);
                 })
             } else if (questionResponse.selectedAnswer) {
@@ -56,13 +58,13 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForPriorityQuestion = function (question, questionResponse) {
+        service.$extractResponseForPriorityQuestion = function(question, questionResponse) {
             var result = [];
             if (!questionResponse.priorityList) {
                 return result;
             }
             var itemById = service.$getObjectByIdMap(question.priorityList);
-            questionResponse.priorityList.forEach(function (i) {
+            questionResponse.priorityList.forEach(function(i) {
                 var item = itemById[i.id];
                 result.push({
                     id: item.id,
@@ -73,10 +75,10 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForDivisionQuestion = function (question, questionResponse) {
+        service.$extractResponseForDivisionQuestion = function(question, questionResponse) {
             var result = [];
             var itemById = service.$getObjectByIdMap(question.divisionList);
-            Object.getOwnPropertyNames(questionResponse).forEach(function (itemId) {
+            Object.getOwnPropertyNames(questionResponse).forEach(function(itemId) {
                 var value = questionResponse[itemId];
                 var item = itemById[itemId];
                 if (!item) {
@@ -91,18 +93,18 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForGridQuestion = function (question, questionResponse) {
+        service.$extractResponseForGridQuestion = function(question, questionResponse) {
 
             if (!question.grid || !question.grid.rows) {
                 return result;
             }
 
-            if(question.grid.cellInputType == 'radio'){
+            if (question.grid.cellInputType == 'radio') {
                 return service.$extractResponseForRadioGridQuestion(question, questionResponse);
             }
             var result = [];
-            question.grid.rows.forEach(function (row) {
-                question.grid.cols.forEach(function (col) {
+            question.grid.rows.forEach(function(row) {
+                question.grid.cols.forEach(function(col) {
                     var res = {
                         row: {
                             id: row.id,
@@ -115,7 +117,7 @@ angular.module('mwFormUtils.responseUtils', [])
                         value: null
                     };
 
-                    if(questionResponse.hasOwnProperty(row.id) && questionResponse[row.id].hasOwnProperty(col.id)){
+                    if (questionResponse.hasOwnProperty(row.id) && questionResponse[row.id].hasOwnProperty(col.id)) {
                         res.value = questionResponse[row.id][col.id];
                     }
 
@@ -125,10 +127,10 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.$extractResponseForRadioGridQuestion= function (question, questionResponse) {
+        service.$extractResponseForRadioGridQuestion = function(question, questionResponse) {
             var result = [];
             var colById = service.$getObjectByIdMap(question.grid.cols);
-            question.grid.rows.forEach(function (row) {
+            question.grid.rows.forEach(function(row) {
                 var selectedColId = questionResponse[row.id];
                 var selectedCol = null;
                 if (selectedColId) {
@@ -157,7 +159,7 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Return the response data for the provided question. 
-        service.extractResponse = function (question, questionResponse) {
+        service.extractResponse = function(question, questionResponse) {
             if (questionTypesWithDefaultAnswer.indexOf(question.type) !== -1) {
                 return questionResponse.answer;
             } else {
@@ -178,12 +180,12 @@ angular.module('mwFormUtils.responseUtils', [])
             return null;
         };
 
-        service.mergeFormWithResponse = function (formData, responseData) {
+        service.mergeFormWithResponse = function(formData, responseData) {
             var result = {};
             angular.copy(formData, result);
 
-            result.pages.forEach(function (page) {
-                page.elements.forEach(function (element) {
+            result.pages.forEach(function(page) {
+                page.elements.forEach(function(element) {
                     var question = element.question;
                     if (!question) {
                         return;
@@ -202,10 +204,10 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Returns an array of all of the questions in the form. 
-        service.getQuestionList = function (formData, copy) {
+        service.getQuestionList = function(formData, copy) {
             var result = [];
-            formData.pages.forEach(function (page) {
-                page.elements.forEach(function (element) {
+            formData.pages.forEach(function(page) {
+                page.elements.forEach(function(element) {
 
                     if (!element.question) {
                         return;
@@ -223,12 +225,15 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //For each question, attempt to extract the response (if any), then return an array of question objects with that response appened. 
-        service.getQuestionWithResponseList = function (formData, responseData) {
+        service.getQuestionWithResponseList = function(formData, responseData) {
             var result = [];
-            service.getQuestionList(formData, true).forEach(function (question) {
+            service.getQuestionList(formData, true).forEach(function(question) {
                 var questionResponse = responseData[question.id];
                 if (questionResponse) {
                     question.response = service.extractResponse(question, questionResponse);
+                    if (question.type == "file") {
+                        question.fileName = questionResponse.fileName;
+                    }
                 } else {
                     question.response = null;
                 }
@@ -238,7 +243,7 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Returns a formatted string with an optional question number and the text of the question. 
-        service.$$getHeader = function (number, questionText, subQuestionNumbers, subQuestionTexts, withQuestionNumber) {
+        service.$$getHeader = function(number, questionText, subQuestionNumbers, subQuestionTexts, withQuestionNumber) {
             var result = '';
 
             if (withQuestionNumber) {
@@ -246,13 +251,13 @@ angular.module('mwFormUtils.responseUtils', [])
                     result += number + '.';
                 }
 
-                if(subQuestionNumbers!==null && subQuestionNumbers!==undefined){
-                    if(!Array.isArray(subQuestionNumbers)){
+                if (subQuestionNumbers !== null && subQuestionNumbers !== undefined) {
+                    if (!Array.isArray(subQuestionNumbers)) {
                         subQuestionNumbers = [subQuestionNumbers]
                     }
 
 
-                    subQuestionNumbers.forEach(function(num){
+                    subQuestionNumbers.forEach(function(num) {
                         result += num + '.';
                     });
                 }
@@ -265,14 +270,14 @@ angular.module('mwFormUtils.responseUtils', [])
 
             result += questionText;
 
-            if(subQuestionTexts===null || subQuestionTexts===undefined){
+            if (subQuestionTexts === null || subQuestionTexts === undefined) {
                 return result;
             }
 
-            if(!Array.isArray(subQuestionTexts)){
+            if (!Array.isArray(subQuestionTexts)) {
                 subQuestionTexts = [subQuestionTexts]
             }
-            subQuestionTexts.forEach(function(txt){
+            subQuestionTexts.forEach(function(txt) {
                 result += ' [' + txt + ']';
             });
 
@@ -280,7 +285,7 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Return an array which contains the text of each question. 
-        service.getResponseSheetHeaders = function (formData, withQuestionNumbers) {
+        service.getResponseSheetHeaders = function(formData, withQuestionNumbers) {
 
             //Questions which require additional processing (for example sub elements)
             var specialCaseQuestions = ['grid', 'priority', 'division'];
@@ -288,7 +293,7 @@ angular.module('mwFormUtils.responseUtils', [])
             var result = [];
 
             var questionNumber = 0;
-            service.getQuestionList(formData).forEach(function (question) {
+            service.getQuestionList(formData).forEach(function(question) {
 
                 questionNumber++;
                 var subIndex = 1;
@@ -300,36 +305,34 @@ angular.module('mwFormUtils.responseUtils', [])
                         if (!question.grid) {
                             return;
                         }
-                        if(question.grid.cellInputType=='radio'){
-                            question.grid.rows.forEach(function (row) {
+                        if (question.grid.cellInputType == 'radio') {
+                            question.grid.rows.forEach(function(row) {
                                 result.push(service.$$getHeader(questionNumber, question.text, subIndex, row.label, withQuestionNumbers));
                                 subIndex++;
                             });
-                        }else{
-                            question.grid.rows.forEach(function (row, rowIndex) {
+                        } else {
+                            question.grid.rows.forEach(function(row, rowIndex) {
 
-                                question.grid.cols.forEach(function (col, colIndex) {
-                                    result.push(service.$$getHeader(questionNumber, question.text, [rowIndex+1, colIndex+1], [row.label, col.label], withQuestionNumbers));
+                                question.grid.cols.forEach(function(col, colIndex) {
+                                    result.push(service.$$getHeader(questionNumber, question.text, [rowIndex + 1, colIndex + 1], [row.label, col.label], withQuestionNumbers));
                                     subIndex++;
                                 });
                             });
                         }
 
-                    }
-                    else if (question.type == 'priority') {
+                    } else if (question.type == 'priority') {
                         if (!question.priorityList) {
                             return;
                         }
-                        question.priorityList.forEach(function (item) {
+                        question.priorityList.forEach(function(item) {
                             result.push(service.$$getHeader(questionNumber, question.text, subIndex, item.value, withQuestionNumbers));
                             subIndex++;
                         });
-                    }
-                    else if (question.type == 'division') {
+                    } else if (question.type == 'division') {
                         if (!question.divisionList) {
                             return;
                         }
-                        question.divisionList.forEach(function (item) {
+                        question.divisionList.forEach(function(item) {
                             result.push(service.$$getHeader(questionNumber, question.text, subIndex, item.value, withQuestionNumbers));
                             subIndex++;
                         });
@@ -340,7 +343,7 @@ angular.module('mwFormUtils.responseUtils', [])
         };
 
         //Get the answers for each question and return an arracy which contains the answer values. 
-        service.getResponseSheetRow = function (formData, responseData) {
+        service.getResponseSheetRow = function(formData, responseData) {
             var answerDelimiter = '; ';
             var result = [];
             if (!responseData) {
@@ -380,14 +383,13 @@ angular.module('mwFormUtils.responseUtils', [])
                             cellVal += response.other;
                         }
                         result.push(cellVal);
-                    }
-                    else if (question.type == 'checkbox') {
+                    } else if (question.type == 'checkbox') {
                         if (!response || !response.selectedAnswers) {
                             result.push("");
                             continue;
                         }
                         var cellVal = "";
-                        response.selectedAnswers.forEach(function (selectedAnswer) {
+                        response.selectedAnswers.forEach(function(selectedAnswer) {
                             if (cellVal) {
                                 cellVal += answerDelimiter;
                             }
@@ -401,37 +403,35 @@ angular.module('mwFormUtils.responseUtils', [])
                             cellVal += response.other;
                         }
                         result.push(cellVal);
-                    }
-                    else if (question.type == 'grid') {
+                    } else if (question.type == 'grid') {
                         if (!question.grid) {
                             continue;
                         }
                         if (!response) {
-                            if(question.grid.cellInputType=='radio'){
-                                question.grid.rows.forEach(function () { result.push("") });
-                            }else{
-                                question.grid.rows.forEach(function () { question.grid.cols.forEach(function () { result.push("") }); });
+                            if (question.grid.cellInputType == 'radio') {
+                                question.grid.rows.forEach(function() { result.push("") });
+                            } else {
+                                question.grid.rows.forEach(function() { question.grid.cols.forEach(function() { result.push("") }); });
                             }
 
                             continue;
                         }
-                        if(question.grid.cellInputType=='radio'){
-                            response.forEach(function (entry) {
+                        if (question.grid.cellInputType == 'radio') {
+                            response.forEach(function(entry) {
                                 result.push(entry.col ? entry.col.label : "");
                             });
-                        }else{
-                            response.forEach(function (entry) {
+                        } else {
+                            response.forEach(function(entry) {
                                 result.push(entry.value);
                             });
                         }
 
-                    }
-                    else if (question.type == 'priority') {
+                    } else if (question.type == 'priority') {
                         if (!question.priorityList) {
                             continue;
                         }
                         var orderedItemById = service.$getObjectByIdMap(response);
-                        question.priorityList.forEach(function (item) {
+                        question.priorityList.forEach(function(item) {
                             var orderedItem = orderedItemById[item.id];
                             if (orderedItem) {
                                 result.push(orderedItem.priority);
@@ -440,13 +440,12 @@ angular.module('mwFormUtils.responseUtils', [])
                             }
 
                         });
-                    }
-                    else if (question.type == 'division') {
+                    } else if (question.type == 'division') {
                         if (!question.divisionList) {
                             continue;
                         }
                         var assignedItemById = service.$getObjectByIdMap(response);
-                        question.divisionList.forEach(function (item) {
+                        question.divisionList.forEach(function(item) {
                             var assignedItem = assignedItemById[item.id];
                             if (assignedItem) {
                                 result.push(assignedItem.value);
@@ -463,14 +462,14 @@ angular.module('mwFormUtils.responseUtils', [])
             return result;
         };
 
-        service.getResponseSheetRows = function (formData, responseDataList) {
-            return responseDataList.map(function (response) {
+        service.getResponseSheetRows = function(formData, responseDataList) {
+            return responseDataList.map(function(response) {
                 return service.getResponseSheetRow(formData, response);
             });
         };
 
         //Return [[Headers (Questions)], [Rows (Answers)]]
-        service.getResponseSheet = function (formData, responseDataObjectOrList, headersWithQuestionNumber) {
+        service.getResponseSheet = function(formData, responseDataObjectOrList, headersWithQuestionNumber) {
             var sheet = [];
             var headers = service.getResponseSheetHeaders(formData, headersWithQuestionNumber);
             sheet.push(headers);
@@ -478,7 +477,7 @@ angular.module('mwFormUtils.responseUtils', [])
                 return sheet;
             }
             if (responseDataObjectOrList instanceof Array) {
-                responseDataObjectOrList.forEach(function (response) {
+                responseDataObjectOrList.forEach(function(response) {
                     sheet.push(service.getResponseSheetRow(formData, response));
                 });
             } else {

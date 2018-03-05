@@ -40,5 +40,8 @@
     "angular-translate-loader-static-files": "2.x",
     "angular-mocks": "~1.4.8",
     "angular-material": "^1.0.7"
+  },
+  "resolutions": {
+    "angular": "1.6.9"
   }
 }
