@@ -152,7 +152,7 @@
         </div>
         <div ng-switch-when="email" class="form-inline">
             <md-input-container>
-                <input class="form-control" type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input class="form-control" type="email" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
         <div ng-switch-when="range" class="mw-range">
