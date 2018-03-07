@@ -1,18 +1,18 @@
-<div class="mw-form-question">
+<div class="mw-form-question" layout="column" layout-align="space-between start">
     <div class="mw-question-text">
         {{::ctrl.print(ctrl.question.text)}} <span ng-if="ctrl.question.required">*</span>
     </div>
 
-    <div class="mw-question-answers" ng-switch="ctrl.question.type">
-        <div ng-switch-when="text">
-            <md-input-container class="md-block" md-no-float>
-                <input flex="30" type="text" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.text'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+    <div ng-switch="ctrl.question.type" style="width: 100%">
+        <div ng-switch-when="text" flex="100">
+            <md-input-container  md-no-float>
+                <input type="text" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.text'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
         <div ng-switch-when="textarea">
-            <md-input-container class="md-block" md-no-float>
-                <textarea msd-elastic class="form-control" ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"></textarea>
+            <md-input-container  md-no-float>
+                <textarea msd-elastic  ng-model="ctrl.questionResponse.answer"  placeholder="{{'mwForm.question.preview.textarea'|translate}}" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly"></textarea>
             </md-input-container>
         </div>
 
@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         <md-input-container>
-                            <input type="text" name="other-answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.questionResponse.other" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly"
+                            <input type="text" name="other-answer-for-question-{{ctrl.question.id}}" ng-model="ctrl.questionResponse.other"  ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly"
                             ng-required="ctrl.isOtherAnswer">
                         </md-input-container>
                     </div>
@@ -51,7 +51,7 @@
                 </md-checkbox>
                 <div>
                     <md-input-container>
-                        <input type="text" ng-model="ctrl.questionResponse.other" name="other-answer-for-question-{{ctrl.question.id}}" class="form-control" ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required="ctrl.isOtherAnswer">
+                        <input type="text" ng-model="ctrl.questionResponse.other" name="other-answer-for-question-{{ctrl.question.id}}"  ng-disabled="!ctrl.isOtherAnswer || ctrl.readOnly" ng-required="ctrl.isOtherAnswer">
                     </md-input-container>
                 </div>
             </div>
@@ -59,7 +59,7 @@
         </div>
 
         <div ng-switch-when="select">
-            <md-input-container >
+            <md-input-container>
                 <md-select ng-disabled="ctrl.readOnly" ng-required="ctrl.question.required" ng-model="ctrl.questionResponse.selectedAnswer">
                     <md-option ng-repeat="answer in ctrl.question.offeredAnswers" ng-value="answer.id">
                         {{::ctrl.print(answer.value)}}
@@ -132,62 +132,62 @@
 
         <mw-priority-list ng-switch-when="priority" question-response="ctrl.questionResponse" question="ctrl.question" read-only="ctrl.readOnly"></mw-priority-list>
 
-        <div ng-switch-when="number" class="form-inline">
+        <div ng-switch-when="number" >
             <md-input-container>
-                <input class="form-control" min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="date" class="form-inline">
+        <div ng-switch-when="date" >
             <md-input-container>
-                <input class="form-control" type="date" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  type="date" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="datetime" class="form-inline">
+        <div ng-switch-when="datetime" >
             <md-input-container>
-                <input class="form-control" type="datetime" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  type="datetime" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="time" class="form-inline">
+        <div ng-switch-when="time" >
             <md-input-container>
-                <input class="form-control" type="time" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  type="time" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="email" class="form-inline">
+        <div ng-switch-when="email" >
             <md-input-container>
-                <input class="form-control" type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  type="email" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="range" class="mw-range" flex="50">
+        <div ng-switch-when="range">
             <md-slider min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="range" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly"></md-slider>
             <strong class="mw-range-value-label">{{ctrl.questionResponse.answer}}</strong>
         </div>
 
-        <div ng-switch-when="url" class="form-inline">
+        <div ng-switch-when="url" >
             <md-input-container>
-                <input class="form-control" type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
+                <input  type="url" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">
             </md-input-container>
         </div>
 
-        <div ng-switch-when="file" class="form-inline">
+        <div ng-switch-when="file" >
             <md-input-container>
-                <input class="form-control" type="file" accept=".png, .tif, .jpg, .jpeg, .pdf" fileread="ctrl.questionResponse.answer"  ng-readonly="ctrl.readOnly" ng-required="ctrl.question.required" placeholder="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Max file size 1MB">
+                <input  type="file" accept=".png, .tif, .jpg, .jpeg, .pdf" fileread="ctrl.questionResponse.answer"  ng-readonly="ctrl.readOnly" ng-required="ctrl.question.required" placeholder="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Max file size 1MB">
             </md-input-container>
             <span ng-if="ctrl.largeFileFlag" style="color:red;">
                 *File size is large
             </span>
             <md-input-container style="width: 200px; vertical-align: text-top; margin-left: 20px;">
-                <label class="form-control">{{ctrl.questionResponse.fileName_1}}</label>
+                <label >{{ctrl.questionResponse.fileName_1}}</label>
             </md-input-container>
         </div>
 
-        <div ng-switch-when="phone" class="form-inline">
+        <div ng-switch-when="phone" >
             <md-input-container>
-                <input class="form-control" type="tel">
+                <input  type="tel">
             </md-input-container>
         </div>
     </div>

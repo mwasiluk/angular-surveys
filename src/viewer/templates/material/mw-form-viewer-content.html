@@ -11,8 +11,8 @@
 
     <div class="mw-form-page" ng-if="ctrl.currentPage">
         <h2 class="mw-page-title" ng-if="ctrl.currentPage.namedPage && ctrl.currentPage.name">{{ctrl.currentPage.name}}</h2>
-        <div class="mw-form-page-element-list" layout="row" flex="100" layout-wrap>
-            <div class="mw-page-element" layout="column" flex="50" ng-repeat="pageElement in ctrl.currentPage.elements" ng-switch="pageElement.type">
+        <div class="mw-form-page-element-list" layout="row" layout-sm="column" layout-align="space-between" flex="100" layout-wrap>
+            <div class="mw-page-element" layout="column" flex="45" flex-sm="100" ng-repeat="pageElement in ctrl.currentPage.elements" ng-switch="pageElement.type">
                 <mw-form-question 
                     ng-switch-when="question" 
                     question="pageElement.question" 
@@ -21,11 +21,11 @@
                     on-response-changed="ctrl.onResponseChanged(pageElement)">                        
                 </mw-form-question>
                 
-                <div class="image-element" ng-switch-when="image">
-                    <figure ng-class="'align-'+pageElement.image.align">
-                        <img ng-src="{{pageElement.image.src}}" ng-attr-alt="pageElement.image.caption" style="max-width: 350px">
+                <div ng-switch-when="image">
+                    <!-- <figure ng-class="'align-'+pageElement.image.align"> -->
+                        <img ng-src="{{pageElement.image.src}}" ng-attr-alt="pageElement.image.caption" style="max-width: 300px">
                         <figcaption ng-if="pageElement.image.caption">{{pageElement.image.caption}}</figcaption>
-                    </figure>
+                    <!-- </figure> -->
                 </div>
                 
                 <div ng-switch-when="paragraph">
