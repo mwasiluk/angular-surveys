@@ -1,220 +1,228 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-<head>
-    <meta charset="UTF-8">
-    <title>angular-surveys demo</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
-    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="../dist/form-builder-material.min.css">
-    <link rel="stylesheet" href="../dist/form-viewer-material.min.css">
-    <link rel="stylesheet" href="demo.css">
-    <script type="text/javascript">
-        //hack to remove ARIA warinings
-        console.realWarn = console.warn;
-        console.warn = function (message) {
-            if (message.indexOf("ARIA") == -1) {
-                console.realWarn.apply(console, arguments);
-            }
-        };
-    </script>
-</head>
-<body ng-controller="DemoController as ctrl" ng-cloak>
+    <head>
+        <meta charset="UTF-8">
+        <title>angular-surveys demo</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+        <link rel="stylesheet" href="../dist/form-builder-material.min.css">
+        <link rel="stylesheet" href="../dist/form-viewer-material.min.css">
+        <link rel="stylesheet" href="demo.css">
+        <script type="text/javascript">
+            //hack to remove ARIA warinings
+            console.realWarn = console.warn;
+            console.warn = function(message) {
+                if (message.indexOf("ARIA") == -1) {
+                    console.realWarn.apply(console, arguments);
+                }
+            };
+        </script>
+    </head>
 
-
-<md-toolbar class="md-hue-2">
-    <div class="md-toolbar-tools" style="border-bottom: 1px solid #e7e7e7;">
-        <h2>
-            <span>angular-surveys demo</span>
-        </h2>
-        <span flex></span>
-        <md-button aria-label="View on GitHub" class="md-icon-button" href="https://github.com/mwasiluk/angular-surveys" target="_blank">
-            <i class="fa fa-github fa-lg"></i>
-        </md-button>
-        <md-menu>
-            <md-button aria-label="Change language" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                <i class="fa fa-flag fa-lg"></i>
-            </md-button>
-            <md-menu-content width="1">
-                <md-menu-item ng-repeat="language in ctrl.languages">
-                    <md-button ng-click="ctrl.changeLanguage(language)">
-                        {{language}}
+    <body ng-controller="DemoController as ctrl" ng-cloak>
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools" style="border-bottom: 1px solid #e7e7e7;">
+                <h2>
+                    <span>angular-surveys demo</span>
+                </h2>
+                <span flex></span>
+                <md-button aria-label="View on GitHub" class="md-icon-button" href="https://github.com/mwasiluk/angular-surveys" target="_blank">
+                    <i class="fa fa-github fa-lg"></i>
+                </md-button>
+                <md-menu>
+                    <md-button aria-label="Change language" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-flag fa-lg"></i>
                     </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-    </div>
-</md-toolbar>
+                    <md-menu-content width="1">
+                        <md-menu-item ng-repeat="language in ctrl.languages">
+                            <md-button ng-click="ctrl.changeLanguage(language)">
+                                {{language}}
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+        </md-toolbar>
 
-<md-content ng-if="ctrl.formData">
-    <md-tabs md-dynamic-height md-border-bottom md-selected="ctrl.selectedTabIndex">
-        <md-tab label="Builder">
-            <md-content class="md-padding tab-content">
-                <div layout="row" layout-align="center" ng-if="ctrl.selectedTabIndex===0">
-                    <div flex-gt-sm="66" flex-sm="90" >
-                        <div layout="row" layout-align="center">
-                            <div>
-                                <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
-                                    Reset
-                                </md-button>
-                                <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
-                                    Read only
-                                </md-checkbox>
+        <md-content ng-if="ctrl.formData">
+            <md-tabs md-dynamic-height md-border-bottom md-selected="ctrl.selectedTabIndex">
+                <md-tab label="Builder">
+                    <md-content class="md-padding tab-content">
+                        <div layout="row" layout-align="center" ng-if="ctrl.selectedTabIndex===0">
+                            <div flex-gt-sm="66" flex-sm="90">
+                                <div layout="row" layout-align="center">
+                                    <div>
+                                        <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetBuilder()">
+                                            Reset
+                                        </md-button>
+                                        <md-checkbox ng-model="ctrl.builderReadOnly" aria-label="Read only">
+                                            Read only
+                                        </md-checkbox>
+                                    </div>
+                                </div>
+                                <mw-form-builder 
+                                    api="ctrl.formBuilder" 
+                                    options="ctrl.optionsBuilder" 
+                                    form-data="ctrl.formData" 
+                                    form-status="ctrl.formStatus" 
+                                    read-only="ctrl.builderReadOnly" 
+                                    on-image-selection="ctrl.onImageSelection()">
+                                </mw-form-builder>
                             </div>
                         </div>
+                    </md-content>
+                </md-tab>
 
-                        <mw-form-builder api="ctrl.formBuilder" options="ctrl.optionsBuilder" form-data="ctrl.formData" form-status="ctrl.formStatus" read-only="ctrl.builderReadOnly"
-                                         on-image-selection="ctrl.onImageSelection()"></mw-form-builder>
-                    </div>
+                <md-tab label="viewer" md-on-select="ctrl.resetViewer()">
+                    <md-content class="md-padding tab-content">
+                        <div layout="row" layout-align="center" ng-if="ctrl.selectedTabIndex===1">
+                            <div flex="70">
+                                <div layout="row" layout-align="center">
+                                    <div>
+                                        <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetViewer()">
+                                            Reset
+                                        </md-button>
+                                        <md-checkbox ng-model="ctrl.formOptions.autoStart" aria-label="Autostart">
+                                            Autostart
+                                        </md-checkbox>
+                                        <md-checkbox ng-model="ctrl.viewerReadOnly" aria-label="Read only">
+                                            Read only
+                                        </md-checkbox>
+                                    </div>
+                                </div>
 
+                                <mw-form-viewer 
+                                    form-data="ctrl.formData" 
+                                    template-data="ctrl.templateData" 
+                                    form-status="ctrl.formStatus" 
+                                    options="ctrl.formOptions" 
+                                    api="ctrl.formViewer" 
+                                    response-data="ctrl.responseData" 
+                                    read-only="ctrl.viewerReadOnly" 
+                                    on-submit="ctrl.saveResponse()">                                        
+                                </mw-form-viewer>
 
-                </div>
-
-
-            </md-content>
-        </md-tab>
-        <md-tab label="viewer" md-on-select="ctrl.resetViewer()">
-            <md-content class="md-padding tab-content" >
-                <div layout="row" layout-align="center" ng-if="ctrl.selectedTabIndex===1">
-                    <div flex-gt-sm="66" flex-sm="90" >
-                        <div layout="row" layout-align="center">
-                            <div>
-                                <md-button class="md-primary" aria-label="Reset" ng-click="ctrl.resetViewer()">
-                                    Reset
-                                </md-button>
-                                <md-checkbox ng-model="ctrl.formOptions.autoStart" aria-label="Autostart">
-                                    Autostart
+                                <br/>
+                                <hr/>
+                                <br/>
+                                <md-checkbox ng-model="ctrl.showResponseData" aria-label="Show response data">
+                                    Show response data
                                 </md-checkbox>
-                                <md-checkbox ng-model="ctrl.viewerReadOnly" aria-label="Read only">
-                                    Read only
-                                </md-checkbox>
+                                <md-card ng-if="ctrl.showResponseData" class="md-padding">
+                                    <pre>
+                                        {{ctrl.responseData|json}}
+                                    </pre>
+                                </md-card>
                             </div>
                         </div>
+                    </md-content>
+                </md-tab>
 
-                        <mw-form-viewer form-data="ctrl.formData" template-data="ctrl.templateData"  form-status="ctrl.formStatus" options="ctrl.formOptions" api="ctrl.formViewer" response-data="ctrl.responseData" read-only="ctrl.viewerReadOnly" on-submit="ctrl.saveResponse()"></mw-form-viewer>
-                        <br/>
-                        <hr/>
-                        <br/>
-                        <md-checkbox ng-model="ctrl.showResponseData" aria-label="Show response data">
-                            Show response data
-                        </md-checkbox>
-                        <md-card ng-if="ctrl.showResponseData" class="md-padding">
-                            <pre >
-{{ctrl.responseData|json}}
+                <md-tab label="model">
+                    <md-content class="md-padding tab-content">
+                        <md-card class="md-padding">
+                            <pre>
+                                {{ctrl.formData|json}}
                             </pre>
                         </md-card>
-                    </div>
-
-                </div>
-
-            </md-content>
-        </md-tab>
-        <md-tab label="model">
-            <md-content class="md-padding tab-content">
-                <md-card class="md-padding">
-<pre>
-{{ctrl.formData|json}}
-</pre>
-                </md-card>
-                <md-checkbox ng-model="ctrl.showModelJsonInput" aria-label="Set model value">
-                    Set model value
-                </md-checkbox>
-
-                <md-card class="md-padding" ng-if="ctrl.showModelJsonInput">
-                    <md-input-container class="md-block">
-                        <textarea   ng-model="ctrl.modelJsonInput"></textarea>
-                    </md-input-container>
-                    <div>
-                        <md-button class="md-raised"  ng-click="ctrl.setModelFromJsonInput()">Set</md-button>
-                    </div>
-
-                </md-card>
-            </md-content>
-        </md-tab>
-        <md-tab label="utils">
-            <md-content class="md-padding tab-content" ng-if="ctrl.selectedTabIndex===3">
-                <md-card class="md-padding">
-                <h3>mwFormResponseUtils service</h3>
-                <br />
-                <h4><a ng-click="ctrl.cmergeFormWithResponse = !ctrl.cmergeFormWithResponse"  href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
-                <div ng-if="ctrl.cmergeFormWithResponse" id="mergeFormWithResponse">
-                    <md-card class="md-padding">
-                            <pre>
-{{ctrl.getMerged() | json}}
-                            </pre>
-                    </md-card>
-                </div>
-
-                <h4><a ng-click="ctrl.cgetQuestionWithResponseList = !ctrl.cgetQuestionWithResponseList" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
-                <div ng-if="ctrl.cgetQuestionWithResponseList" id="getQuestionWithResponseList">
-                    <md-card class="md-padding">
-                            <pre>
-{{ctrl.getQuestionWithResponseList() | json}}
-                            </pre>
-                    </md-card>
-                </div>
-
-                <h4><a ng-click="ctrl.cgetResponseSheetHeaders = !ctrl.cgetResponseSheetHeaders"  href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
-                <div ng-if="ctrl.cgetResponseSheetHeaders" id="getResponseSheetHeaders">
-                    <md-card class="md-padding">
-                        <md-checkbox ng-model="ctrl.headersWithQuestionNumber" aria-label="headersWithQuestionNumber">
-                            headersWithQuestionNumber
-                        </md-checkbox>
-                            <pre>
-{{ctrl.getResponseSheetHeaders() | json}}
-                            </pre>
-                    </md-card>
-                </div>
-
-                <h4><a ng-click="ctrl.cgetResponseSheetRow = !ctrl.cgetResponseSheetRow" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
-                <div  ng-if="ctrl.cgetResponseSheetRow" class="collapse" id="getResponseSheetRow">
-                    <md-card class="md-padding">
-                            <pre>
-{{ctrl.getResponseSheetRow() | json}}
-                            </pre>
-                    </md-card>
-                </div>
-
-                <h4><a ng-click="ctrl.cgetResponseSheet = !ctrl.cgetResponseSheet" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
-                <div ng-if="ctrl.cgetResponseSheet" id="getResponseSheet">
-                    <md-card class="md-padding">
-                        <md-checkbox ng-model="ctrl.headersWithQuestionNumber" aria-label="headersWithQuestionNumber">
-                            headersWithQuestionNumber
+                        <md-checkbox ng-model="ctrl.showModelJsonInput" aria-label="Set model value">
+                            Set model value
                         </md-checkbox>
 
-                            <pre>
-{{ctrl.getResponseSheet() | json}}
-                            </pre>
-                    </md-card>
-                </div>
-                </md-card>
-            </md-content>
-        </md-tab>
-    </md-tabs>
-</md-content>
+                        <md-card class="md-padding" ng-if="ctrl.showModelJsonInput">
+                            <md-input-container class="md-block">
+                                <textarea ng-model="ctrl.modelJsonInput"></textarea>
+                            </md-input-container>
+                            <div>
+                                <md-button class="md-raised" ng-click="ctrl.setModelFromJsonInput()">Set</md-button>
+                            </div>
 
+                        </md-card>
+                    </md-content>
+                </md-tab>
 
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-aria/angular-aria.js"></script>
-<script src="../bower_components/angular-animate/angular-animate.js"></script>
-<script src="../bower_components/angular-material/angular-material.js"></script>
-<script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="../bower_components/angular-translate/angular-translate.min.js"></script>
-<script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-<script src="../bower_components/angular-elastic/elastic.js"></script>
-<script src="../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="../bower_components/Sortable/Sortable.min.js"></script>
-<script src="../vendor/angular-legacy-sortable.js"></script>
-<script src="../dist/form-utils.js"></script>
-<script src="../dist/form-builder.js"></script>
-<script src="../dist/form-builder-material-tpls.min.js"></script>
-<script src="../dist/form-viewer.js"></script>
-<script src="../dist/form-viewer-material-tpls.min.js"></script>
+                <md-tab label="utils">
+                    <md-content class="md-padding tab-content" ng-if="ctrl.selectedTabIndex===3">
+                        <md-card class="md-padding">
+                            <h3>mwFormResponseUtils service</h3>
+                            <br />
+                            <h4><a ng-click="ctrl.cmergeFormWithResponse = !ctrl.cmergeFormWithResponse" href="#mergeFormWithResponse" aria-expanded="false" aria-controls="collapseExample"> mergeFormWithResponse(formData, responseData)</a></h4>
+                            <div ng-if="ctrl.cmergeFormWithResponse" id="mergeFormWithResponse">
+                                <md-card class="md-padding">
+                                    <pre>
+                                        {{ctrl.getMerged() | json}}
+                                    </pre>
+                                </md-card>
+                            </div>
 
-<script src="demo.js"></script>
+                            <h4><a ng-click="ctrl.cgetQuestionWithResponseList = !ctrl.cgetQuestionWithResponseList" href="#getQuestionWithResponseList" aria-expanded="false" aria-controls="collapseExample"> getQuestionWithResponseList(formData, responseData)</a></h4>
+                            <div ng-if="ctrl.cgetQuestionWithResponseList" id="getQuestionWithResponseList">
+                                <md-card class="md-padding">
+                                    <pre>
+                                        {{ctrl.getQuestionWithResponseList() | json}}
+                                    </pre>
+                                </md-card>
+                            </div>
 
+                            <h4><a ng-click="ctrl.cgetResponseSheetHeaders = !ctrl.cgetResponseSheetHeaders" href="#getResponseSheetHeaders" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetHeaders(formData, withQuestionNumbers)</a></h4>
+                            <div ng-if="ctrl.cgetResponseSheetHeaders" id="getResponseSheetHeaders">
+                                <md-card class="md-padding">
+                                    <md-checkbox ng-model="ctrl.headersWithQuestionNumber" aria-label="headersWithQuestionNumber">
+                                        headersWithQuestionNumber
+                                    </md-checkbox>
+                                    <pre>
+                                        {{ctrl.getResponseSheetHeaders() | json}}
+                                    </pre>
+                                </md-card>
+                            </div>
 
-</body>
+                            <h4><a ng-click="ctrl.cgetResponseSheetRow = !ctrl.cgetResponseSheetRow" href="#getResponseSheetRow" aria-expanded="false" aria-controls="collapseExample"> getResponseSheetRow(formData, responseData)</a></h4>
+                            <div ng-if="ctrl.cgetResponseSheetRow" class="collapse" id="getResponseSheetRow">
+                                <md-card class="md-padding">
+                                    <pre>
+                                        {{ctrl.getResponseSheetRow() | json}}
+                                    </pre>
+                                </md-card>
+                            </div>
+
+                            <h4><a ng-click="ctrl.cgetResponseSheet = !ctrl.cgetResponseSheet" href="#getResponseSheet" aria-expanded="false" aria-controls="collapseExample"> getResponseSheet(formData, responseDataObjectOrList, headersWithQuestionNumber)</a></h4>
+                            <div ng-if="ctrl.cgetResponseSheet" id="getResponseSheet">
+                                <md-card class="md-padding">
+                                    <md-checkbox ng-model="ctrl.headersWithQuestionNumber" aria-label="headersWithQuestionNumber">
+                                        headersWithQuestionNumber
+                                    </md-checkbox>
+
+                                    <pre>
+                                        {{ctrl.getResponseSheet() | json}}
+                                    </pre>
+                                </md-card>
+                            </div>
+                        </md-card>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-aria/angular-aria.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.js"></script>
+        <script src="../bower_components/angular-material/angular-material.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="../bower_components/angular-translate/angular-translate.min.js"></script>
+        <script src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+        <script src="../bower_components/angular-elastic/elastic.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="../bower_components/Sortable/Sortable.min.js"></script>
+        <script src="../vendor/angular-legacy-sortable.js"></script>
+        <script src="../dist/form-utils.js"></script>
+        <script src="../dist/form-builder.js"></script>
+        <script src="../dist/form-builder-material-tpls.min.js"></script>
+        <script src="../dist/form-viewer.js"></script>
+        <script src="../dist/form-viewer-material-tpls.min.js"></script>
+
+        <script src="demo.js"></script>
+    </body>
 </html>
