@@ -2,7 +2,6 @@ angular.module('mwFormViewer', ['ngSanitize', 'ui.bootstrap','ng-sortable', 'pas
 
 
 
-
 angular.module('mwFormViewer')
     .directive('mwPriorityList', function () {
 
@@ -113,7 +112,6 @@ angular.module('mwFormViewer')
     };
 });
 
-
 angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function ($rootScope) {
 
     return {
@@ -127,6 +125,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
             options: '=?',
             formStatus: '=?', //wrapper for internal angular form object
             onSubmit: '&',
+            onSave: '&',
             api: '=?'
 
         },
@@ -135,6 +134,12 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
         bindToController: true,
         controller: ["$timeout", "$interpolate", function($timeout, $interpolate){
             var ctrl = this;
+            var rootScope = $rootScope;
+            ctrl.largeFileFlag = false;
+            $rootScope.$on("fileRequiredFlag", function(event, flag) {
+                ctrl.largeFileFlag = flag;
+            });
+
             // Put initialization logic inside `$onInit()`
             // to make sure bindings have been initialized.
             ctrl.$onInit = function() {
@@ -169,7 +174,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                         disabled: false
                     }
                 };
-
+                rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                rootScope.formValid = ctrl.form;
                 ctrl.resetPages();
 
                 if(ctrl.api){
@@ -181,6 +187,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                         }
 
                         ctrl.buttons.submitForm.visible=false;
+                        rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                        rootScope.formValid = ctrl.form;
                         ctrl.buttons.prevPage.visible=false;
                         ctrl.buttons.nextPage.visible=false;
                         ctrl.currentPage=null;
@@ -190,7 +198,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                 }
             };
 
-            ctrl.submitForm = function(){
+            ctrl.submitForm = function() {
                 ctrl.formSubmitted=true;
                 ctrl.submitStatus='IN_PROGRESS';
 
@@ -204,7 +212,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                     ctrl.submitStatus='ERROR';
                 });
 
-
             };
 
             ctrl.setCurrentPage = function (page) {
@@ -212,6 +219,11 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                 if(!page){
 
                     ctrl.buttons.submitForm.visible=false;
+
+                    $rootScope.submitButton = ctrl.buttons.submitForm.visible;
+
+                    $rootScope.formValid = ctrl.form;
+
                     ctrl.buttons.prevPage.visible=false;
 
                     ctrl.buttons.nextPage.visible=false;
@@ -232,6 +244,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                 ctrl.currentPage.isLast = index==ctrl.formData.pages.length-1;
 
                 ctrl.buttons.submitForm.visible=ctrl.currentPage.isLast;
+                $rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                $rootScope.formValid = ctrl.form;
                 ctrl.buttons.prevPage.visible=!ctrl.currentPage.isFirst;
 
                 ctrl.buttons.nextPage.visible=!ctrl.currentPage.isLast;
@@ -254,6 +268,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                         formSubmit = true;
                     }
                     ctrl.buttons.submitForm.visible=formSubmit;
+                    $rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                    $rootScope.formValid = ctrl.form;
                     ctrl.buttons.nextPage.visible=!formSubmit;
                 }
             };
@@ -289,6 +305,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
 
 
             ctrl.goToPrevPage= function(){
+                window.scrollTo(0,0);
                 var prevPage = ctrl.prevPages.pop();
                 ctrl.setCurrentPage(prevPage);
                 ctrl.updateNextPageBasedOnAllAnswers();
@@ -296,6 +313,10 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
             };
 
             ctrl.goToNextPage= function(){
+                window.scrollTo(0,0);
+                //TODO Saving each page data on next button 
+                ctrl.onSave();
+                
                 ctrl.prevPages.push(ctrl.currentPage);
 
                 ctrl.updateNextPageBasedOnAllAnswers();
@@ -310,6 +331,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                 });
 
                 ctrl.buttons.submitForm.visible=!ctrl.nextPage;
+                $rootScope.submitButton = ctrl.buttons.submitForm.visible;
+                $rootScope.formValid = ctrl.form;
                 ctrl.buttons.nextPage.visible=!!ctrl.nextPage;
             };
 
@@ -378,7 +401,6 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
         }
     };
 }]);
-
 angular.module('mwFormViewer').factory("FormQuestionId", function() {
         var id = 0;
         return {
@@ -386,9 +408,9 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                 return ++id;
             }
         }
-    })
+    });
 
-    .directive('mwFormQuestion', ['$parse', function($parse) {
+    angular.module('mwFormViewer').directive('mwFormQuestion', ['$parse','$rootScope', function($parse, $rootScope) {
 
         return {
             replace: true,
@@ -463,8 +485,8 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                             ctrl.questionResponse.answer = new Date(ctrl.questionResponse.answer)
                         }
                     } else if (ctrl.question.type == 'file') {
-                        ctrl.questionResponse.fileName_1 = ctrl.questionResponse.fileName_1;
                         ctrl.questionResponse.fileName = ctrl.questionResponse.fileName_1;
+                        ctrl.questionResponse.answer = ctrl.questionResponse.answer;
                     }
 
                     ctrl.isAnswerSelected = false;
@@ -522,13 +544,13 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                 ctrl.print = mwFormViewer.print;
 
                 //file uploads
-                //
 
                 ele.bind("change", function(changeEvent) {
                     var fileSize = changeEvent.target.files[0].size / 1024;
                     console.log("file size.....................",fileSize);
                     if (fileSize <= 1024) {
                         ctrl.largeFileFlag = false;
+                        $rootScope.$broadcast('fileRequiredFlag', ctrl.largeFileFlag);
                         var reader = new FileReader();
                         var fileName = changeEvent.target.files[0];
                         reader.onload = function(loadEvent) {
@@ -540,8 +562,9 @@ angular.module('mwFormViewer').factory("FormQuestionId", function() {
                         
                         reader.readAsDataURL(changeEvent.target.files[0]); 
                     } else {
-                        ctrl.largeFileFlag = true;   
-                        alert("File size is larze; maximum file size 1 MB");          
+                        ctrl.largeFileFlag = true; 
+                        $rootScope.$broadcast('fileRequiredFlag', ctrl.largeFileFlag);
+                        alert("File size is larze; maximum file size 1 MB");           
                     }
                 });
             }
