@@ -1,12 +1,12 @@
 <div class="mw-form-viewer-content">
         <h1 class="decorated form-title"><span class="task-title">{{ctrl.formData.name}}</span></h1>
-        <div class="mw-title-page" ng-if="!ctrl.currentPage && !ctrl.formSubmitted">
+        <div class="mw-title-page">
 
             <div class="mw-form-description task-description">
                 {{ctrl.formData.description}}
             </div>
 
-            <md-button type="button"  class="md-raised begin-response-button" ng-click="ctrl.beginResponse()" translate="mwForm.buttons.begin">Rozpocznij</md-button>
+            <md-button type="button"  ng-if="!ctrl.currentPage && !ctrl.formSubmitted" class="md-raised begin-response-button" ng-click="ctrl.beginResponse()" translate="mwForm.buttons.begin">Rozpocznij</md-button>
         </div>
 
         <div class="mw-form-page" ng-if="ctrl.currentPage">
