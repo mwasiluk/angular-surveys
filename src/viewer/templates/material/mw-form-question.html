@@ -166,7 +166,7 @@
         </div>
         <div ng-switch-when="file" class="form-inline">
             <md-input-container>
-                <input class="form-control" ng-class="ctrl.questionResponse.answer == 'undefined' ? 'fileupload-text' : 'fileupload-text-black'" ng-model="ctrl.questionResponse.fileName" type="file" accept=".png, .tif, .jpg, .jpeg, .pdf" fileread="ctrl.questionResponse.answer"  ng-readonly="ctrl.readOnly" ng-required="ctrl.question.required" placeholder="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Max file size 1MB">
+                <input class="form-control" ng-class="ctrl.fileSelectedEvent ? 'fileupload-text-black' : 'fileupload-text'" ng-model="ctrl.questionResponse.fileName" type="file" accept=".png, .tif, .jpg, .jpeg, .pdf" fileread="ctrl.questionResponse.answer"  ng-readonly="ctrl.readOnly" ng-required="ctrl.questionResponse.fileName == undefined" placeholder="&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Max file size 1MB">
             </md-input-container>
             <span ng-if="ctrl.largeFileFlag" style="color:red;">
                 *File size is large
