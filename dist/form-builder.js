@@ -86,7 +86,6 @@ angular.module('mwFormBuilder')
 
     }]);
 
-
 angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', function () {
 
     return {
@@ -146,7 +145,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                         item.orderNo = i+1;
                     }
                 }
-
             }
 
             function sortByOrderNo(array) {
@@ -181,7 +179,6 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', function () {
 
@@ -279,8 +276,6 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                     keyEvent.preventDefault()
                     ctrl.addNewOfferedAnswer();
                 }
-
-
             };
 
             // Prior to v1.5, we need to call `$onInit()` manually.
@@ -295,7 +290,6 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
 
@@ -399,7 +393,6 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
                         item.orderNo = i+1;
                     }
                 }
-
             }
 
             function sortByOrderNo(array) {
@@ -447,7 +440,6 @@ angular.module('mwFormBuilder').directive('mwQuestionGridBuilder', function () {
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function () {
 
@@ -544,7 +536,6 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
     };
 });
 
-
 angular.module('mwFormBuilder').directive('mwLabel', function () {
 
     return {
@@ -568,7 +559,6 @@ angular.module('mwFormBuilder').directive('mwLabel', function () {
         }
     };
 });
-
 
 angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
     var id = 0;
@@ -711,7 +701,6 @@ angular.module('mwFormBuilder').factory("FormQuestionBuilderId", function(){
     };
 });
 
-
 angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
     var id = 0;
         return {
@@ -766,7 +755,6 @@ angular.module('mwFormBuilder').factory("FormParagraphBuilderId", function(){
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function () {
 
@@ -884,7 +872,6 @@ angular.module('mwFormBuilder').directive('mwFormPageElementBuilder', function (
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", function ($rootScope) {
 
@@ -1088,8 +1075,6 @@ angular.module('mwFormBuilder').directive('mwFormPageBuilder', ["$rootScope", fu
         }
     };
 }]);
-
-
 angular.module('mwFormBuilder').factory("FormImageBuilderId", function(){
     var id = 0;
         return {
@@ -1181,7 +1166,6 @@ angular.module('mwFormBuilder').directive('mwFormConfirmationPageBuilder', funct
         }
     };
 });
-
 
 angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", function ($rootScope) {
 
@@ -1414,7 +1398,7 @@ angular.module('mwFormBuilder').filter('mwStartFrom', function() {
     };
 });
 angular.module('mwFormBuilder')
-    .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'select', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
+    .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'select', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url', 'file'])
     .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph'])
     .constant('MW_GRID_CELL_INPUT_TYPES', ['radio', 'checkbox', 'text', 'number', 'date', 'time'])
     .factory('mwFormBuilderOptions', ["MW_ELEMENT_TYPES", "MW_QUESTION_TYPES", function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES){
@@ -1470,7 +1454,6 @@ angular.module('mwFormBuilder')
 
         return options;
     }]);
-
 angular.module('mwFormBuilder')
     .directive('wdFocusMe', ["$timeout", "$parse", function($timeout, $parse) {
         return {
@@ -1501,7 +1484,6 @@ angular.module('mwFormBuilder')
             });
         };
     }]);
-
 'use strict';
 
 angular.module('mwFormBuilder')

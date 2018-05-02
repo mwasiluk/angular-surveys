@@ -1,12 +1,12 @@
 <div class="mw-form-viewer-content">
-        <h1 class="form-title">{{ctrl.formData.name}}</h1>
-        <div class="mw-title-page" ng-if="!ctrl.currentPage && !ctrl.formSubmitted">
+        <h1 class="decorated form-title"><span class="task-title">{{ctrl.formData.name}}</span></h1>
+        <div class="mw-title-page">
 
-            <div class="mw-form-description">
+            <div class="mw-form-description task-description">
                 {{ctrl.formData.description}}
             </div>
 
-            <md-button type="button"  class="md-raised begin-response-button" ng-click="ctrl.beginResponse()" translate="mwForm.buttons.begin">Rozpocznij</md-button>
+            <md-button type="button"  ng-if="!ctrl.currentPage && !ctrl.formSubmitted" class="md-raised begin-response-button" ng-click="ctrl.beginResponse()" translate="mwForm.buttons.begin">Rozpocznij</md-button>
         </div>
 
         <div class="mw-form-page" ng-if="ctrl.currentPage">
@@ -34,8 +34,8 @@
 
         <div class="mw-form-action-list">
 
-            <md-button type="button"  ng-if="ctrl.buttons.prevPage.visible" class="md-raised prev-page-button" ng-click="ctrl.goToPrevPage()"><i class="fa fa-chevron-left"></i> <span translate="mwForm.buttons.back">Wstecz</span></md-button>
-            <md-button type="button" ng-disabled="ctrl.form.$invalid" ng-if="ctrl.buttons.nextPage.visible" class="md-raised next-page-button" ng-click="ctrl.goToNextPage()"><span translate="mwForm.buttons.next">Dalej</span> <i class="fa fa-chevron-right"></i></md-button>
-            <md-button type="submit" ng-disabled="ctrl.options.disableSubmit || ctrl.form.$invalid" ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="md-raised next-page-button" ng-click="ctrl.submitForm()"> <span translate="mwForm.buttons.submit">Submit</span></md-button>
+            <md-button type="button"  ng-if="ctrl.buttons.prevPage.visible" class="md-raised prev-page-button btn-next" ng-click="ctrl.goToPrevPage()"><i class="fa fa-chevron-left"></i> <span translate="mwForm.buttons.back">Wstecz</span></md-button>
+            <md-button type="button" ng-disabled="ctrl.form.$invalid || ctrl.largeFileFlag" ng-if="ctrl.buttons.nextPage.visible" class="md-raised next-page-button btn-next" ng-click="ctrl.goToNextPage()"><span translate="mwForm.buttons.next">Dalej</span> <i class="fa fa-chevron-right"></i></md-button>
+            <md-button type="submit" ng-disabled="ctrl.options.disableSubmit || ctrl.form.$invalid || ctrl.largeFileFlag" ng-if="ctrl.buttons.submitForm.visible && !ctrl.readOnly" class="md-raised next-page-button btn-next" ng-click="ctrl.submitForm()"> <span translate="mwForm.buttons.submit">Submit</span></md-button>
         </div>
 </div>

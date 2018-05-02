@@ -5,16 +5,21 @@
         margin: 15px 0;
 
         .mw-page-title{
-            margin-top: 30px;
+            margin-top: 20px;
             margin-bottom: 25px;
         }
 
         .mw-page-element{
-            margin-bottom: 30px;
+            margin-bottom: 20px;
 
             .mw-question-text{
-                margin-bottom: 7px;
+                margin-bottom: 4px;
                 font-weight: bold;
+                font-style: italic;
+                font-size: 11px;
+                font-family: Open Sans;
+                letter-spacing: 1px;
+                margin-left: 2px;
             }
         }
 
